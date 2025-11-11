@@ -1,0 +1,28 @@
+feature
+Age
+Sleep Duration
+Physical Activity Level
+Stress Level
+Heart Rate
+Daily Steps
+SleepDisorder_Imputed
+Systolic_BP
+Diastolic_BP
+Sleep_Efficiency
+Health_Risk_Score
+BMI Category_Encoded
+Sleep_Duration_Category_Encoded
+Activity_Category_Encoded
+Stress_Category_Encoded
+BP_Category_Encoded
+Gender_Male
+Occupation_Office Worker
+Occupation_Retired
+Occupation_Student
+Age_Group_Middle_Age
+Age_Group_Senior
+Age_Group_Young_Adult
+Heart_Rate_Category_Normal
+Steps_Category_Low_Active
+Steps_Category_Sedentary
+Steps_Category_Somewhat_Active
