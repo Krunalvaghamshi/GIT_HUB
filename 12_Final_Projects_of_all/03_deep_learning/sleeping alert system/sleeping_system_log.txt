@@ -1,0 +1,17 @@
+2025-11-18 13:50:03 - INFO - Application started.
+2025-11-18 13:50:35 - INFO - Application started.
+2025-11-18 13:50:50 - INFO - Camera started.
+2025-11-18 13:50:59 - INFO - Calibration initiated.
+2025-11-18 13:51:11 - ERROR - Video loop error: window ".!_querystring" was deleted before its visibility changed
+2025-11-18 13:51:32 - INFO - All registrations cleared.
+2025-11-18 13:51:38 - INFO - Application closed.
+2025-11-18 13:55:03 - INFO - Application started.
+2025-11-18 13:55:10 - INFO - Camera started.
+2025-11-18 13:55:17 - INFO - Calibration initiated.
+2025-11-18 13:55:24 - INFO - Person registered: k with threshold 0.233
+2025-11-18 13:55:40 - INFO - Calibration initiated.
+2025-11-18 13:55:47 - INFO - Person registered: kk with threshold 0.204
+2025-11-18 13:55:47 - ERROR - Video loop error: dictionary changed size during iteration
+2025-11-18 13:55:54 - INFO - Calibration initiated.
+2025-11-18 13:55:59 - INFO - All registrations cleared.
+2025-11-18 13:56:02 - INFO - Application closed.
