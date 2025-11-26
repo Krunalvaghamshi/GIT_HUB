@@ -154,45 +154,116 @@ st.markdown("""
 # 2. UTILITY FUNCTIONS & MODEL LOADING
 # ============================================================
 
+# @st.cache_resource
+# def load_models():
+#     """Load ML models and encoders with error handling"""
+#     models = {}
+#     try:
+#         # Load Quality Model (Regression)
+#         if os.path.exists('sleep_quality_model.pkl'):
+#             with open('sleep_quality_model.pkl', 'rb') as f:
+#                 models['quality'] = pickle.load(f)
+        
+#         # Load Disorder Model (Classification)
+#         if os.path.exists('sleep_disorder_model.pkl'):
+#             with open('sleep_disorder_model.pkl', 'rb') as f:
+#                 models['disorder'] = pickle.load(f)
+                
+#         # Load Label Encoder
+#         if os.path.exists('disorder_label_encoder.pkl'):
+#             with open('disorder_label_encoder.pkl', 'rb') as f:
+#                 models['encoder'] = pickle.load(f)
+        
+#         # Feature Names - Try to get from model object first (most reliable)
+#         if 'quality' in models and hasattr(models['quality'], 'feature_names_in_'):
+#              models['features_quality'] = models['quality'].feature_names_in_.tolist()
+#         elif os.path.exists('feature_names_quality.csv'):
+#             models['features_quality'] = pd.read_csv('feature_names_quality.csv')['feature'].tolist()
+
+#         if 'disorder' in models and hasattr(models['disorder'], 'feature_names_in_'):
+#              models['features_disorder'] = models['disorder'].feature_names_in_.tolist()
+#         elif os.path.exists('feature_names_disorder.csv'):
+#             models['features_disorder'] = pd.read_csv('feature_names_disorder.csv')['feature'].tolist()
+            
+#         return models
+#     except Exception as e:
+#         st.error(f"Error loading models: {e}")
+#         return None
+
+# Updated Utility Function
 @st.cache_resource
 def load_models():
-    """Load ML models and encoders with error handling"""
+    """Load ML models and encoders with robust path handling"""
     models = {}
+    
+    # Get the absolute path of the current directory where streamlit_app.py is located
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # Helper function to construct paths
+    def get_path(filename):
+        return os.path.join(current_dir, filename)
+
     try:
-        # Load Quality Model (Regression)
-        if os.path.exists('sleep_quality_model.pkl'):
-            with open('sleep_quality_model.pkl', 'rb') as f:
+        # Load Quality Model
+        model_path = get_path('sleep_quality_model.pkl')
+        if os.path.exists(model_path):
+            with open(model_path, 'rb') as f:
                 models['quality'] = pickle.load(f)
+        else:
+            st.error(f"File not found: {model_path}")
         
-        # Load Disorder Model (Classification)
-        if os.path.exists('sleep_disorder_model.pkl'):
-            with open('sleep_disorder_model.pkl', 'rb') as f:
+        # Load Disorder Model
+        model_path = get_path('sleep_disorder_model.pkl')
+        if os.path.exists(model_path):
+            with open(model_path, 'rb') as f:
                 models['disorder'] = pickle.load(f)
                 
         # Load Label Encoder
-        if os.path.exists('disorder_label_encoder.pkl'):
-            with open('disorder_label_encoder.pkl', 'rb') as f:
+        model_path = get_path('disorder_label_encoder.pkl')
+        if os.path.exists(model_path):
+            with open(model_path, 'rb') as f:
                 models['encoder'] = pickle.load(f)
         
-        # Feature Names - Try to get from model object first (most reliable)
-        if 'quality' in models and hasattr(models['quality'], 'feature_names_in_'):
+        # Feature Names
+        # Try loading from CSV
+        csv_path = get_path('feature_names_quality.csv')
+        if os.path.exists(csv_path):
+            models['features_quality'] = pd.read_csv(csv_path)['feature'].tolist()
+        elif 'quality' in models and hasattr(models['quality'], 'feature_names_in_'):
              models['features_quality'] = models['quality'].feature_names_in_.tolist()
-        elif os.path.exists('feature_names_quality.csv'):
-            models['features_quality'] = pd.read_csv('feature_names_quality.csv')['feature'].tolist()
 
-        if 'disorder' in models and hasattr(models['disorder'], 'feature_names_in_'):
+        csv_path = get_path('feature_names_disorder.csv')
+        if os.path.exists(csv_path):
+            models['features_disorder'] = pd.read_csv(csv_path)['feature'].tolist()
+        elif 'disorder' in models and hasattr(models['disorder'], 'feature_names_in_'):
              models['features_disorder'] = models['disorder'].feature_names_in_.tolist()
-        elif os.path.exists('feature_names_disorder.csv'):
-            models['features_disorder'] = pd.read_csv('feature_names_disorder.csv')['feature'].tolist()
             
         return models
     except Exception as e:
         st.error(f"Error loading models: {e}")
         return None
+    
+
+# def save_prediction_history(data_dict):
+#     file_path = 'prediction_history.csv'
+#     new_row = pd.DataFrame([data_dict])
+#     if not os.path.exists(file_path):
+#         new_row.to_csv(file_path, index=False)
+#     else:
+#         try:
+#             existing_df = pd.read_csv(file_path)
+#             updated_df = pd.concat([existing_df, new_row], ignore_index=True)
+#             updated_df.to_csv(file_path, index=False)
+#         except Exception:
+#             new_row.to_csv(file_path, index=False)
 
 def save_prediction_history(data_dict):
-    file_path = 'prediction_history.csv'
+    # Get absolute path
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    file_path = os.path.join(current_dir, 'prediction_history.csv')
+    
     new_row = pd.DataFrame([data_dict])
+    
     if not os.path.exists(file_path):
         new_row.to_csv(file_path, index=False)
     else:
@@ -203,6 +274,7 @@ def save_prediction_history(data_dict):
         except Exception:
             new_row.to_csv(file_path, index=False)
 
+            
 def categorize_bp(systolic, diastolic):
     if systolic < 120 and diastolic < 80: return 'Normal'
     elif systolic < 130 and diastolic < 80: return 'Elevated'

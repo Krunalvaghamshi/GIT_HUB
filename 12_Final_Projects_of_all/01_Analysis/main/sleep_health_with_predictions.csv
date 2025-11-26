@@ -1,0 +1,401 @@
+Person_ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activity Level,Stress Level,BMI Category,Heart Rate,Daily Steps,Sleep Disorder,SleepDisorder_Imputed,Systolic_BP,Diastolic_BP,BP_Category,Sleep_Efficiency,Health_Risk_Score,Age_Group,Sleep_Duration_Category,Activity_Category,Stress_Category,Heart_Rate_Category,Steps_Category,Sleep_Quality_Category,Has_Sleep_Disorder,Predicted_Sleep_Quality,Predicted_Disorder,Disorder_Confidence,Risk_Level
+1,Male,29,Manual Labor,7.4,7.0,41,7,Obese,91,8539,None,1,124,70,Elevated,6.4750000000000005,6.290000000000001,Young_Adult,Optimal,Moderate,High,Normal,Somewhat_Active,Good,0,7.4049999999999985,None,99.798,High_Risk
+2,Female,43,Retired,4.2,4.9,41,5,Obese,81,18754,None,1,131,86,High_Stage1,2.5725,5.49,Middle_Age,Insufficient,Moderate,Moderate,Normal,Active,Fair,0,4.646999999999998,None,99.841484,High_Risk
+3,Male,44,Retired,6.1,6.0,107,4,Underweight,81,2857,None,1,122,70,Elevated,4.574999999999999,2.8100000000000005,Middle_Age,Below_Optimal,Active,Moderate,Normal,Sedentary,Fair,0,6.0749999999999975,None,99.83397,High_Risk
+4,Male,29,Office Worker,8.3,10.0,20,10,Obese,55,6886,None,1,124,72,Elevated,10.375,7.1,Young_Adult,Optimal,Sedentary,High,Low,Low_Active,Excellent,0,9.687999999999999,None,99.812355,High_Risk
+5,Male,67,Retired,9.1,9.5,19,4,Overweight,97,14945,Insomnia,0,133,78,High_Stage1,10.80625,5.970000000000001,Elderly,Excessive,Sedentary,Moderate,Normal,Active,Excellent,1,9.337,Insomnia,99.638016,High_Risk
+6,Female,47,Student,6.1,6.9,24,4,Normal,87,9485,None,1,123,60,Elevated,5.26125,5.42,Senior,Below_Optimal,Sedentary,Moderate,Normal,Somewhat_Active,Good,0,7.037000000000002,None,99.75244,High_Risk
+7,Male,22,Office Worker,5.1,6.1,26,6,Obese,66,15680,None,1,121,70,Elevated,3.88875,5.94,Young_Adult,Insufficient,Sedentary,Moderate,Normal,Active,Good,0,6.174000000000006,None,99.702545,High_Risk
+8,Male,49,Office Worker,10.7,6.2,49,8,Obese,59,18767,None,1,134,87,High_Stage1,8.2925,5.709999999999999,Senior,Excessive,Moderate,High,Low,Active,Good,0,6.317000000000003,None,99.75388,High_Risk
+9,Male,25,Manual Labor,11.9,7.2,27,8,Underweight,99,16397,Sleep Apnea,0,112,63,Normal,10.71,6.7700000000000005,Young_Adult,Excessive,Sedentary,High,Normal,Active,Good,1,7.531000000000006,Insomnia,93.69691,High_Risk
+10,Female,51,Retired,8.2,4.0,64,5,Overweight,76,12744,None,1,125,84,High_Stage1,4.1,4.5,Senior,Optimal,Active,Moderate,Normal,Active,Poor,0,3.9390000000000014,None,99.8285,High_Risk
+11,Male,57,Manual Labor,5.4,5.5,82,6,Obese,99,6334,None,1,138,92,High_Stage1,3.7125,4.92,Senior,Insufficient,Active,Moderate,Normal,Low_Active,Fair,0,5.587000000000001,None,99.78229,High_Risk
+12,Male,27,Student,6.2,2.7,34,4,Underweight,84,14226,None,1,113,66,Normal,2.0925,5.06,Young_Adult,Below_Optimal,Moderate,Moderate,Normal,Active,Poor,0,2.8369999999999957,None,99.76876,High_Risk
+13,Male,54,Office Worker,4.1,6.8,113,9,Obese,70,15440,Sleep Apnea,0,137,90,High_Stage1,3.4849999999999994,4.3100000000000005,Senior,Insufficient,Active,High,Normal,Active,Good,1,6.480999999999998,Sleep Apnea,93.819984,High_Risk
+14,Male,46,Office Worker,11.3,7.3,68,8,Underweight,74,17020,None,1,123,73,Elevated,10.31125,5.04,Senior,Excessive,Active,High,Normal,Active,Good,0,7.465999999999997,None,99.7565,High_Risk
+15,Female,52,Office Worker,4.9,5.0,87,10,Underweight,77,6251,None,1,126,81,High_Stage1,3.0625,5.13,Senior,Insufficient,Active,High,Normal,Low_Active,Fair,0,4.998999999999999,None,99.72508,High_Risk
+16,Male,68,Student,8.6,9.1,98,10,Overweight,96,14180,None,1,134,79,High_Stage1,9.7825,5.38,Elderly,Optimal,Active,High,Normal,Active,Excellent,0,9.239999999999998,None,99.757225,High_Risk
+17,Female,36,Student,6.2,3.5,31,1,Obese,64,18140,None,1,128,78,Elevated,2.7125,4.25,Middle_Age,Below_Optimal,Moderate,Low,Normal,Active,Poor,0,3.59,None,99.75259,High_Risk
+18,Female,28,Manual Labor,8.4,3.1,39,2,Overweight,53,2922,None,1,114,65,Normal,3.2550000000000003,3.89,Young_Adult,Optimal,Moderate,Low,Low,Sedentary,Poor,0,3.1750000000000007,None,99.78058,High_Risk
+19,Female,26,Manual Labor,9.2,6.4,93,9,Underweight,78,9957,Sleep Apnea,0,113,65,Normal,7.359999999999999,4.67,Young_Adult,Excessive,Active,High,Normal,Somewhat_Active,Good,1,6.470999999999991,Sleep Apnea,99.138405,High_Risk
+20,Male,27,Manual Labor,10.6,8.1,94,8,Normal,58,17796,Insomnia,0,113,63,Normal,10.7325,3.94,Young_Adult,Excessive,Active,High,Low,Active,Excellent,1,8.040000000000012,Insomnia,80.22176,High_Risk
+21,Female,38,Retired,5.7,9.4,53,3,Obese,76,3230,None,1,129,75,Elevated,6.697500000000001,4.43,Middle_Age,Insufficient,Moderate,Low,Normal,Sedentary,Excellent,0,9.10199999999999,None,99.85605,High_Risk
+22,Male,45,Office Worker,4.1,5.1,41,8,Normal,75,12627,Insomnia,0,122,77,Elevated,2.61375,5.87,Senior,Insufficient,Moderate,High,Normal,Active,Fair,1,4.825000000000003,Insomnia,61.423992,Medium_Risk
+23,Female,44,Office Worker,5.1,8.2,60,1,Obese,68,12006,None,1,132,86,High_Stage1,5.227499999999999,3.4600000000000004,Middle_Age,Insufficient,Active,Low,Normal,Active,Excellent,0,8.65,None,99.821976,High_Risk
+24,Female,52,Manual Labor,11.2,5.9,55,10,Overweight,77,6933,Insomnia,0,126,78,Elevated,8.26,6.29,Senior,Excessive,Moderate,High,Normal,Low_Active,Fair,1,6.012999999999994,Insomnia,98.21972,High_Risk
+25,Female,40,Office Worker,11.0,5.7,30,4,Overweight,66,16295,Insomnia,0,120,77,Elevated,7.8375,5.0200000000000005,Middle_Age,Excessive,Moderate,Moderate,Normal,Active,Fair,1,5.752999999999998,Insomnia,99.00528,High_Risk
+26,Female,61,Manual Labor,8.8,7.8,108,3,Overweight,92,18377,None,1,130,85,High_Stage1,8.58,2.8999999999999995,Elderly,Optimal,Active,Low,Normal,Active,Good,0,7.652999999999999,None,99.785,High_Risk
+27,Female,36,Retired,8.8,7.3,41,6,Overweight,90,2203,Insomnia,0,118,71,Normal,8.030000000000001,5.7700000000000005,Middle_Age,Optimal,Moderate,Moderate,Normal,Sedentary,Good,1,7.342999999999993,Insomnia,96.10639,High_Risk
+28,Female,80,Retired,9.3,2.8,103,7,Overweight,91,18544,None,1,140,86,High_Stage1,3.255,4.23,Elderly,Excessive,Active,High,Normal,Active,Poor,0,2.8930000000000033,None,99.85097,High_Risk
+29,Female,49,Student,5.4,9.0,48,4,Normal,99,17899,None,1,124,73,Elevated,6.075,4.94,Senior,Insufficient,Moderate,Moderate,Normal,Active,Excellent,0,8.698000000000002,None,99.76349,High_Risk
+30,Female,27,Retired,11.3,8.8,21,7,Overweight,69,5748,None,1,113,63,Normal,12.43,6.250000000000001,Young_Adult,Excessive,Sedentary,High,Normal,Low_Active,Excellent,0,8.929999999999994,None,99.818245,High_Risk
+31,Male,23,Manual Labor,7.4,4.7,114,9,Underweight,94,8718,None,1,111,60,Normal,4.3475,4.36,Young_Adult,Optimal,Active,High,Normal,Somewhat_Active,Fair,0,5.107999999999998,None,99.76508,High_Risk
+32,Male,47,Retired,7.1,6.8,56,2,Underweight,89,3093,Insomnia,0,123,74,Elevated,6.034999999999999,3.9,Senior,Optimal,Moderate,Low,Normal,Sedentary,Good,1,6.667999999999996,Insomnia,99.68358,High_Risk
+33,Female,36,Student,8.2,7.0,27,3,Normal,88,17228,Sleep Apnea,0,118,67,Normal,7.174999999999999,5.05,Middle_Age,Optimal,Sedentary,Low,Normal,Active,Good,1,6.917000000000002,Sleep Apnea,65.021515,Medium_Risk
+34,Female,50,Office Worker,4.4,6.5,30,5,Obese,98,18034,None,1,135,86,High_Stage1,3.575,6.16,Senior,Insufficient,Moderate,Moderate,Normal,Active,Good,0,6.578000000000002,None,99.787056,High_Risk
+35,Female,47,Manual Labor,5.3,4.9,22,3,Underweight,72,7710,Insomnia,0,123,72,Elevated,3.2462500000000003,4.88,Senior,Insufficient,Sedentary,Low,Normal,Somewhat_Active,Fair,1,5.008999999999997,Insomnia,97.48038,High_Risk
+36,Male,38,Office Worker,9.9,4.7,30,8,Obese,96,11732,Insomnia,0,129,82,High_Stage1,5.81625,7.02,Middle_Age,Excessive,Moderate,High,Normal,Active,Fair,1,4.699999999999996,Insomnia,96.3067,High_Risk
+37,Female,27,Student,4.7,5.9,17,10,Normal,81,5191,None,1,113,76,Normal,3.4662500000000005,7.31,Young_Adult,Insufficient,Sedentary,High,Normal,Low_Active,Fair,0,5.935999999999992,None,99.70527,High_Risk
+38,Male,18,Student,8.8,8.3,55,8,Obese,96,2689,None,1,119,70,Normal,9.13,6.27,Young_Adult,Optimal,Moderate,High,Normal,Sedentary,Excellent,0,8.211999999999987,None,99.75119,High_Risk
+39,Male,33,Student,6.0,7.1,113,8,Obese,82,4103,None,1,126,69,Elevated,5.324999999999999,4.25,Middle_Age,Below_Optimal,Active,High,Normal,Sedentary,Good,0,7.190000000000011,None,99.81568,High_Risk
+40,Male,52,Office Worker,7.1,5.3,119,9,Obese,95,2365,None,1,136,82,High_Stage1,4.703749999999999,4.630000000000001,Senior,Optimal,Active,High,Normal,Sedentary,Fair,0,5.5520000000000005,None,99.75799,High_Risk
+41,Male,43,Office Worker,6.3,7.5,16,4,Obese,54,16010,Sleep Apnea,0,131,77,High_Stage1,5.90625,5.4,Middle_Age,Below_Optimal,Sedentary,Moderate,Low,Active,Good,1,7.58,Sleep Apnea,97.8898,High_Risk
+42,Male,21,Office Worker,6.8,1.0,32,5,Normal,92,13767,None,1,110,60,Normal,0.85,5.58,Young_Adult,Below_Optimal,Moderate,Moderate,Normal,Active,Poor,0,1.2160000000000004,None,99.710556,High_Risk
+43,Female,42,Office Worker,9.8,8.3,117,5,Underweight,97,18103,Insomnia,0,121,71,Elevated,10.167500000000002,3.1300000000000003,Middle_Age,Excessive,Active,Moderate,Normal,Active,Excellent,1,8.120999999999999,Insomnia,99.8193,High_Risk
+44,Female,45,Student,6.4,2.5,105,8,Overweight,83,14742,None,1,122,72,Elevated,2.0,4.3100000000000005,Senior,Below_Optimal,Active,High,Normal,Active,Poor,0,2.5679999999999996,None,99.79688,High_Risk
+45,Female,26,Student,8.5,5.3,84,7,Obese,89,14391,None,1,123,77,Elevated,5.63125,4.960000000000001,Young_Adult,Optimal,Active,High,Normal,Active,Fair,0,5.320000000000005,None,99.83525,High_Risk
+46,Female,42,Manual Labor,7.8,3.8,95,9,Underweight,60,6172,None,1,121,73,Elevated,3.705,4.25,Middle_Age,Optimal,Active,High,Normal,Low_Active,Poor,0,4.109999999999999,None,99.778534,High_Risk
+47,Female,40,Manual Labor,9.3,3.4,31,8,Underweight,99,17623,None,1,120,67,Elevated,3.9525,6.65,Middle_Age,Excessive,Moderate,High,Normal,Active,Poor,0,3.493000000000003,None,99.74064,High_Risk
+48,Male,22,Office Worker,11.5,8.3,116,2,Normal,52,4378,None,1,111,60,Normal,11.93125,1.36,Young_Adult,Excessive,Active,Low,Low,Sedentary,Excellent,0,8.316999999999993,None,99.81335,High_Risk
+49,Female,45,Retired,9.9,5.1,98,10,Underweight,82,19589,None,1,122,73,Elevated,6.311249999999999,4.9,Senior,Excessive,Active,High,Normal,Active,Fair,0,5.034000000000007,None,99.73306,High_Risk
+50,Female,48,Retired,5.7,6.7,31,4,Normal,60,14031,None,1,124,77,Elevated,4.773750000000001,4.67,Senior,Insufficient,Moderate,Moderate,Normal,Active,Good,0,6.714000000000003,None,99.778404,High_Risk
+51,Male,56,Student,4.2,5.9,101,6,Obese,65,7669,None,1,138,88,High_Stage1,3.0975,3.67,Senior,Insufficient,Active,Moderate,Normal,Somewhat_Active,Fair,0,5.814999999999992,None,99.85991,High_Risk
+52,Female,55,Student,6.1,7.0,38,2,Obese,67,4735,None,1,137,84,High_Stage1,5.3375,4.4,Senior,Below_Optimal,Moderate,Low,Normal,Sedentary,Good,0,7.0070000000000014,None,99.84811,High_Risk
+53,Male,19,Student,8.8,6.2,22,7,Overweight,79,11867,Insomnia,0,109,67,Normal,6.820000000000001,6.42,Young_Adult,Optimal,Sedentary,High,Normal,Active,Good,1,6.226000000000002,Insomnia,96.28114,High_Risk
+54,Female,25,Manual Labor,4.4,3.4,91,3,Overweight,97,10490,None,1,112,74,Normal,1.87,3.51,Young_Adult,Insufficient,Active,Low,Normal,Active,Poor,0,3.4479999999999986,None,99.850174,High_Risk
+55,Male,47,Manual Labor,8.0,8.0,11,3,Overweight,59,2956,None,1,123,76,Elevated,8.0,5.15,Senior,Optimal,Sedentary,Low,Low,Sedentary,Good,0,7.935000000000001,None,99.77593,High_Risk
+56,Female,47,Student,8.8,5.0,38,2,Underweight,67,11306,None,1,123,80,High_Stage1,5.5,4.0,Senior,Optimal,Moderate,Low,Normal,Active,Fair,0,5.140999999999999,None,99.78777,High_Risk
+57,Female,47,Student,6.7,2.9,94,8,Obese,87,8623,None,1,133,86,High_Stage1,2.42875,4.92,Senior,Below_Optimal,Active,High,Normal,Somewhat_Active,Poor,0,2.7609999999999997,None,99.80614,High_Risk
+58,Male,90,Student,10.2,5.1,88,6,Normal,68,16908,Sleep Apnea,0,145,96,High_Stage2,6.5025,3.72,Elderly,Excessive,Active,Moderate,Normal,Active,Fair,1,5.115000000000001,Sleep Apnea,98.97097,High_Risk
+59,Male,48,Retired,4.9,9.0,61,1,Overweight,85,19858,None,1,124,77,Elevated,5.5125,3.5700000000000003,Senior,Insufficient,Active,Low,Normal,Active,Excellent,0,8.863999999999999,None,99.8286,High_Risk
+60,Male,57,Manual Labor,4.6,7.7,36,1,Normal,62,6460,None,1,128,71,Elevated,4.427499999999999,3.66,Senior,Insufficient,Moderate,Low,Normal,Low_Active,Good,0,7.599000000000002,None,99.791534,High_Risk
+61,Male,54,Retired,9.8,5.3,59,7,Normal,95,15986,Insomnia,0,127,76,Elevated,6.492500000000001,5.430000000000001,Senior,Excessive,Moderate,High,Normal,Active,Fair,1,5.372000000000003,Insomnia,99.848625,High_Risk
+62,Male,49,Retired,8.0,5.3,104,8,Overweight,52,14638,None,1,124,73,Elevated,5.3,3.72,Senior,Optimal,Active,High,Low,Active,Fair,0,5.246000000000004,None,99.8635,High_Risk
+63,Male,35,Student,9.5,5.4,88,5,Obese,59,4850,None,1,127,74,Elevated,6.4125000000000005,3.64,Middle_Age,Excessive,Active,Moderate,Low,Sedentary,Fair,0,5.375999999999993,None,99.85419,High_Risk
+64,Male,51,Student,7.5,10.0,32,5,Overweight,87,15299,None,1,125,81,High_Stage1,9.375,5.680000000000001,Senior,Optimal,Moderate,Moderate,Normal,Active,Excellent,0,9.453,None,99.768326,High_Risk
+65,Male,28,Office Worker,6.0,6.8,97,4,Normal,50,12698,None,1,114,60,Normal,5.1,2.49,Young_Adult,Below_Optimal,Active,Moderate,Low,Active,Good,0,6.870999999999999,None,99.80486,High_Risk
+66,Female,36,Office Worker,10.6,6.9,53,6,Overweight,76,6594,None,1,118,69,Normal,9.1425,5.130000000000001,Middle_Age,Excessive,Moderate,Moderate,Normal,Low_Active,Good,0,6.928999999999991,None,99.72786,High_Risk
+67,Female,32,Retired,10.4,8.1,86,6,Normal,95,16282,None,1,116,63,Normal,10.53,4.32,Middle_Age,Excessive,Active,Moderate,Normal,Active,Excellent,0,7.971000000000009,None,99.83004,High_Risk
+68,Male,41,Manual Labor,9.6,6.5,31,3,Normal,57,18285,Insomnia,0,120,76,Elevated,7.8,4.31,Middle_Age,Excessive,Moderate,Low,Low,Active,Good,1,6.414000000000001,Insomnia,99.754974,High_Risk
+69,Female,74,Student,6.2,5.5,52,9,Overweight,100,16334,Insomnia,0,137,95,High_Stage1,4.2625,6.54,Elderly,Below_Optimal,Moderate,High,Normal,Active,Fair,1,5.424999999999999,Insomnia,98.23599,High_Risk
+70,Female,18,Student,8.7,5.6,46,7,Underweight,95,8644,None,1,109,60,Normal,6.089999999999999,5.82,Young_Adult,Optimal,Moderate,High,Normal,Somewhat_Active,Fair,0,5.5700000000000065,None,99.79504,High_Risk
+71,Female,50,Retired,6.9,5.9,70,1,Overweight,91,4850,None,1,125,74,Elevated,5.088750000000001,3.42,Senior,Below_Optimal,Active,Low,Normal,Sedentary,Fair,0,6.362999999999996,None,99.81614,High_Risk
+72,Female,18,Office Worker,4.7,5.9,106,7,Underweight,66,16933,Insomnia,0,109,64,Normal,3.4662500000000005,3.4400000000000004,Young_Adult,Insufficient,Active,High,Normal,Active,Fair,1,5.852999999999993,Insomnia,94.52889,High_Risk
+73,Male,32,Manual Labor,11.3,7.5,65,5,Normal,58,2165,None,1,116,71,Normal,10.59375,3.91,Middle_Age,Excessive,Active,Moderate,Low,Sedentary,Good,0,8.088000000000005,None,99.78549,High_Risk
+74,Female,56,Office Worker,5.1,6.1,12,5,Normal,55,12701,Insomnia,0,128,73,Elevated,3.88875,5.44,Senior,Insufficient,Sedentary,Moderate,Low,Active,Good,1,6.182000000000001,Insomnia,99.2534,High_Risk
+75,Male,40,Office Worker,11.6,7.5,72,2,Underweight,92,2919,Insomnia,0,120,76,Elevated,10.875,3.48,Middle_Age,Excessive,Active,Low,Normal,Sedentary,Good,1,7.743999999999999,Insomnia,99.64653,High_Risk
+76,Female,23,Office Worker,7.6,5.8,28,4,Normal,74,10305,Insomnia,0,111,60,Normal,5.51,5.040000000000001,Young_Adult,Optimal,Sedentary,Moderate,Normal,Active,Fair,1,5.811000000000003,Insomnia,93.54621,High_Risk
+77,Female,29,Office Worker,5.5,6.2,32,6,Underweight,88,19375,None,1,114,69,Normal,4.2625,5.8,Young_Adult,Insufficient,Moderate,Moderate,Normal,Active,Good,0,6.120000000000001,None,99.72638,High_Risk
+78,Female,50,Student,8.3,2.0,38,10,Underweight,98,17715,None,1,125,72,Elevated,2.075,7.02,Senior,Optimal,Moderate,High,Normal,Active,Poor,0,2.4979999999999993,None,99.76663,High_Risk
+79,Male,29,Student,11.0,7.8,39,7,Normal,77,5839,None,1,114,66,Normal,10.725,5.67,Young_Adult,Excessive,Moderate,High,Normal,Low_Active,Good,0,8.059000000000003,None,99.71465,High_Risk
+80,Female,43,Office Worker,9.9,6.7,48,5,Obese,82,19642,Insomnia,0,131,78,High_Stage1,8.29125,5.300000000000001,Middle_Age,Excessive,Moderate,Moderate,Normal,Active,Good,1,6.712000000000006,Insomnia,98.88362,High_Risk
+81,Male,40,Manual Labor,10.5,8.0,117,9,Underweight,86,13618,None,1,120,73,Elevated,10.5,4.11,Middle_Age,Excessive,Active,High,Normal,Active,Good,0,7.927000000000001,None,99.75727,High_Risk
+82,Female,30,Retired,9.3,1.0,120,3,Overweight,58,15519,Insomnia,0,115,66,Normal,1.1625,1.86,Middle_Age,Excessive,Active,Low,Low,Active,Poor,1,1.211,Insomnia,97.62781,High_Risk
+83,Male,72,Manual Labor,9.5,10.0,34,1,Overweight,67,12776,None,1,136,86,High_Stage1,11.875,4.0200000000000005,Elderly,Excessive,Moderate,Low,Normal,Active,Excellent,0,8.816999999999997,None,99.7067,High_Risk
+84,Female,49,Manual Labor,10.8,5.7,110,4,Normal,70,2067,None,1,124,80,High_Stage1,7.695000000000001,2.5,Senior,Excessive,Active,Moderate,Normal,Sedentary,Fair,0,5.7049999999999965,None,99.859245,High_Risk
+85,Male,18,Manual Labor,6.0,8.2,120,9,Obese,51,11788,None,1,119,66,Normal,6.15,3.72,Young_Adult,Below_Optimal,Active,High,Low,Active,Excellent,0,7.529999999999998,None,99.82796,High_Risk
+86,Male,42,Office Worker,7.9,3.9,17,4,Normal,92,7660,None,1,121,74,Elevated,3.85125,5.73,Middle_Age,Optimal,Sedentary,Moderate,Normal,Somewhat_Active,Poor,0,4.030999999999998,None,99.75547,High_Risk
+87,Female,30,Student,5.8,7.2,115,2,Obese,87,6478,None,1,125,77,Elevated,5.22,2.49,Middle_Age,Insufficient,Active,Low,Normal,Low_Active,Good,0,7.2690000000000055,None,99.837616,High_Risk
+88,Male,52,Manual Labor,11.9,3.9,67,10,Underweight,89,10210,None,1,126,81,High_Stage1,5.8012500000000005,5.97,Senior,Excessive,Active,High,Normal,Active,Poor,0,3.9789999999999974,None,99.73566,High_Risk
+89,Female,28,Office Worker,11.6,4.8,25,5,Underweight,85,12922,Sleep Apnea,0,114,77,Normal,6.96,5.65,Young_Adult,Excessive,Sedentary,Moderate,Normal,Active,Fair,1,5.084000000000005,Sleep Apnea,97.96897,High_Risk
+90,Female,38,Manual Labor,4.3,9.8,81,3,Underweight,99,5521,None,1,119,70,Normal,5.2675,3.65,Middle_Age,Insufficient,Active,Low,Normal,Low_Active,Excellent,0,9.379999999999988,None,99.844185,High_Risk
+91,Female,47,Manual Labor,9.6,5.6,10,9,Underweight,92,2572,None,1,123,61,Elevated,6.72,7.439999999999999,Senior,Excessive,Sedentary,High,Normal,Sedentary,Fair,0,5.6740000000000075,None,99.81361,High_Risk
+92,Female,52,Office Worker,11.4,6.4,117,4,Overweight,86,9082,None,1,126,73,Elevated,9.12,2.81,Senior,Excessive,Active,Moderate,Normal,Somewhat_Active,Good,0,6.392999999999993,None,99.82145,High_Risk
+93,Female,21,Student,5.4,7.7,14,6,Overweight,64,7395,Insomnia,0,110,61,Normal,5.197500000000001,6.06,Young_Adult,Insufficient,Sedentary,Moderate,Normal,Low_Active,Good,1,7.931000000000009,Insomnia,64.741745,Medium_Risk
+94,Female,34,Student,8.5,7.0,12,2,Normal,77,17407,Insomnia,0,117,69,Normal,7.4375,4.98,Middle_Age,Optimal,Sedentary,Low,Normal,Active,Good,1,6.9270000000000005,Sleep Apnea,76.064545,High_Risk
+95,Female,32,Retired,11.3,6.3,74,6,Obese,67,13094,None,1,126,76,Elevated,8.89875,4.52,Middle_Age,Excessive,Active,Moderate,Normal,Active,Good,0,6.307999999999998,None,99.79044,High_Risk
+96,Female,30,Office Worker,4.3,6.7,13,3,Underweight,83,2650,Insomnia,0,115,63,Normal,3.60125,5.37,Middle_Age,Insufficient,Sedentary,Low,Normal,Sedentary,Good,1,6.720000000000004,Insomnia,96.562126,High_Risk
+97,Female,66,Retired,9.6,10.0,113,9,Underweight,71,7741,Insomnia,0,133,89,High_Stage1,12.0,3.93,Elderly,Excessive,Active,High,Normal,Somewhat_Active,Excellent,1,9.527,Insomnia,94.89205,High_Risk
+98,Female,46,Retired,6.4,5.9,108,2,Obese,60,15281,None,1,133,78,High_Stage1,4.720000000000001,2.16,Senior,Below_Optimal,Active,Low,Normal,Active,Fair,0,6.1339999999999915,None,99.84346,High_Risk
+99,Female,21,Retired,11.4,6.4,105,9,Obese,62,8838,None,1,120,67,Elevated,9.12,4.390000000000001,Young_Adult,Excessive,Active,High,Normal,Somewhat_Active,Good,0,6.387999999999992,None,99.821106,High_Risk
+100,Male,53,Student,11.8,8.1,73,5,Normal,53,5262,None,1,126,73,Elevated,11.9475,3.5700000000000003,Senior,Excessive,Active,Moderate,Low,Low_Active,Excellent,0,8.236000000000011,None,99.81437,High_Risk
+101,Male,71,Office Worker,11.6,8.2,115,8,Obese,71,19722,None,1,145,93,High_Stage2,11.89,3.97,Elderly,Excessive,Active,High,Normal,Active,Excellent,0,8.168000000000008,None,99.80159,High_Risk
+102,Female,55,Retired,7.8,8.4,107,2,Underweight,56,6996,Insomnia,0,127,77,Elevated,8.19,1.7100000000000002,Senior,Optimal,Active,Low,Low,Low_Active,Excellent,1,8.342999999999996,Insomnia,99.74654,High_Risk
+103,Female,18,Office Worker,10.9,7.3,116,6,Underweight,92,13826,None,1,109,60,Normal,9.94625,3.36,Young_Adult,Excessive,Active,Moderate,Normal,Active,Good,0,7.5629999999999935,None,99.838486,High_Risk
+104,Female,32,Office Worker,10.8,3.7,98,3,Underweight,73,4827,Sleep Apnea,0,116,64,Normal,4.995000000000001,2.62,Middle_Age,Excessive,Active,Low,Normal,Sedentary,Poor,1,3.808999999999996,Insomnia,98.76303,High_Risk
+105,Female,59,Student,6.6,9.3,19,10,Underweight,53,16211,None,1,129,81,High_Stage1,7.6725,6.69,Senior,Below_Optimal,Sedentary,High,Low,Active,Excellent,0,8.716,None,99.66253,High_Risk
+106,Female,29,Retired,10.6,3.7,30,5,Underweight,77,7232,None,1,114,67,Normal,4.9025,5.340000000000001,Young_Adult,Excessive,Moderate,Moderate,Normal,Low_Active,Poor,0,3.799999999999995,None,99.72965,High_Risk
+107,Female,46,Retired,4.3,6.6,55,8,Normal,64,4217,None,1,123,73,Elevated,3.5475,5.23,Senior,Insufficient,Moderate,High,Normal,Sedentary,Good,0,6.547000000000008,None,99.82132,High_Risk
+108,Female,51,Office Worker,8.8,4.5,112,10,Underweight,50,16232,None,1,125,68,Elevated,4.95,3.84,Senior,Optimal,Active,High,Low,Active,Fair,0,4.464000000000002,None,99.818954,High_Risk
+109,Female,26,Manual Labor,5.8,5.9,100,1,Normal,52,16026,Insomnia,0,113,70,Normal,4.2775,1.54,Young_Adult,Insufficient,Active,Low,Low,Active,Fair,1,5.859999999999993,Insomnia,99.04964,High_Risk
+110,Male,39,Student,5.0,6.7,36,5,Underweight,63,15878,Insomnia,0,119,77,Normal,4.1875,4.88,Middle_Age,Insufficient,Moderate,Moderate,Normal,Active,Good,1,6.6730000000000045,Insomnia,96.41769,High_Risk
+111,Female,18,Student,4.6,6.6,75,3,Overweight,87,8837,None,1,109,60,Normal,3.795,3.79,Young_Adult,Insufficient,Active,Low,Normal,Somewhat_Active,Good,0,6.656000000000009,None,99.83299,High_Risk
+112,Male,24,Student,9.6,6.8,50,4,Overweight,99,9031,None,1,112,62,Normal,8.16,5.080000000000001,Young_Adult,Excessive,Moderate,Moderate,Normal,Somewhat_Active,Good,0,6.735999999999998,None,99.776924,High_Risk
+113,Female,36,Student,6.7,9.2,22,2,Overweight,50,16806,None,1,118,68,Normal,7.704999999999999,4.34,Middle_Age,Below_Optimal,Sedentary,Low,Low,Active,Excellent,0,8.851000000000003,None,99.60371,High_Risk
+114,Female,21,Retired,9.8,6.9,18,9,Overweight,87,5716,None,1,110,60,Normal,8.4525,7.3,Young_Adult,Excessive,Sedentary,High,Normal,Low_Active,Good,0,6.956000000000001,None,99.77318,High_Risk
+115,Male,64,Retired,4.5,5.5,45,3,Normal,87,5414,None,1,132,84,High_Stage1,3.09375,4.49,Elderly,Insufficient,Moderate,Low,Normal,Low_Active,Fair,0,5.610000000000001,None,99.819466,High_Risk
+116,Female,18,Manual Labor,6.5,7.9,95,2,Normal,70,19832,None,1,109,60,Normal,6.41875,2.3500000000000005,Young_Adult,Below_Optimal,Active,Low,Normal,Active,Good,0,7.95099999999999,None,99.79645,High_Risk
+117,Male,33,Student,8.3,8.4,115,10,Obese,97,2570,None,1,126,85,High_Stage1,8.715000000000002,5.09,Middle_Age,Optimal,Active,High,Normal,Sedentary,Excellent,0,8.139999999999995,None,99.8439,High_Risk
+118,Female,41,Student,10.3,3.5,99,9,Underweight,78,15288,Sleep Apnea,0,120,75,Elevated,4.5062500000000005,4.489999999999999,Middle_Age,Excessive,Active,High,Normal,Active,Poor,1,3.66,Sleep Apnea,98.5261,High_Risk
+119,Female,61,Office Worker,6.6,7.2,67,7,Overweight,54,2917,None,1,130,81,High_Stage1,5.94,4.57,Elderly,Below_Optimal,Active,High,Low,Sedentary,Good,0,7.282000000000003,None,99.82876,High_Risk
+120,Male,18,Retired,9.0,7.4,63,6,Normal,98,12066,None,1,109,68,Normal,8.325000000000001,5.07,Young_Adult,Optimal,Active,Moderate,Normal,Active,Good,0,7.3729999999999905,None,99.79314,High_Risk
+121,Female,57,Student,11.1,5.4,21,1,Underweight,59,8982,None,1,128,79,Elevated,7.492500000000001,4.05,Senior,Excessive,Sedentary,Low,Low,Somewhat_Active,Fair,0,5.487999999999996,None,99.76338,High_Risk
+122,Male,40,Manual Labor,8.9,8.8,90,5,Underweight,77,8336,None,1,120,62,Elevated,9.79,3.54,Middle_Age,Optimal,Active,Moderate,Normal,Somewhat_Active,Excellent,0,8.81099999999999,None,99.78685,High_Risk
+123,Female,25,Manual Labor,5.9,5.7,87,3,Normal,70,18999,None,1,112,62,Normal,4.20375,2.890000000000001,Young_Adult,Insufficient,Active,Low,Normal,Active,Fair,0,5.737999999999997,None,99.790215,High_Risk
+124,Male,46,Retired,4.2,6.3,23,1,Overweight,99,11941,Sleep Apnea,0,123,72,Elevated,3.3075,4.99,Senior,Insufficient,Sedentary,Low,Normal,Active,Good,1,6.177999999999998,Sleep Apnea,99.42835,High_Risk
+125,Male,42,Manual Labor,11.0,5.7,43,4,Obese,56,14380,Insomnia,0,131,88,High_Stage1,7.8375,4.630000000000001,Middle_Age,Excessive,Moderate,Moderate,Low,Active,Fair,1,5.755,Insomnia,97.96536,High_Risk
+126,Female,30,Manual Labor,4.2,6.0,62,2,Underweight,52,13667,None,1,115,69,Normal,3.1500000000000004,2.98,Middle_Age,Insufficient,Active,Low,Low,Active,Fair,0,5.8519999999999985,None,99.77584,High_Risk
+127,Female,41,Retired,11.0,3.8,29,2,Obese,94,6529,None,1,130,82,High_Stage1,5.225,5.210000000000001,Middle_Age,Excessive,Sedentary,Low,Normal,Low_Active,Poor,0,4.0310000000000015,None,99.69131,High_Risk
+128,Male,34,Student,8.2,3.1,84,3,Overweight,96,19519,None,1,117,69,Normal,3.1775,3.7,Middle_Age,Optimal,Active,Low,Normal,Active,Poor,0,3.1100000000000008,None,99.78737,High_Risk
+129,Female,41,Student,11.5,9.2,25,8,Overweight,69,14192,Insomnia,0,120,64,Elevated,13.225,6.430000000000001,Middle_Age,Excessive,Sedentary,High,Normal,Active,Excellent,1,9.217000000000013,Insomnia,95.47982,High_Risk
+130,Female,49,Manual Labor,10.4,4.3,104,8,Obese,68,10566,None,1,134,82,High_Stage1,5.59,4.24,Senior,Excessive,Active,High,Normal,Active,Fair,0,4.2740000000000045,None,99.87394,High_Risk
+131,Female,63,Manual Labor,12.0,4.0,79,7,Overweight,84,9226,None,1,131,87,High_Stage1,6.0,4.8100000000000005,Elderly,Excessive,Active,High,Normal,Somewhat_Active,Poor,0,4.082,None,99.813156,High_Risk
+132,Male,21,Student,6.8,1.7,65,6,Underweight,53,7162,None,1,110,60,Normal,1.4449999999999998,4.109999999999999,Young_Adult,Below_Optimal,Active,Moderate,Low,Low_Active,Poor,0,1.6879999999999993,None,99.795235,High_Risk
+133,Male,71,Retired,10.1,4.7,92,9,Obese,54,18590,None,1,145,93,High_Stage2,5.93375,4.619999999999999,Elderly,Excessive,Active,High,Low,Active,Fair,0,4.637000000000003,None,99.731834,High_Risk
+134,Male,18,Manual Labor,7.2,3.4,110,4,Overweight,50,3319,None,1,109,60,Normal,3.06,2.3,Young_Adult,Optimal,Active,Moderate,Low,Sedentary,Poor,0,3.4269999999999983,None,99.8151,High_Risk
+135,Male,37,Office Worker,7.8,9.3,67,1,Obese,53,3141,Sleep Apnea,0,128,71,Elevated,9.0675,2.95,Middle_Age,Optimal,Active,Low,Low,Sedentary,Excellent,1,8.92499999999999,Sleep Apnea,96.2806,High_Risk
+136,Male,48,Retired,9.0,8.0,13,8,Underweight,61,6627,None,1,124,80,High_Stage1,9.0,6.43,Senior,Optimal,Sedentary,High,Normal,Low_Active,Good,0,7.976999999999997,None,99.75311,High_Risk
+137,Male,44,Manual Labor,11.0,4.6,120,7,Overweight,76,16501,None,1,122,77,Elevated,6.324999999999999,3.42,Middle_Age,Excessive,Active,High,Normal,Active,Fair,0,4.579000000000004,None,99.82369,High_Risk
+138,Male,30,Manual Labor,11.9,10.0,13,7,Underweight,91,4690,None,1,115,72,Normal,14.875,6.73,Middle_Age,Excessive,Sedentary,High,Normal,Sedentary,Excellent,0,9.532000000000005,None,99.795616,High_Risk
+139,Male,36,Office Worker,10.1,8.0,29,3,Overweight,72,9323,Insomnia,0,118,70,Normal,10.1,4.87,Middle_Age,Excessive,Sedentary,Low,Normal,Somewhat_Active,Good,1,8.038,Sleep Apnea,88.69346,High_Risk
+140,Male,32,Office Worker,7.3,5.4,19,4,Normal,74,5255,Sleep Apnea,0,116,64,Normal,4.9275,5.3100000000000005,Middle_Age,Optimal,Sedentary,Moderate,Normal,Low_Active,Fair,1,5.543999999999995,Sleep Apnea,98.68105,High_Risk
+141,Female,31,Student,7.4,1.0,33,10,Overweight,70,7213,None,1,115,61,Normal,0.925,6.8100000000000005,Middle_Age,Optimal,Moderate,High,Normal,Low_Active,Poor,0,1.3140000000000003,None,99.70921,High_Risk
+142,Male,52,Retired,9.9,10.0,108,9,Obese,73,6108,Insomnia,0,136,87,High_Stage1,12.375,4.52,Senior,Excessive,Active,High,Normal,Low_Active,Excellent,1,9.487,Insomnia,94.60262,High_Risk
+143,Female,45,Retired,5.9,3.2,35,6,Overweight,74,11802,None,1,122,74,Elevated,2.3600000000000003,5.630000000000001,Senior,Insufficient,Moderate,Moderate,Normal,Active,Poor,0,3.2319999999999967,None,99.79634,High_Risk
+144,Female,29,Student,4.9,2.7,46,5,Underweight,94,13413,None,1,114,64,Normal,1.6537500000000005,5.2,Young_Adult,Insufficient,Moderate,Moderate,Normal,Active,Poor,0,2.880999999999996,None,99.72863,High_Risk
+145,Female,53,Retired,6.8,8.0,111,3,Underweight,95,16995,None,1,126,81,High_Stage1,6.8,2.6700000000000004,Senior,Below_Optimal,Active,Low,Normal,Active,Good,0,7.961999999999998,None,99.78348,High_Risk
+146,Male,44,Retired,6.3,10.0,94,9,Overweight,81,14583,None,1,122,62,Elevated,7.875,4.9,Middle_Age,Below_Optimal,Active,High,Normal,Active,Excellent,0,9.353000000000002,None,99.76116,High_Risk
+147,Male,52,Retired,6.4,8.8,63,5,Obese,81,7021,None,1,136,95,High_Stage1,7.040000000000001,4.83,Senior,Below_Optimal,Active,Moderate,Normal,Low_Active,Excellent,0,8.67699999999999,None,99.79638,High_Risk
+148,Male,49,Retired,5.9,7.1,113,5,Normal,54,8582,None,1,124,74,Elevated,5.23625,2.39,Senior,Insufficient,Active,Moderate,Low,Somewhat_Active,Good,0,7.11300000000001,None,99.84798,High_Risk
+149,Male,27,Retired,4.3,7.2,112,4,Obese,85,15455,None,1,123,63,Elevated,3.87,3.140000000000001,Young_Adult,Insufficient,Active,Moderate,Normal,Active,Good,0,6.8770000000000024,None,99.87104,High_Risk
+150,Female,31,Office Worker,4.1,7.7,30,4,Normal,95,15117,Sleep Apnea,0,115,65,Normal,3.94625,5.4,Middle_Age,Insufficient,Moderate,Moderate,Normal,Active,Good,1,7.361000000000005,Sleep Apnea,65.79292,Medium_Risk
+151,Male,51,Retired,11.9,7.5,83,1,Underweight,91,19359,None,1,125,76,Elevated,11.15625,2.83,Senior,Excessive,Active,Low,Normal,Active,Good,0,7.595,None,99.74463,High_Risk
+152,Male,49,Office Worker,7.4,6.6,47,7,Obese,98,3262,None,1,134,86,High_Stage1,6.105,6.25,Senior,Optimal,Moderate,High,Normal,Sedentary,Good,0,6.611000000000006,None,99.80111,High_Risk
+153,Male,39,Retired,7.1,6.2,55,9,Normal,91,9382,None,1,119,70,Normal,5.5025,6.07,Middle_Age,Optimal,Moderate,High,Normal,Somewhat_Active,Good,0,6.119999999999997,None,99.814865,High_Risk
+154,Male,41,Student,9.4,5.9,13,3,Overweight,88,5327,Insomnia,0,120,64,Elevated,6.932500000000001,5.67,Middle_Age,Excessive,Sedentary,Low,Normal,Low_Active,Fair,1,5.987999999999992,Insomnia,97.190956,High_Risk
+155,Male,59,Manual Labor,5.7,4.5,69,2,Underweight,65,12020,None,1,129,91,High_Stage1,3.2062500000000003,3.03,Senior,Insufficient,Active,Low,Normal,Active,Fair,0,4.578999999999999,None,99.76332,High_Risk
+156,Female,31,Office Worker,11.6,5.4,66,3,Overweight,82,19641,None,1,115,60,Normal,7.83,3.96,Middle_Age,Excessive,Active,Low,Normal,Active,Fair,0,5.521999999999994,None,99.77101,High_Risk
+157,Male,48,Retired,10.3,2.6,54,1,Underweight,98,18848,Sleep Apnea,0,124,82,High_Stage1,3.3475,3.84,Senior,Excessive,Moderate,Low,Normal,Active,Poor,1,2.8070000000000004,Insomnia,99.7596,High_Risk
+158,Female,36,Student,4.7,5.8,29,6,Obese,70,16062,None,1,128,80,High_Stage1,3.4075,5.93,Middle_Age,Insufficient,Sedentary,Moderate,Normal,Active,Fair,0,5.620000000000001,None,99.7183,High_Risk
+159,Male,36,Manual Labor,7.3,4.0,26,7,Obese,58,8774,None,1,128,81,High_Stage1,3.65,6.08,Middle_Age,Optimal,Sedentary,High,Low,Somewhat_Active,Poor,0,4.4849999999999985,None,99.69241,High_Risk
+160,Female,56,Office Worker,11.0,3.8,80,2,Underweight,55,17160,Insomnia,0,128,76,Elevated,5.225,2.5,Senior,Excessive,Active,Low,Low,Active,Poor,1,3.928000000000005,Insomnia,99.72601,High_Risk
+161,Male,52,Manual Labor,11.6,6.4,13,8,Underweight,100,3230,None,1,126,84,High_Stage1,9.28,7.21,Senior,Excessive,Sedentary,High,Normal,Sedentary,Good,0,6.5499999999999945,None,99.719185,High_Risk
+162,Male,52,Student,7.7,8.8,102,6,Underweight,94,11076,None,1,126,74,Elevated,8.47,3.82,Senior,Optimal,Active,Moderate,Normal,Active,Excellent,0,8.666999999999994,None,99.75931,High_Risk
+163,Female,59,Office Worker,8.9,7.8,23,4,Obese,84,5805,None,1,139,79,High_Stage1,8.6775,5.789999999999999,Senior,Optimal,Sedentary,Moderate,Normal,Low_Active,Good,0,7.827999999999995,None,99.74601,High_Risk
+164,Female,40,Manual Labor,5.3,2.9,12,5,Normal,88,16715,None,1,120,77,Elevated,1.92125,6.1000000000000005,Middle_Age,Insufficient,Sedentary,Moderate,Normal,Active,Poor,0,3.010000000000001,None,99.70691,High_Risk
+165,Female,50,Retired,11.9,4.0,97,8,Overweight,71,7750,None,1,125,75,Elevated,5.95,4.3100000000000005,Senior,Excessive,Active,High,Normal,Somewhat_Active,Poor,0,4.042999999999999,None,99.82227,High_Risk
+166,Male,35,Office Worker,5.9,7.9,110,3,Overweight,90,17627,None,1,117,71,Normal,5.826250000000001,2.8,Middle_Age,Insufficient,Active,Low,Normal,Active,Good,0,7.734999999999993,None,99.84726,High_Risk
+167,Female,44,Manual Labor,11.5,4.0,89,3,Obese,54,15232,None,1,132,80,High_Stage1,5.75,2.91,Middle_Age,Excessive,Active,Low,Low,Active,Poor,0,4.039000000000001,None,99.79852,High_Risk
+168,Male,38,Student,9.2,5.6,67,4,Overweight,91,5135,None,1,119,69,Normal,6.44,4.41,Middle_Age,Excessive,Active,Moderate,Normal,Low_Active,Fair,0,5.673000000000003,None,99.79544,High_Risk
+169,Male,41,Student,8.9,7.1,64,1,Underweight,72,8953,Insomnia,0,120,74,Elevated,7.89875,3.0200000000000005,Middle_Age,Optimal,Active,Low,Normal,Somewhat_Active,Good,1,7.089000000000009,Insomnia,99.439804,High_Risk
+170,Female,48,Office Worker,8.1,4.1,13,9,Normal,66,3546,None,1,124,72,Elevated,4.151249999999999,6.83,Senior,Optimal,Sedentary,High,Normal,Sedentary,Fair,0,4.1010000000000035,None,99.7802,High_Risk
+171,Female,27,Manual Labor,5.8,6.2,33,8,Overweight,61,17457,None,1,113,60,Normal,4.495,6.03,Young_Adult,Insufficient,Moderate,High,Normal,Active,Good,0,6.186999999999999,None,99.680695,High_Risk
+172,Male,71,Office Worker,5.4,3.3,43,8,Normal,72,19478,Insomnia,0,135,86,High_Stage1,2.2275,5.75,Elderly,Insufficient,Moderate,High,Normal,Active,Poor,1,3.3680000000000034,Insomnia,97.79718,High_Risk
+173,Male,24,Office Worker,5.8,4.8,39,10,Underweight,65,4411,None,1,112,60,Normal,3.48,6.33,Young_Adult,Insufficient,Moderate,High,Normal,Sedentary,Fair,0,5.184999999999998,None,99.71232,High_Risk
+174,Female,21,Manual Labor,5.5,6.6,91,6,Overweight,52,16113,None,1,110,67,Normal,4.5375,3.51,Young_Adult,Insufficient,Active,Moderate,Low,Active,Good,0,6.702000000000005,None,99.81341,High_Risk
+175,Female,57,Manual Labor,10.2,2.8,28,7,Obese,79,6145,Sleep Apnea,0,138,93,High_Stage1,3.5699999999999994,6.44,Senior,Excessive,Sedentary,High,Normal,Low_Active,Poor,1,3.037000000000004,Sleep Apnea,92.96094,High_Risk
+176,Female,51,Retired,6.8,6.9,40,6,Normal,71,4775,None,1,125,73,Elevated,5.865,5.22,Senior,Below_Optimal,Moderate,Moderate,Normal,Sedentary,Good,0,6.929999999999992,None,99.82369,High_Risk
+177,Male,49,Manual Labor,4.5,6.0,69,9,Underweight,58,15193,None,1,124,67,Elevated,3.375,4.989999999999999,Senior,Insufficient,Active,High,Low,Active,Fair,0,5.572,None,99.739586,High_Risk
+178,Male,49,Student,11.8,7.1,69,3,Normal,78,14851,Insomnia,0,124,73,Elevated,10.4725,3.59,Senior,Excessive,Active,Low,Normal,Active,Good,1,7.355000000000009,Insomnia,99.78891,High_Risk
+179,Male,39,Office Worker,11.1,6.4,28,3,Overweight,96,15070,None,1,119,71,Normal,8.88,5.380000000000001,Middle_Age,Excessive,Sedentary,Low,Normal,Active,Good,0,6.406999999999991,None,99.710014,High_Risk
+180,Male,26,Office Worker,11.4,8.7,58,3,Overweight,86,5970,None,1,113,64,Normal,12.3975,4.28,Young_Adult,Excessive,Moderate,Low,Normal,Low_Active,Excellent,0,8.798000000000009,None,99.80349,High_Risk
+181,Male,41,Student,12.0,6.3,72,10,Obese,72,16119,None,1,130,87,High_Stage1,9.45,5.880000000000001,Middle_Age,Excessive,Active,High,Normal,Active,Good,0,6.479999999999999,None,99.68362,High_Risk
+182,Male,29,Manual Labor,5.4,5.1,119,3,Underweight,62,6331,None,1,114,61,Normal,3.4425,1.77,Young_Adult,Insufficient,Active,Low,Normal,Low_Active,Fair,0,5.268999999999995,None,99.81745,High_Risk
+183,Female,54,Student,7.2,6.2,92,9,Underweight,81,12295,None,1,127,73,Elevated,5.58,4.760000000000001,Senior,Optimal,Active,High,Normal,Active,Good,0,6.178000000000001,None,99.69285,High_Risk
+184,Male,37,Student,10.1,7.1,31,4,Obese,95,3942,Sleep Apnea,0,128,81,High_Stage1,8.96375,5.77,Middle_Age,Excessive,Moderate,Moderate,Normal,Sedentary,Good,1,7.001000000000008,Sleep Apnea,97.831085,High_Risk
+185,Male,27,Retired,9.6,6.1,33,7,Obese,96,18575,None,1,123,76,Elevated,7.319999999999999,6.629999999999999,Young_Adult,Excessive,Moderate,High,Normal,Active,Good,0,6.0640000000000045,None,99.75397,High_Risk
+186,Male,35,Student,5.2,6.1,118,9,Underweight,97,15404,Insomnia,0,117,66,Normal,3.965,4.3,Middle_Age,Insufficient,Active,High,Normal,Active,Good,1,6.189000000000005,Insomnia,98.48708,High_Risk
+187,Female,46,Office Worker,10.5,4.6,85,7,Normal,72,2861,None,1,123,76,Elevated,6.0375,4.19,Senior,Excessive,Active,High,Normal,Sedentary,Fair,0,4.454000000000004,None,99.85942,High_Risk
+188,Male,31,Student,5.8,4.7,39,9,Normal,94,11275,Insomnia,0,115,66,Normal,3.4075,6.609999999999999,Middle_Age,Insufficient,Moderate,High,Normal,Active,Fair,1,4.654999999999997,Insomnia,99.39235,High_Risk
+189,Male,27,Office Worker,5.8,3.2,67,3,Obese,66,19033,Insomnia,0,123,63,Elevated,2.32,3.81,Young_Adult,Insufficient,Active,Low,Normal,Active,Poor,1,3.238999999999996,Insomnia,98.99313,High_Risk
+190,Female,43,Office Worker,8.3,9.5,111,4,Normal,89,6134,None,1,121,73,Elevated,9.85625,2.8500000000000005,Middle_Age,Optimal,Active,Moderate,Normal,Low_Active,Excellent,0,9.309999999999995,None,99.84798,High_Risk
+191,Male,43,Office Worker,8.7,3.5,40,8,Underweight,70,13803,None,1,121,73,Elevated,3.80625,5.8,Middle_Age,Optimal,Moderate,High,Normal,Active,Poor,0,3.6780000000000017,None,99.66581,High_Risk
+192,Male,32,Manual Labor,8.6,4.6,109,6,Overweight,51,17408,None,1,116,70,Normal,4.944999999999999,2.95,Middle_Age,Optimal,Active,Moderate,Low,Active,Fair,0,4.579000000000005,None,99.82899,High_Risk
+193,Male,32,Retired,4.7,4.6,73,5,Overweight,86,19420,None,1,116,63,Normal,2.7025,4.430000000000001,Middle_Age,Insufficient,Active,Moderate,Normal,Active,Fair,0,4.5160000000000045,None,99.803215,High_Risk
+194,Male,43,Office Worker,11.0,7.8,28,4,Normal,55,18351,Insomnia,0,121,72,Elevated,10.725,4.660000000000001,Middle_Age,Excessive,Sedentary,Moderate,Low,Active,Good,1,7.875000000000003,Insomnia,99.0556,High_Risk
+195,Male,18,Office Worker,6.1,5.4,57,8,Obese,93,6131,Insomnia,0,119,73,Normal,4.1175,6.15,Young_Adult,Below_Optimal,Moderate,High,Normal,Low_Active,Fair,1,5.473999999999992,Insomnia,99.70974,High_Risk
+196,Female,18,Manual Labor,5.0,8.5,54,1,Obese,67,14057,None,1,119,63,Normal,5.3125,3.62,Young_Adult,Insufficient,Moderate,Low,Normal,Active,Excellent,0,8.558000000000002,None,99.77271,High_Risk
+197,Female,29,Office Worker,11.1,4.7,109,9,Obese,79,13349,None,1,124,67,Elevated,6.52125,4.609999999999999,Young_Adult,Excessive,Active,High,Normal,Active,Fair,0,4.799999999999998,None,99.80647,High_Risk
+198,Female,36,Student,11.6,6.6,103,1,Obese,71,13486,None,1,128,82,High_Stage1,9.57,2.2299999999999995,Middle_Age,Excessive,Active,Low,Normal,Active,Good,0,6.787000000000007,None,99.79291,High_Risk
+199,Male,44,Student,10.9,4.3,64,8,Obese,82,7457,None,1,132,92,High_Stage1,5.85875,5.719999999999999,Middle_Age,Excessive,Active,High,Normal,Low_Active,Fair,0,4.317000000000004,None,99.7142,High_Risk
+200,Male,62,Retired,10.5,10.0,64,4,Normal,79,8079,None,1,131,76,High_Stage1,13.125,4.06,Elderly,Excessive,Active,Moderate,Normal,Somewhat_Active,Excellent,0,9.715,None,99.799934,High_Risk
+201,Male,52,Office Worker,9.2,3.6,106,9,Overweight,66,14453,Insomnia,0,126,80,High_Stage1,4.14,4.24,Senior,Excessive,Active,High,Normal,Active,Poor,1,3.588000000000004,Insomnia,98.803185,High_Risk
+202,Female,37,Manual Labor,8.4,6.6,27,5,Overweight,92,14158,Sleep Apnea,0,118,65,Normal,6.93,5.93,Middle_Age,Optimal,Sedentary,Moderate,Normal,Active,Good,1,6.601000000000006,Sleep Apnea,97.587654,High_Risk
+203,Male,39,Student,4.7,7.3,72,3,Normal,81,17735,None,1,119,79,Normal,4.28875,3.56,Middle_Age,Insufficient,Active,Low,Normal,Active,Good,0,7.0279999999999925,None,99.80252,High_Risk
+204,Male,24,Manual Labor,7.3,6.8,101,9,Obese,91,17830,None,1,122,68,Elevated,6.205,5.09,Young_Adult,Optimal,Active,High,Normal,Active,Good,0,6.647999999999999,None,99.77105,High_Risk
+205,Female,39,Manual Labor,7.0,5.6,56,9,Normal,100,17125,None,1,119,76,Normal,4.9,6.22,Middle_Age,Optimal,Moderate,High,Normal,Active,Fair,0,5.655000000000005,None,99.782555,High_Risk
+206,Male,35,Student,6.1,5.7,84,4,Overweight,63,13905,None,1,117,64,Normal,4.34625,3.3399999999999994,Middle_Age,Below_Optimal,Active,Moderate,Normal,Active,Fair,0,5.781999999999997,None,99.8286,High_Risk
+207,Female,44,Manual Labor,9.8,6.1,66,4,Underweight,59,14298,None,1,122,72,Elevated,7.4725,3.6,Middle_Age,Excessive,Active,Moderate,Low,Active,Good,0,6.132000000000005,None,99.70091,High_Risk
+208,Female,27,Student,8.0,5.7,54,8,Normal,96,4011,None,1,113,68,Normal,5.7,5.9,Young_Adult,Optimal,Moderate,High,Normal,Sedentary,Fair,0,5.680999999999999,None,99.82169,High_Risk
+209,Female,47,Manual Labor,4.6,7.9,42,2,Obese,100,5373,Insomnia,0,133,86,High_Stage1,4.5425,4.94,Senior,Insufficient,Moderate,Low,Normal,Low_Active,Good,1,7.9229999999999885,Insomnia,98.95555,High_Risk
+210,Male,62,Student,5.8,10.0,26,9,Overweight,85,12335,None,1,131,78,High_Stage1,7.25,7.0200000000000005,Elderly,Insufficient,Sedentary,High,Normal,Active,Excellent,0,8.864999999999998,None,99.67362,High_Risk
+211,Male,38,Office Worker,9.5,4.9,79,6,Overweight,83,12692,None,1,119,69,Normal,5.8187500000000005,4.49,Middle_Age,Excessive,Active,Moderate,Normal,Active,Fair,0,4.942000000000001,None,99.7912,High_Risk
+212,Male,46,Retired,4.6,3.3,13,9,Overweight,58,16527,Sleep Apnea,0,123,71,Elevated,1.8975,6.87,Senior,Insufficient,Sedentary,High,Low,Active,Poor,1,3.374000000000004,Sleep Apnea,97.39358,High_Risk
+213,Male,50,Student,10.8,5.8,29,8,Overweight,91,14773,Insomnia,0,125,66,Elevated,7.83,6.75,Senior,Excessive,Sedentary,High,Normal,Active,Fair,1,5.7760000000000025,Insomnia,99.27343,High_Risk
+214,Male,33,Student,8.0,10.0,56,7,Obese,77,3289,None,1,126,84,High_Stage1,10.0,5.5600000000000005,Middle_Age,Optimal,Moderate,High,Normal,Sedentary,Excellent,0,9.79,None,99.76193,High_Risk
+215,Male,43,Retired,7.8,4.4,100,1,Underweight,60,3447,None,1,121,63,Elevated,4.29,1.7000000000000002,Middle_Age,Optimal,Active,Low,Normal,Sedentary,Fair,0,4.493999999999996,None,99.8102,High_Risk
+216,Male,40,Student,8.7,9.3,24,3,Overweight,63,16139,None,1,120,70,Elevated,10.11375,4.84,Middle_Age,Optimal,Sedentary,Low,Normal,Active,Excellent,0,9.114999999999988,None,99.65219,High_Risk
+217,Female,41,Student,10.6,9.4,79,2,Normal,88,15757,Insomnia,0,120,75,Elevated,12.455,3.1900000000000004,Middle_Age,Excessive,Active,Low,Normal,Active,Excellent,1,9.41699999999999,Insomnia,99.677475,High_Risk
+218,Male,28,Manual Labor,6.8,4.9,56,5,Underweight,96,7462,Insomnia,0,114,71,Normal,4.165,4.94,Young_Adult,Below_Optimal,Moderate,Moderate,Normal,Low_Active,Fair,1,4.938999999999994,Insomnia,98.928055,High_Risk
+219,Female,40,Retired,9.4,7.1,87,5,Overweight,68,9657,None,1,120,71,Elevated,8.3425,3.65,Middle_Age,Excessive,Active,Moderate,Normal,Somewhat_Active,Good,0,7.099000000000009,None,99.75049,High_Risk
+220,Male,47,Office Worker,8.5,9.3,84,5,Underweight,64,6920,None,1,123,69,Elevated,9.88125,3.4600000000000004,Senior,Optimal,Active,Moderate,Normal,Low_Active,Excellent,0,9.235999999999986,None,99.813194,High_Risk
+221,Male,61,Student,6.1,5.2,112,4,Normal,77,12345,Insomnia,0,130,81,High_Stage1,3.965,2.5800000000000005,Elderly,Below_Optimal,Active,Moderate,Normal,Active,Fair,1,5.2839999999999945,Insomnia,99.636856,High_Risk
+222,Male,54,Retired,11.0,5.6,18,5,Overweight,73,10417,None,1,127,70,Elevated,7.699999999999999,5.82,Senior,Excessive,Sedentary,Moderate,Normal,Active,Fair,0,5.625000000000005,None,99.62363,High_Risk
+223,Female,72,Manual Labor,10.4,4.8,99,3,Normal,57,19160,None,1,136,94,High_Stage1,6.24,2.27,Elderly,Excessive,Active,Low,Low,Active,Fair,0,4.678000000000006,None,99.80183,High_Risk
+224,Female,28,Office Worker,9.3,4.0,25,1,Obese,92,7208,None,1,124,75,Elevated,4.65,4.99,Young_Adult,Excessive,Sedentary,Low,Normal,Low_Active,Poor,0,3.8630000000000013,None,99.76105,High_Risk
+225,Female,53,Retired,10.8,4.7,78,5,Overweight,58,2687,None,1,126,83,High_Stage1,6.345000000000001,3.72,Senior,Excessive,Active,Moderate,Low,Sedentary,Fair,0,4.657999999999996,None,99.86285,High_Risk
+226,Female,42,Office Worker,10.9,3.6,70,9,Overweight,96,18913,None,1,121,70,Elevated,4.905,5.92,Middle_Age,Excessive,Active,High,Normal,Active,Poor,0,3.8030000000000017,None,99.79906,High_Risk
+227,Male,72,Office Worker,9.7,6.1,19,9,Overweight,82,15223,Insomnia,0,136,82,High_Stage1,7.396249999999999,7.169999999999999,Elderly,Excessive,Sedentary,High,Normal,Active,Good,1,6.106000000000006,Insomnia,97.979294,High_Risk
+228,Female,27,Office Worker,10.7,4.5,59,4,Overweight,82,10080,Sleep Apnea,0,113,66,Normal,6.01875,4.47,Young_Adult,Excessive,Moderate,Moderate,Normal,Active,Fair,1,4.309000000000003,Sleep Apnea,97.75145,High_Risk
+229,Male,27,Student,9.6,6.5,12,3,Obese,68,11486,None,1,123,87,High_Stage1,7.8,5.5,Young_Adult,Excessive,Sedentary,Low,Normal,Active,Good,0,6.436000000000003,None,99.69969,High_Risk
+230,Male,31,Student,9.4,2.9,86,1,Overweight,52,8094,None,1,115,65,Normal,3.4075,2.16,Middle_Age,Excessive,Active,Low,Low,Somewhat_Active,Poor,0,3.024000000000001,None,99.80831,High_Risk
+231,Female,18,Manual Labor,8.9,6.7,116,2,Underweight,59,9692,None,1,109,60,Normal,7.45375,1.5000000000000002,Young_Adult,Optimal,Active,Low,Low,Somewhat_Active,Good,0,6.746000000000001,None,99.7883,High_Risk
+232,Female,32,Manual Labor,10.0,7.7,103,8,Overweight,89,13088,None,1,116,64,Normal,9.625,4.49,Middle_Age,Excessive,Active,High,Normal,Active,Good,0,7.629000000000003,None,99.83075,High_Risk
+233,Female,28,Retired,5.3,2.0,118,1,Obese,96,5103,None,1,124,68,Elevated,1.325,2.28,Young_Adult,Insufficient,Active,Low,Normal,Low_Active,Poor,0,2.7349999999999977,None,99.828735,High_Risk
+234,Female,42,Manual Labor,11.0,6.7,79,8,Overweight,91,4440,Sleep Apnea,0,121,77,Elevated,9.2125,5.25,Middle_Age,Excessive,Active,High,Normal,Sedentary,Good,1,6.630999999999996,Insomnia,94.89741,High_Risk
+235,Female,45,Office Worker,11.0,8.5,90,7,Underweight,50,9124,None,1,122,69,Elevated,11.6875,3.6,Senior,Excessive,Active,High,Low,Somewhat_Active,Excellent,0,8.223,None,99.827866,High_Risk
+236,Female,68,Office Worker,4.2,3.6,118,8,Obese,78,19228,None,1,144,89,High_Stage1,1.89,4.02,Elderly,Insufficient,Active,High,Normal,Active,Poor,0,3.737000000000003,None,99.83222,High_Risk
+237,Female,54,Student,10.6,9.3,60,6,Obese,99,16031,None,1,137,96,High_Stage1,12.3225,5.58,Senior,Excessive,Active,Moderate,Normal,Active,Excellent,0,9.338999999999992,None,99.81115,High_Risk
+238,Female,31,Office Worker,5.0,6.8,28,9,Underweight,83,16536,Insomnia,0,115,64,Normal,4.25,6.72,Middle_Age,Insufficient,Sedentary,High,Normal,Active,Good,1,6.666,Insomnia,97.41546,High_Risk
+239,Male,26,Retired,6.7,4.6,51,3,Underweight,100,2446,Insomnia,0,113,66,Normal,3.8525,4.57,Young_Adult,Below_Optimal,Moderate,Low,Normal,Sedentary,Fair,1,4.718000000000001,Insomnia,99.65708,High_Risk
+240,Female,47,Office Worker,9.9,5.9,44,10,Underweight,62,5915,Sleep Apnea,0,123,74,Elevated,7.30125,6.12,Senior,Excessive,Moderate,High,Normal,Low_Active,Fair,1,5.986999999999992,Sleep Apnea,98.56602,High_Risk
+241,Female,20,Office Worker,5.3,7.1,55,4,Underweight,50,17787,Insomnia,0,110,60,Normal,4.703749999999999,3.75,Young_Adult,Insufficient,Moderate,Moderate,Low,Active,Good,1,7.133000000000009,Insomnia,98.39479,High_Risk
+242,Male,67,Retired,10.5,6.2,35,6,Underweight,83,19618,None,1,133,86,High_Stage1,8.137500000000001,5.61,Elderly,Excessive,Moderate,Moderate,Normal,Active,Good,0,6.277000000000003,None,99.69978,High_Risk
+243,Female,57,Manual Labor,10.7,7.1,78,8,Obese,78,8587,None,1,138,92,High_Stage1,9.496249999999998,5.220000000000001,Senior,Excessive,Active,High,Normal,Somewhat_Active,Good,0,7.077000000000007,None,99.84315,High_Risk
+244,Male,32,Manual Labor,8.1,4.2,102,5,Obese,97,2226,None,1,126,76,Elevated,4.2525,3.98,Middle_Age,Optimal,Active,Moderate,Normal,Sedentary,Fair,0,4.271999999999996,None,99.84483,High_Risk
+245,Male,18,Retired,4.1,6.3,73,3,Overweight,96,13151,None,1,109,65,Normal,3.22875,4.03,Young_Adult,Insufficient,Active,Low,Normal,Active,Good,0,6.030999999999997,None,99.868614,High_Risk
+246,Female,60,Student,6.3,3.2,46,6,Overweight,62,7558,None,1,130,86,High_Stage1,2.52,5.0600000000000005,Elderly,Below_Optimal,Moderate,Moderate,Normal,Somewhat_Active,Poor,0,3.265999999999997,None,99.776306,High_Risk
+247,Male,38,Office Worker,8.9,5.8,93,4,Normal,97,13971,None,1,119,66,Normal,6.4525,3.55,Middle_Age,Optimal,Active,Moderate,Normal,Active,Fair,0,5.828,None,99.82261,High_Risk
+248,Male,58,Retired,11.8,4.2,58,9,Overweight,98,2186,None,1,129,85,High_Stage1,6.195,6.32,Senior,Excessive,Moderate,High,Normal,Sedentary,Fair,0,4.244999999999996,None,99.74249,High_Risk
+249,Male,18,Office Worker,9.1,4.5,30,3,Overweight,78,16680,None,1,109,60,Normal,5.11875,4.960000000000001,Young_Adult,Excessive,Moderate,Low,Normal,Active,Fair,0,4.557999999999999,None,99.66619,High_Risk
+250,Male,31,Student,6.1,8.5,83,4,Underweight,88,16559,None,1,115,63,Normal,6.481249999999999,3.67,Middle_Age,Below_Optimal,Active,Moderate,Normal,Active,Excellent,0,8.381999999999998,None,99.84691,High_Risk
+251,Female,40,Office Worker,9.1,8.2,73,7,Underweight,73,13069,Insomnia,0,120,79,Elevated,9.3275,4.57,Middle_Age,Excessive,Active,High,Normal,Active,Excellent,1,8.137000000000006,Sleep Apnea,62.35063,Medium_Risk
+252,Male,40,Retired,8.3,7.2,14,7,Overweight,75,4535,None,1,120,74,Elevated,7.470000000000001,6.58,Middle_Age,Optimal,Sedentary,High,Normal,Sedentary,Good,0,7.0940000000000065,None,99.75313,High_Risk
+253,Female,33,Office Worker,10.2,3.8,109,4,Normal,66,3932,None,1,116,61,Normal,4.845,2.45,Middle_Age,Excessive,Active,Moderate,Normal,Sedentary,Poor,0,3.898000000000003,None,99.85786,High_Risk
+254,Male,49,Manual Labor,4.9,5.4,79,6,Underweight,56,4032,None,1,124,79,Elevated,3.307500000000001,3.75,Senior,Insufficient,Active,Moderate,Low,Sedentary,Fair,0,5.330999999999993,None,99.822075,High_Risk
+255,Male,23,Student,10.1,8.4,99,3,Overweight,62,3252,None,1,111,64,Normal,10.605,2.57,Young_Adult,Excessive,Active,Low,Normal,Sedentary,Excellent,0,8.295999999999996,None,99.820816,High_Risk
+256,Male,37,Student,8.3,6.3,13,6,Overweight,54,7509,None,1,118,66,Normal,6.536250000000001,5.890000000000001,Middle_Age,Optimal,Sedentary,Moderate,Low,Somewhat_Active,Good,0,6.1030000000000015,None,99.66852,High_Risk
+257,Male,41,Student,11.7,10.0,112,2,Obese,75,7074,None,1,130,77,High_Stage1,14.625,2.3400000000000003,Middle_Age,Excessive,Active,Low,Normal,Low_Active,Excellent,0,9.582000000000004,None,99.85158,High_Risk
+258,Female,47,Retired,6.7,6.8,48,8,Normal,98,15900,None,1,123,75,Elevated,5.695,6.12,Senior,Below_Optimal,Moderate,High,Normal,Active,Good,0,6.830999999999997,None,99.83316,High_Risk
+259,Female,50,Student,9.1,6.4,44,2,Obese,52,16523,None,1,135,88,High_Stage1,7.28,3.92,Senior,Excessive,Moderate,Low,Low,Active,Good,0,6.514999999999992,None,99.75746,High_Risk
+260,Male,23,Manual Labor,11.5,5.4,10,7,Normal,56,3881,None,1,111,60,Normal,7.7625,6.12,Young_Adult,Excessive,Sedentary,High,Low,Sedentary,Fair,0,5.582999999999995,None,99.779366,High_Risk
+261,Male,18,Retired,4.8,6.3,33,9,Underweight,98,2269,None,1,109,60,Normal,3.78,6.869999999999999,Young_Adult,Insufficient,Moderate,High,Normal,Sedentary,Good,0,6.299999999999998,None,99.720695,High_Risk
+262,Female,59,Manual Labor,11.5,5.7,66,1,Normal,88,3630,None,1,129,75,Elevated,8.19375,3.28,Senior,Excessive,Active,Low,Normal,Sedentary,Fair,0,5.968999999999998,None,99.80492,High_Risk
+263,Male,44,Office Worker,9.5,7.4,109,8,Overweight,50,19958,None,1,122,72,Elevated,8.7875,3.53,Middle_Age,Excessive,Active,High,Low,Active,Good,0,7.180000000000006,None,99.73998,High_Risk
+264,Male,28,Office Worker,4.5,7.9,79,7,Overweight,98,15383,None,1,114,69,Normal,4.4437500000000005,5.090000000000001,Young_Adult,Insufficient,Active,High,Normal,Active,Good,0,7.75499999999999,None,99.830315,High_Risk
+265,Male,63,Office Worker,6.4,4.4,50,6,Normal,66,18152,None,1,131,86,High_Stage1,3.5200000000000005,4.82,Elderly,Below_Optimal,Moderate,Moderate,Normal,Active,Fair,0,4.457999999999995,None,99.750084,High_Risk
+266,Female,41,Office Worker,9.7,3.3,63,6,Normal,92,13084,None,1,120,68,Elevated,4.00125,4.95,Middle_Age,Excessive,Active,Moderate,Normal,Active,Poor,0,3.388000000000004,None,99.81887,High_Risk
+267,Female,57,Manual Labor,4.5,2.3,55,6,Normal,74,3695,None,1,128,76,Elevated,1.29375,4.83,Senior,Insufficient,Moderate,Moderate,Normal,Sedentary,Poor,0,2.973999999999998,None,99.816284,High_Risk
+268,Female,41,Retired,8.7,7.0,69,9,Obese,52,16821,None,1,130,73,High_Stage1,7.612499999999999,5.27,Middle_Age,Optimal,Active,High,Low,Active,Good,0,6.900999999999999,None,99.62022,High_Risk
+269,Male,70,Retired,6.8,3.8,117,2,Normal,64,5262,None,1,135,82,High_Stage1,3.23,1.5700000000000005,Elderly,Below_Optimal,Active,Low,Normal,Low_Active,Poor,0,3.619999999999997,None,99.81126,High_Risk
+270,Male,66,Student,9.0,1.7,69,1,Underweight,78,3445,Insomnia,0,133,91,High_Stage1,1.9125,2.99,Elderly,Optimal,Active,Low,Normal,Sedentary,Poor,1,1.9809999999999983,Insomnia,99.50655,High_Risk
+271,Female,36,Manual Labor,4.4,6.8,66,6,Obese,92,18436,Insomnia,0,128,73,Elevated,3.74,5.26,Middle_Age,Insufficient,Active,Moderate,Normal,Active,Good,1,6.802999999999998,Insomnia,99.34443,High_Risk
+272,Female,54,Office Worker,11.0,10.0,40,10,Obese,81,11949,Insomnia,0,137,92,High_Stage1,13.75,7.02,Senior,Excessive,Moderate,High,Normal,Active,Excellent,1,9.295000000000005,Insomnia,97.09646,High_Risk
+273,Female,49,Manual Labor,11.8,6.0,93,8,Normal,75,8901,None,1,124,76,Elevated,8.850000000000001,4.31,Senior,Excessive,Active,High,Normal,Somewhat_Active,Fair,0,6.1160000000000005,None,99.823784,High_Risk
+274,Female,60,Student,11.8,7.7,33,3,Underweight,65,2719,None,1,130,79,High_Stage1,11.357500000000002,4.41,Elderly,Excessive,Moderate,Low,Normal,Sedentary,Good,0,7.799000000000004,None,99.80415,High_Risk
+275,Male,25,Student,10.0,6.2,98,10,Obese,74,10597,None,1,122,63,Elevated,7.75,5.140000000000001,Young_Adult,Excessive,Active,High,Normal,Active,Good,0,6.209999999999999,None,99.762985,High_Risk
+276,Female,50,Manual Labor,5.0,5.8,45,1,Overweight,77,8855,None,1,125,60,Elevated,3.625,3.89,Senior,Insufficient,Moderate,Low,Normal,Somewhat_Active,Fair,0,5.942,None,99.786415,High_Risk
+277,Male,55,Manual Labor,10.1,7.8,94,9,Obese,58,10263,None,1,137,84,High_Stage1,9.8475,4.639999999999999,Senior,Excessive,Active,High,Low,Active,Good,0,7.945999999999991,None,99.806625,High_Risk
+278,Female,18,Manual Labor,4.2,5.4,39,1,Normal,50,16520,None,1,109,60,Normal,2.8350000000000004,3.33,Young_Adult,Insufficient,Moderate,Low,Low,Active,Fair,0,5.264999999999994,None,99.773476,High_Risk
+279,Male,22,Retired,4.2,6.5,33,3,Underweight,78,13874,Sleep Apnea,0,111,60,Normal,3.4125,4.67,Young_Adult,Insufficient,Moderate,Low,Normal,Active,Good,1,6.127999999999998,Sleep Apnea,97.533295,High_Risk
+280,Female,18,Office Worker,6.6,6.6,117,8,Normal,71,16079,None,1,109,60,Normal,5.444999999999999,3.51,Young_Adult,Below_Optimal,Active,High,Normal,Active,Good,0,6.7400000000000055,None,99.803474,High_Risk
+281,Female,35,Manual Labor,7.9,4.7,115,3,Overweight,65,19082,Insomnia,0,117,69,Normal,4.64125,2.15,Middle_Age,Optimal,Active,Low,Normal,Active,Fair,1,4.687000000000001,Insomnia,98.570465,High_Risk
+282,Female,50,Manual Labor,10.2,8.0,39,4,Overweight,90,9243,None,1,125,67,Elevated,10.2,5.23,Senior,Excessive,Moderate,Moderate,Normal,Somewhat_Active,Good,0,8.136999999999997,None,99.77866,High_Risk
+283,Female,62,Manual Labor,9.5,5.7,95,8,Overweight,100,11018,None,1,131,80,High_Stage1,6.76875,4.95,Elderly,Excessive,Active,High,Normal,Active,Fair,0,5.692999999999997,None,99.80489,High_Risk
+284,Male,41,Student,7.6,4.5,101,1,Normal,93,18732,None,1,120,68,Elevated,4.275,2.3300000000000005,Middle_Age,Optimal,Active,Low,Normal,Active,Fair,0,4.702999999999999,None,99.79736,High_Risk
+285,Female,64,Student,6.2,7.1,16,6,Obese,100,14100,None,1,142,89,High_Stage1,5.5025,6.92,Elderly,Below_Optimal,Sedentary,Moderate,Normal,Active,Good,0,7.2200000000000095,None,99.808624,High_Risk
+286,Male,19,Retired,12.0,4.2,44,1,Normal,90,18691,Insomnia,0,109,60,Normal,6.300000000000001,3.98,Young_Adult,Excessive,Moderate,Low,Normal,Active,Fair,1,4.333999999999996,Insomnia,99.74844,High_Risk
+287,Male,18,Office Worker,7.4,6.1,64,1,Underweight,56,6820,None,1,109,60,Normal,5.6425,2.7,Young_Adult,Optimal,Active,Low,Low,Low_Active,Good,0,6.050000000000004,None,99.80925,High_Risk
+288,Male,39,Retired,7.6,6.0,101,8,Obese,63,13001,None,1,129,83,High_Stage1,5.699999999999999,4.23,Middle_Age,Optimal,Active,High,Normal,Active,Fair,0,5.965,None,99.85683,High_Risk
+289,Male,45,Office Worker,5.3,8.2,23,4,Overweight,78,15907,Insomnia,0,122,75,Elevated,5.432499999999999,5.470000000000001,Senior,Insufficient,Sedentary,Moderate,Normal,Active,Excellent,1,8.28900000000001,Insomnia,98.08358,High_Risk
+290,Female,39,Student,10.4,6.9,19,1,Normal,68,13669,None,1,119,75,Normal,8.97,4.29,Middle_Age,Excessive,Sedentary,Low,Normal,Active,Good,0,6.950999999999997,None,99.68181,High_Risk
+291,Male,18,Student,9.5,5.9,89,10,Overweight,68,17916,Sleep Apnea,0,109,60,Normal,7.0062500000000005,5.090000000000001,Young_Adult,Excessive,Active,High,Normal,Active,Fair,1,5.927999999999993,Sleep Apnea,98.183205,High_Risk
+292,Male,38,Student,5.8,7.6,25,7,Overweight,51,12878,None,1,119,66,Normal,5.51,5.77,Middle_Age,Insufficient,Sedentary,High,Low,Active,Good,0,7.50200000000001,None,99.706635,High_Risk
+293,Male,20,Retired,4.7,8.8,63,5,Underweight,90,4985,None,1,110,60,Normal,5.170000000000001,4.61,Young_Adult,Insufficient,Active,Moderate,Normal,Sedentary,Excellent,0,8.874999999999991,None,99.774796,High_Risk
+294,Female,50,Manual Labor,9.4,7.1,104,5,Obese,94,10112,None,1,135,77,High_Stage1,8.3425,3.86,Senior,Excessive,Active,Moderate,Normal,Active,Good,0,7.07600000000001,None,99.848625,High_Risk
+295,Female,45,Manual Labor,9.2,6.0,115,1,Underweight,64,10467,None,1,122,73,Elevated,6.9,1.3300000000000003,Senior,Excessive,Active,Low,Normal,Active,Fair,0,6.098999999999995,None,99.816475,High_Risk
+296,Female,25,Student,6.2,3.4,98,10,Underweight,52,2336,None,1,112,60,Normal,2.635,4.3,Young_Adult,Below_Optimal,Active,High,Low,Sedentary,Poor,0,3.5049999999999977,None,99.82742,High_Risk
+297,Female,32,Manual Labor,11.6,3.9,86,6,Underweight,60,12165,None,1,116,72,Normal,5.654999999999999,3.62,Middle_Age,Excessive,Active,Moderate,Normal,Active,Poor,0,3.9319999999999955,None,99.85794,High_Risk
+298,Male,24,Manual Labor,5.2,5.4,79,9,Overweight,95,14768,Insomnia,0,112,64,Normal,3.51,5.63,Young_Adult,Insufficient,Active,High,Normal,Active,Fair,1,5.567999999999994,Insomnia,99.671486,High_Risk
+299,Male,39,Retired,7.5,4.8,53,9,Underweight,79,5968,Insomnia,0,119,66,Normal,4.5,5.89,Middle_Age,Optimal,Moderate,High,Normal,Low_Active,Fair,1,4.9360000000000035,Sleep Apnea,98.785675,High_Risk
+300,Female,54,Office Worker,11.5,5.6,82,8,Underweight,89,2910,None,1,127,73,Elevated,8.049999999999999,4.920000000000001,Senior,Excessive,Active,High,Normal,Sedentary,Fair,0,5.770000000000006,None,99.81635,High_Risk
+301,Male,25,Student,7.4,6.1,54,5,Obese,67,17632,None,1,122,74,Elevated,5.6425,4.82,Young_Adult,Optimal,Moderate,Moderate,Normal,Active,Good,0,6.124000000000007,None,99.77868,High_Risk
+302,Male,47,Student,9.1,7.1,109,1,Obese,100,18279,None,1,133,84,High_Stage1,8.07625,2.63,Senior,Excessive,Active,Low,Normal,Active,Good,0,7.04800000000001,None,99.76484,High_Risk
+303,Male,32,Retired,7.2,5.9,65,9,Underweight,97,5129,None,1,116,74,Normal,5.3100000000000005,5.89,Middle_Age,Optimal,Active,High,Normal,Low_Active,Fair,0,5.984999999999992,None,99.82094,High_Risk
+304,Female,28,Retired,6.2,7.0,116,1,Obese,51,7447,None,1,124,76,Elevated,5.425,1.4400000000000002,Young_Adult,Below_Optimal,Active,Low,Low,Low_Active,Good,0,7.055,None,99.866356,High_Risk
+305,Female,38,Manual Labor,11.9,6.1,93,8,Obese,81,8129,None,1,129,75,Elevated,9.07375,4.83,Middle_Age,Excessive,Active,High,Normal,Somewhat_Active,Good,0,6.228000000000006,None,99.831924,High_Risk
+306,Male,24,Student,7.3,2.0,91,5,Underweight,57,7850,None,1,112,60,Normal,1.825,3.1100000000000003,Young_Adult,Optimal,Active,Moderate,Low,Somewhat_Active,Poor,0,2.0499999999999994,None,99.85251,High_Risk
+307,Female,31,Office Worker,11.2,4.1,116,3,Overweight,71,9446,None,1,115,63,Normal,5.739999999999999,2.24,Middle_Age,Excessive,Active,Low,Normal,Somewhat_Active,Fair,0,4.100000000000005,None,99.8068,High_Risk
+308,Female,22,Retired,5.8,5.7,66,7,Underweight,55,13949,Sleep Apnea,0,111,61,Normal,4.1325,4.420000000000001,Young_Adult,Insufficient,Active,High,Low,Active,Fair,1,5.673999999999999,Sleep Apnea,98.15825,High_Risk
+309,Female,69,Office Worker,5.7,3.6,30,7,Obese,61,10519,None,1,144,94,High_Stage2,2.565,6.02,Elderly,Insufficient,Moderate,High,Normal,Active,Poor,0,3.7520000000000033,None,99.79081,High_Risk
+310,Female,40,Office Worker,4.2,7.2,77,9,Overweight,96,2314,None,1,120,74,Elevated,3.78,5.71,Middle_Age,Insufficient,Active,High,Normal,Sedentary,Good,0,7.0430000000000055,None,99.83064,High_Risk
+311,Female,29,Student,9.2,9.1,59,7,Normal,89,13737,None,1,114,61,Normal,10.464999999999998,5.3100000000000005,Young_Adult,Excessive,Moderate,High,Normal,Active,Excellent,0,8.98000000000001,None,99.82052,High_Risk
+312,Male,43,Student,6.9,8.4,42,3,Overweight,85,3134,None,1,121,69,Elevated,7.245000000000001,4.74,Middle_Age,Below_Optimal,Moderate,Low,Normal,Sedentary,Excellent,0,8.394999999999992,None,99.76231,High_Risk
+313,Female,38,Retired,10.9,5.6,100,1,Obese,64,12938,None,1,129,77,Elevated,7.63,2.1800000000000006,Middle_Age,Excessive,Active,Low,Normal,Active,Fair,0,5.585000000000004,None,99.818245,High_Risk
+314,Male,36,Student,7.8,9.0,16,8,Overweight,77,17588,None,1,118,71,Normal,8.775,6.86,Middle_Age,Optimal,Sedentary,High,Normal,Active,Excellent,0,8.855,None,99.716965,High_Risk
+315,Male,49,Student,11.7,6.3,79,3,Underweight,98,10347,Insomnia,0,124,85,High_Stage1,9.21375,3.69,Senior,Excessive,Active,Low,Normal,Active,Good,1,6.3469999999999995,Insomnia,99.26837,High_Risk
+316,Female,51,Student,5.5,5.3,24,8,Normal,94,7592,None,1,125,70,Elevated,3.64375,6.76,Senior,Insufficient,Sedentary,High,Normal,Somewhat_Active,Fair,0,5.540000000000004,None,99.69368,High_Risk
+317,Male,32,Office Worker,10.9,4.8,91,8,Normal,67,19270,None,1,116,69,Normal,6.54,4.21,Middle_Age,Excessive,Active,High,Normal,Active,Fair,0,4.837000000000004,None,99.804115,High_Risk
+318,Male,31,Retired,10.2,5.4,41,5,Normal,51,12997,Sleep Apnea,0,115,70,Normal,6.885,4.49,Middle_Age,Excessive,Moderate,Moderate,Low,Active,Fair,1,5.45799999999999,Sleep Apnea,99.39215,High_Risk
+319,Male,35,Manual Labor,10.2,5.2,84,1,Obese,62,2721,Insomnia,0,127,74,Elevated,6.63,2.62,Middle_Age,Excessive,Active,Low,Normal,Sedentary,Fair,1,5.144999999999994,Insomnia,94.87729,High_Risk
+320,Female,18,Office Worker,10.8,6.3,29,10,Obese,94,11104,None,1,119,71,Normal,8.505,7.609999999999999,Young_Adult,Excessive,Sedentary,High,Normal,Active,Good,0,6.368999999999997,None,99.78718,High_Risk
+321,Female,18,Student,10.1,6.3,97,7,Normal,64,2870,None,1,109,60,Normal,7.953749999999999,3.670000000000001,Young_Adult,Excessive,Active,High,Normal,Sedentary,Good,0,6.314999999999997,None,99.7996,High_Risk
+322,Male,60,Office Worker,9.0,6.0,24,10,Overweight,69,8751,None,1,130,77,High_Stage1,6.75,7.06,Elderly,Optimal,Sedentary,High,Normal,Somewhat_Active,Fair,0,6.164,None,99.72781,High_Risk
+323,Female,64,Student,5.0,6.9,57,5,Normal,78,18881,None,1,132,79,High_Stage1,4.3125,4.55,Elderly,Insufficient,Moderate,Moderate,Normal,Active,Good,0,6.746999999999989,None,99.75887,High_Risk
+324,Female,36,Student,4.3,8.4,80,8,Overweight,91,3756,None,1,118,75,Normal,4.515,5.220000000000001,Middle_Age,Insufficient,Active,High,Normal,Sedentary,Excellent,0,8.099999999999989,None,99.829445,High_Risk
+325,Female,48,Office Worker,11.4,7.9,30,9,Overweight,78,3117,None,1,124,68,Elevated,11.2575,6.76,Senior,Excessive,Moderate,High,Normal,Sedentary,Good,0,8.036999999999995,None,99.806816,High_Risk
+326,Female,44,Retired,8.9,3.0,51,7,Obese,52,13601,None,1,132,81,High_Stage1,3.3375000000000004,5.210000000000001,Middle_Age,Optimal,Moderate,High,Low,Active,Poor,0,2.9860000000000007,None,99.73483,High_Risk
+327,Male,86,Student,10.4,1.0,35,7,Overweight,68,4828,None,1,143,95,High_Stage2,1.3,5.8100000000000005,Elderly,Excessive,Moderate,High,Normal,Sedentary,Poor,0,1.2030000000000003,None,99.82151,High_Risk
+328,Male,56,Retired,7.9,7.9,117,1,Normal,52,16996,None,1,128,78,Elevated,7.80125,1.0300000000000002,Senior,Optimal,Active,Low,Low,Active,Good,0,7.8579999999999925,None,99.75707,High_Risk
+329,Female,38,Manual Labor,4.9,3.3,23,4,Obese,63,15878,None,1,129,88,High_Stage1,2.02125,5.369999999999999,Middle_Age,Insufficient,Sedentary,Moderate,Normal,Active,Poor,0,3.3000000000000047,None,99.68541,High_Risk
+330,Female,25,Student,5.0,5.6,66,2,Underweight,89,8992,None,1,112,60,Normal,3.5,3.6000000000000005,Young_Adult,Insufficient,Active,Low,Normal,Somewhat_Active,Fair,0,5.752999999999997,None,99.80119,High_Risk
+331,Male,18,Retired,9.5,3.7,46,2,Underweight,53,15778,None,1,109,65,Normal,4.39375,3.4800000000000004,Young_Adult,Excessive,Moderate,Low,Low,Active,Poor,0,3.7859999999999956,None,99.75466,High_Risk
+332,Male,43,Retired,7.4,2.4,67,2,Obese,60,8771,None,1,131,88,High_Stage1,2.22,3.39,Middle_Age,Optimal,Active,Low,Normal,Somewhat_Active,Poor,0,2.4150000000000014,None,99.84797,High_Risk
+333,Female,28,Manual Labor,5.6,7.1,30,4,Normal,80,18526,None,1,114,72,Normal,4.97,5.1000000000000005,Young_Adult,Insufficient,Moderate,Moderate,Normal,Active,Good,0,7.133000000000006,None,99.72437,High_Risk
+334,Male,18,Retired,7.9,7.5,91,1,Underweight,92,5435,None,1,109,60,Normal,7.40625,2.6100000000000003,Young_Adult,Optimal,Active,Low,Normal,Low_Active,Good,0,7.440999999999999,None,99.78643,High_Risk
+335,Female,30,Retired,4.5,4.8,78,4,Underweight,81,8622,None,1,115,69,Normal,2.7,3.68,Middle_Age,Insufficient,Active,Moderate,Normal,Somewhat_Active,Fair,0,4.767000000000005,None,99.83221,High_Risk
+336,Female,23,Manual Labor,8.7,1.0,12,2,Overweight,76,14852,None,1,111,60,Normal,1.0875,5.16,Young_Adult,Optimal,Sedentary,Low,Normal,Active,Poor,0,1.1380000000000001,None,99.69091,High_Risk
+337,Male,65,Student,6.2,4.9,96,5,Overweight,79,16806,None,1,132,85,High_Stage1,3.7975,3.6,Elderly,Below_Optimal,Active,Moderate,Normal,Active,Fair,0,4.991999999999994,None,99.81873,High_Risk
+338,Male,53,Retired,10.4,6.8,99,3,Normal,92,12623,Insomnia,0,126,85,High_Stage1,8.84,2.97,Senior,Excessive,Active,Low,Normal,Active,Good,1,6.814999999999998,Insomnia,99.878,High_Risk
+339,Female,39,Retired,6.5,3.0,46,8,Obese,51,3848,Insomnia,0,129,85,High_Stage1,2.4375,5.639999999999999,Middle_Age,Below_Optimal,Moderate,High,Low,Sedentary,Poor,1,3.1169999999999978,Sleep Apnea,94.60121,High_Risk
+340,Female,62,Retired,7.6,6.4,97,4,Normal,98,4696,None,1,131,75,High_Stage1,6.08,3.4500000000000006,Elderly,Optimal,Active,Moderate,Normal,Sedentary,Good,0,6.315999999999992,None,99.81015,High_Risk
+341,Male,41,Office Worker,4.1,6.0,58,1,Obese,58,3717,None,1,130,81,High_Stage1,3.075,3.32,Middle_Age,Insufficient,Moderate,Low,Low,Sedentary,Fair,0,5.826999999999997,None,99.84285,High_Risk
+342,Female,27,Manual Labor,4.6,7.2,28,1,Underweight,77,11259,None,1,113,66,Normal,4.14,4.2,Young_Adult,Insufficient,Sedentary,Low,Normal,Active,Good,0,7.1250000000000036,None,99.777466,High_Risk
+343,Male,62,Office Worker,7.1,6.2,98,10,Overweight,80,4786,None,1,131,81,High_Stage1,5.5025,5.0600000000000005,Elderly,Optimal,Active,High,Normal,Sedentary,Good,0,6.166999999999999,None,99.74618,High_Risk
+344,Female,48,Manual Labor,7.8,4.1,94,3,Normal,83,16154,None,1,124,72,Elevated,3.9975,2.9400000000000004,Senior,Optimal,Active,Low,Normal,Active,Fair,0,4.141000000000004,None,99.81254,High_Risk
+345,Male,24,Student,8.8,8.4,21,9,Normal,64,15409,Sleep Apnea,0,112,60,Normal,9.240000000000002,6.550000000000001,Young_Adult,Optimal,Sedentary,High,Normal,Active,Excellent,1,8.245999999999992,Sleep Apnea,99.23732,High_Risk
+346,Male,37,Student,6.3,5.7,70,7,Obese,97,5791,None,1,128,71,Elevated,4.48875,5.539999999999999,Middle_Age,Below_Optimal,Active,High,Normal,Low_Active,Fair,0,5.795999999999997,None,99.83775,High_Risk
+347,Male,26,Retired,9.6,5.9,50,2,Obese,74,5871,None,1,123,75,Elevated,7.08,4.18,Young_Adult,Excessive,Moderate,Low,Normal,Low_Active,Fair,0,5.947999999999992,None,99.81179,High_Risk
+348,Female,19,Manual Labor,10.9,4.1,42,9,Normal,85,3806,Insomnia,0,109,66,Normal,5.58625,6.34,Young_Adult,Excessive,Moderate,High,Normal,Sedentary,Fair,1,4.129000000000004,Insomnia,97.976524,High_Risk
+349,Female,53,Student,10.2,5.1,59,10,Obese,57,19888,Sleep Apnea,0,136,89,High_Stage1,6.5025,5.969999999999999,Senior,Excessive,Moderate,High,Low,Active,Fair,1,5.088000000000005,Sleep Apnea,98.76073,High_Risk
+350,Male,68,Manual Labor,4.3,4.2,77,2,Normal,58,15304,Insomnia,0,134,83,High_Stage1,2.2575,2.6500000000000004,Elderly,Insufficient,Active,Low,Low,Active,Fair,1,3.948999999999996,Insomnia,99.49623,High_Risk
+351,Female,19,Student,7.8,5.7,115,3,Normal,86,17549,None,1,109,64,Normal,5.5575,2.37,Young_Adult,Optimal,Active,Low,Normal,Active,Fair,0,5.7269999999999985,None,99.78601,High_Risk
+352,Male,48,Office Worker,4.8,9.4,80,10,Normal,97,5303,None,1,124,79,Elevated,5.64,5.74,Senior,Insufficient,Active,High,Normal,Low_Active,Excellent,0,9.221999999999989,None,99.76451,High_Risk
+353,Male,30,Student,5.9,3.3,95,2,Underweight,94,18061,None,1,115,64,Normal,2.43375,2.83,Middle_Age,Insufficient,Active,Low,Normal,Active,Poor,0,3.211999999999997,None,99.796906,High_Risk
+354,Female,32,Office Worker,11.9,2.8,42,3,Obese,88,17198,None,1,126,77,Elevated,4.165,5.0,Middle_Age,Excessive,Moderate,Low,Normal,Active,Poor,0,3.1600000000000046,None,99.75616,High_Risk
+355,Female,31,Student,5.1,8.9,90,6,Overweight,81,19888,None,1,115,65,Normal,5.67375,4.12,Middle_Age,Insufficient,Active,Moderate,Normal,Active,Excellent,0,8.89699999999999,None,99.82762,High_Risk
+356,Male,27,Retired,8.0,5.6,33,9,Overweight,66,12655,None,1,113,67,Normal,5.6,6.43,Young_Adult,Optimal,Moderate,High,Normal,Active,Fair,0,5.581000000000006,None,99.77814,High_Risk
+357,Female,40,Office Worker,8.9,4.7,70,9,Obese,84,10924,Sleep Apnea,0,130,82,High_Stage1,5.228750000000001,5.879999999999999,Middle_Age,Optimal,Active,High,Normal,Active,Fair,1,4.807999999999995,Sleep Apnea,98.67912,High_Risk
+358,Female,27,Student,9.6,8.1,70,7,Normal,86,11940,None,1,113,68,Normal,9.72,4.92,Young_Adult,Excessive,Active,High,Normal,Active,Excellent,0,8.25900000000001,None,99.815,High_Risk
+359,Male,44,Retired,8.5,4.8,107,3,Overweight,68,5924,None,1,122,68,Elevated,5.1,2.45,Middle_Age,Optimal,Active,Low,Normal,Low_Active,Fair,0,4.822000000000005,None,99.83442,High_Risk
+360,Male,39,Office Worker,4.1,9.7,37,4,Overweight,93,11783,None,1,119,64,Normal,4.97125,5.3500000000000005,Middle_Age,Insufficient,Moderate,Moderate,Normal,Active,Excellent,0,9.22700000000001,None,99.78902,High_Risk
+361,Female,36,Retired,6.6,7.4,67,6,Obese,78,6485,None,1,128,88,High_Stage1,6.105,4.949999999999999,Middle_Age,Below_Optimal,Active,Moderate,Normal,Low_Active,Good,0,7.396999999999991,None,99.808334,High_Risk
+362,Male,26,Manual Labor,8.1,5.0,52,5,Overweight,56,14629,None,1,113,68,Normal,5.0625,4.46,Young_Adult,Optimal,Moderate,Moderate,Low,Active,Fair,0,4.859000000000002,None,99.697685,High_Risk
+363,Male,31,Manual Labor,4.7,10.0,50,2,Normal,77,15233,None,1,115,73,Normal,5.875,3.84,Middle_Age,Insufficient,Moderate,Low,Normal,Active,Excellent,0,9.527999999999999,None,99.82593,High_Risk
+364,Female,51,Office Worker,6.8,4.8,48,6,Obese,58,14901,None,1,135,89,High_Stage1,4.08,5.119999999999999,Senior,Below_Optimal,Moderate,Moderate,Low,Active,Fair,0,4.792000000000003,None,99.79493,High_Risk
+365,Male,47,Student,4.3,7.5,95,3,Normal,77,2191,Insomnia,0,123,74,Elevated,4.03125,2.79,Senior,Insufficient,Active,Low,Normal,Sedentary,Good,1,7.402000000000002,Insomnia,99.07166,High_Risk
+366,Male,25,Office Worker,4.6,6.6,58,8,Overweight,55,6917,None,1,112,70,Normal,3.795,5.16,Young_Adult,Insufficient,Moderate,High,Low,Low_Active,Good,0,6.686000000000007,None,99.79595,High_Risk
+367,Female,41,Retired,7.2,8.6,26,2,Overweight,78,7831,Sleep Apnea,0,120,75,Elevated,7.74,4.780000000000001,Middle_Age,Optimal,Sedentary,Low,Normal,Somewhat_Active,Excellent,1,8.50700000000001,Sleep Apnea,98.746544,High_Risk
+368,Female,51,Student,5.1,9.1,107,1,Normal,66,12160,None,1,125,81,High_Stage1,5.80125,1.6100000000000003,Senior,Insufficient,Active,Low,Normal,Active,Excellent,0,8.956000000000008,None,99.841835,High_Risk
+369,Male,18,Manual Labor,8.5,6.1,79,9,Underweight,65,15682,None,1,109,60,Normal,6.481249999999999,4.83,Young_Adult,Optimal,Active,High,Normal,Active,Good,0,6.0170000000000075,None,99.68519,High_Risk
+370,Male,48,Student,9.5,4.5,119,3,Overweight,72,14391,None,1,124,74,Elevated,5.34375,2.17,Senior,Excessive,Active,Low,Normal,Active,Fair,0,4.796000000000002,None,99.78739,High_Risk
+371,Female,30,Manual Labor,10.4,6.9,79,1,Underweight,80,3874,None,1,115,69,Normal,8.97,2.7300000000000004,Middle_Age,Excessive,Active,Low,Normal,Sedentary,Good,0,6.924999999999992,None,99.81616,High_Risk
+372,Female,48,Student,5.6,4.6,107,7,Overweight,52,11062,None,1,124,74,Elevated,3.22,3.3300000000000005,Senior,Insufficient,Active,High,Low,Active,Fair,0,4.531000000000004,None,99.82924,High_Risk
+373,Female,28,Student,5.3,10.0,74,10,Underweight,70,6763,None,1,114,67,Normal,6.625,5.38,Young_Adult,Insufficient,Active,High,Normal,Low_Active,Excellent,0,9.607,None,99.76222,High_Risk
+374,Female,18,Student,4.8,6.3,83,5,Underweight,75,12234,Insomnia,0,109,61,Normal,3.78,3.71,Young_Adult,Insufficient,Active,Moderate,Normal,Active,Good,1,6.248999999999999,Insomnia,99.40704,High_Risk
+375,Male,18,Retired,9.1,5.3,94,5,Underweight,85,11221,Insomnia,0,109,60,Normal,6.02875,3.58,Young_Adult,Excessive,Active,Moderate,Normal,Active,Fair,1,5.306000000000001,Insomnia,99.71287,High_Risk
+376,Female,40,Retired,9.7,6.4,14,1,Normal,91,13410,None,1,120,64,Elevated,7.76,4.9,Middle_Age,Excessive,Sedentary,Low,Normal,Active,Good,0,6.380999999999996,None,99.72262,High_Risk
+377,Female,43,Office Worker,4.3,3.3,11,9,Underweight,86,16519,Insomnia,0,121,78,Elevated,1.77375,7.289999999999999,Middle_Age,Insufficient,Sedentary,High,Normal,Active,Poor,1,3.404999999999999,Insomnia,89.45151,High_Risk
+378,Male,26,Office Worker,11.5,4.1,31,7,Underweight,71,3051,None,1,113,60,Normal,5.89375,5.79,Young_Adult,Excessive,Moderate,High,Normal,Sedentary,Fair,0,4.081000000000002,None,99.80051,High_Risk
+379,Female,49,Manual Labor,4.4,8.4,66,8,Underweight,91,14225,Insomnia,0,124,70,Elevated,4.620000000000001,5.44,Senior,Insufficient,Active,High,Normal,Active,Excellent,1,8.197999999999986,Insomnia,98.11245,High_Risk
+380,Male,18,Retired,8.3,4.7,75,9,Overweight,61,11765,None,1,109,65,Normal,4.876250000000001,5.07,Young_Adult,Optimal,Active,High,Normal,Active,Fair,0,4.614999999999994,None,99.761566,High_Risk
+381,Female,39,Manual Labor,9.7,3.9,83,6,Underweight,91,13382,None,1,119,65,Normal,4.72875,4.33,Middle_Age,Excessive,Active,Moderate,Normal,Active,Poor,0,3.8809999999999962,None,99.82525,High_Risk
+382,Female,21,Office Worker,11.0,7.1,107,5,Overweight,62,14580,Insomnia,0,110,60,Normal,9.7625,2.93,Young_Adult,Excessive,Active,Moderate,Normal,Active,Good,1,7.747999999999995,Insomnia,80.232056,High_Risk
+383,Female,30,Manual Labor,9.7,8.4,25,6,Underweight,60,13989,None,1,115,71,Normal,10.185,5.45,Middle_Age,Excessive,Sedentary,Moderate,Normal,Active,Excellent,0,8.254,None,99.70343,High_Risk
+384,Male,40,Office Worker,10.4,7.4,60,2,Underweight,65,13939,Insomnia,0,120,75,Elevated,9.62,3.3,Middle_Age,Excessive,Active,Low,Normal,Active,Good,1,7.411999999999991,Insomnia,99.784424,High_Risk
+385,Male,27,Retired,6.7,8.0,48,4,Normal,57,2307,None,1,113,60,Normal,6.7,4.1,Young_Adult,Below_Optimal,Moderate,Moderate,Low,Sedentary,Good,0,8.107,None,99.80947,High_Risk
+386,Female,34,Student,10.5,4.5,95,3,Overweight,89,5359,None,1,117,66,Normal,5.90625,3.23,Middle_Age,Excessive,Active,Low,Normal,Low_Active,Fair,0,4.355000000000002,None,99.833626,High_Risk
+387,Male,55,Retired,4.6,3.2,85,7,Underweight,89,5176,None,1,127,75,Elevated,1.84,4.53,Senior,Insufficient,Active,High,Normal,Low_Active,Poor,0,3.208999999999995,None,99.834,High_Risk
+388,Male,31,Manual Labor,11.2,9.0,97,9,Overweight,94,3251,None,1,115,64,Normal,12.6,5.07,Middle_Age,Excessive,Active,High,Normal,Sedentary,Excellent,0,9.039000000000001,None,99.85179,High_Risk
+389,Male,52,Manual Labor,8.4,5.4,120,5,Overweight,51,7366,None,1,126,75,Elevated,5.670000000000001,2.32,Senior,Optimal,Active,Moderate,Low,Low_Active,Fair,0,5.2860000000000005,None,99.85057,High_Risk
+390,Male,23,Retired,10.5,5.5,49,6,Obese,79,19901,Insomnia,0,121,78,Elevated,7.21875,5.51,Young_Adult,Excessive,Moderate,Moderate,Normal,Active,Fair,1,5.575999999999999,Insomnia,97.783936,High_Risk
+391,Male,47,Retired,7.6,8.7,47,10,Normal,79,8226,None,1,123,68,Elevated,8.264999999999999,6.37,Senior,Optimal,Moderate,High,Normal,Somewhat_Active,Excellent,0,8.62100000000001,None,99.77708,High_Risk
+392,Male,61,Office Worker,9.1,7.1,69,2,Normal,61,16330,Insomnia,0,130,75,High_Stage1,8.07625,2.95,Elderly,Excessive,Active,Low,Normal,Active,Good,1,7.055000000000004,Insomnia,99.887344,High_Risk
+393,Female,18,Manual Labor,8.2,6.9,68,3,Normal,59,6891,Insomnia,0,109,61,Normal,7.0725,3.24,Young_Adult,Optimal,Active,Low,Low,Low_Active,Good,1,6.8709999999999924,Insomnia,99.209366,High_Risk
+394,Female,28,Manual Labor,9.9,10.0,19,3,Obese,93,6992,None,1,124,75,Elevated,12.375,5.789999999999999,Young_Adult,Excessive,Sedentary,Low,Normal,Low_Active,Excellent,0,9.721,None,99.781715,High_Risk
+395,Male,48,Retired,4.7,4.7,108,9,Obese,60,3961,Insomnia,0,134,92,High_Stage1,2.7612500000000004,4.26,Senior,Insufficient,Active,High,Normal,Sedentary,Fair,1,4.754,Insomnia,98.36586,High_Risk
+396,Female,36,Student,4.5,7.9,73,7,Normal,64,14497,Sleep Apnea,0,118,66,Normal,4.4437500000000005,4.390000000000001,Middle_Age,Insufficient,Active,High,Normal,Active,Good,1,7.655999999999995,Sleep Apnea,98.808464,High_Risk
+397,Female,45,Manual Labor,6.0,6.1,72,8,Obese,65,12848,Insomnia,0,132,80,High_Stage1,4.574999999999999,5.140000000000001,Senior,Below_Optimal,Active,High,Normal,Active,Good,1,6.066999999999998,Insomnia,94.08554,High_Risk
+398,Female,30,Student,5.3,6.5,58,10,Obese,66,15255,Insomnia,0,125,76,Elevated,4.30625,6.18,Middle_Age,Insufficient,Moderate,High,Normal,Active,Good,1,6.390999999999998,Insomnia,94.10342,High_Risk
+399,Female,41,Retired,11.0,9.1,73,9,Obese,75,6567,Sleep Apnea,0,130,75,High_Stage1,12.5125,5.609999999999999,Middle_Age,Excessive,Active,High,Normal,Low_Active,Excellent,1,9.32300000000001,Sleep Apnea,98.05975,High_Risk
+400,Male,37,Retired,5.8,7.0,41,6,Normal,51,18079,None,1,118,70,Normal,5.075,4.79,Middle_Age,Insufficient,Moderate,Moderate,Low,Active,Good,0,7.099000000000003,None,99.63044,High_Risk
