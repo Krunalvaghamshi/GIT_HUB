@@ -1,0 +1,49 @@
+Timestamp,Age,Gender,Occupation,Sleep_Quality,Disorder,Confidence,Risk_Level,Stress_Level,Sleep_Duration,Heart_Rate,Sleep_Efficiency,Physical_Activity,BMI_Category,Daily_Steps,Systolic_BP,Diastolic_BP,Predicted_Quality,Predicted_Disorder,Risk,Sleep_Efficiency_Input,Calculated_Health_Risk,Predicted_Sleep_Quality,Model_Confidence
+2025-11-24 15:56:17,23,Female,Student,,,,High Risk,8,4.5,62,,10.0,Normal,4500.0,130.0,70.0,,Insomnia,,58.0,6.54,9.32,94.95
+2025-11-24 16:14:29,30,Male,Software Engineer,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.36,92.15
+2025-11-24 16:17:52,30,Male,Freelancer,,,,High Risk,8,5.0,70,,4.0,Normal,3500.0,120.0,80.0,,Insomnia,,65.0,6.88,9.36,91.95
+2025-11-24 16:20:06,23,Female,Teacher,,,,High Risk,9,4.4,70,,5.0,Obese,3000.0,120.0,80.0,,Insomnia,,59.0,7.55,9.19,92.66
+2025-11-24 16:20:25,23,Female,Teacher,,,,High Risk,9,4.4,87,,5.0,Obese,3000.0,108.0,66.0,,Insomnia,,59.0,7.89,9.18,92.79
+2025-11-24 16:31:35,30,Male,Software Engineer,,,,High Risk,5,7.0,63,,45.0,Normal,4500.0,132.0,73.0,,Insomnia,,91.0,4.61,9.35,92.15
+2025-11-24 16:31:50,30,Male,Software Engineer,,,,High Risk,2,7.0,63,,45.0,Normal,4500.0,132.0,73.0,,Insomnia,,91.0,3.71,9.35,92.13
+2025-11-24 16:31:59,30,Male,Software Engineer,,,,High Risk,7,7.0,63,,45.0,Normal,4500.0,132.0,73.0,,Insomnia,,91.0,5.21,9.36,92.15
+2025-11-24 16:32:17,30,Male,Sales Representative,,,,High Risk,2,8.7,63,,61.0,Normal,7500.0,132.0,73.0,,Insomnia,,91.0,3.23,9.35,91.61
+2025-11-24 16:32:41,26,Female,Sales Representative,,,,High Risk,2,8.4,63,,61.0,Normal,10000.0,132.0,73.0,,Insomnia,,91.0,3.23,9.28,93.06
+2025-11-24 16:32:53,26,Female,Sales Representative,,,,High Risk,2,8.4,66,,61.0,Normal,10000.0,123.0,73.0,,Insomnia,,91.0,3.29,9.27,93.42
+2025-11-24 16:33:31,30,Male,Software Engineer,,,,High Risk,5,9.4,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.36,94.76
+2025-11-24 16:33:39,30,Male,Software Engineer,,,,High Risk,5,9.4,70,,45.0,Overweight,6000.0,120.0,80.0,,Insomnia,,85.0,4.95,9.36,94.76
+2025-11-24 16:33:52,45,Male,Retired,,,,High Risk,5,9.4,70,,45.0,Overweight,6000.0,120.0,80.0,,Insomnia,,85.0,4.95,9.32,97.78
+2025-11-24 16:40:51,45,Male,Retired,,,,High Risk,8,9.4,70,,45.0,Overweight,6000.0,120.0,80.0,,Insomnia,,85.0,5.85,9.33,97.78
+2025-11-24 16:48:41,42,Male,Software Engineer,,,,High Risk,4,5.3,70,,4.0,Normal,6000.0,120.0,80.0,,Insomnia,,59.0,5.68,9.36,91.95
+2025-11-24 16:49:40,42,Male,Student,,,,High Risk,4,5.3,90,,4.0,Normal,6000.0,110.0,89.0,,Insomnia,,59.0,6.08,9.39,90.57
+2025-11-24 16:51:26,28,Male,Office Worker,,,,High Risk,3,5.0,75,,0.0,Normal,2000.0,110.0,89.0,,Insomnia,,60.0,5.6,9.24,98.2
+2025-11-26 13:06:41,23,Male,Student,,,,High Risk,8,6.8,90,,10.0,Normal,3500.0,128.0,73.0,,Insomnia,,55.0,7.1,9.32,96.82
+2025-11-26 13:12:31,25,Male,Entrepreneur,,,,High Risk,9,6.0,61,,12.0,Normal,3000.0,129.0,73.0,,Insomnia,,60.0,6.76,9.29,97.76
+2025-11-26 13:16:28,40,Male,Entrepreneur,,,,High Risk,8,4.9,90,,10.0,Overweight,1000.0,111.0,86.0,,Insomnia,,55.0,7.3,9.35,91.95
+2025-11-26 13:22:10,33,Male,Artist,,,,High Risk,6,9.0,81,,45.0,Normal,8000.0,120.0,80.0,,Insomnia,,85.0,5.27,9.36,92.15
+2025-11-26 13:28:18,35,Male,Firefighter,,,,High Risk,9,4.0,95,,91.0,Normal,6000.0,120.0,80.0,,Insomnia,,55.0,5.07,9.27,92.15
+2025-11-26 14:10:33,35,Female,Doctor,,,,High Risk,7,5.6,70,,45.0,Normal,3000.0,120.0,80.0,,Insomnia,,50.0,5.35,9.36,91.73
+2025-11-26 14:23:54,28,Female,Nurse,,,,High Risk,7,4.5,70,,18.0,Normal,10000.0,120.0,80.0,,Insomnia,,57.0,6.16,9.27,93.2
+2025-11-26 14:29:42,30,Female,Sales Representative,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.37,91.73
+2025-11-26 14:31:09,30,Female,Engineer,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.37,91.73
+2025-11-26 14:34:17,30,Female,Accountant,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.37,91.73
+2025-11-26 14:35:24,30,Female,Scientist,,,,High Risk,5,5.8,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.37,91.73
+2025-11-26 14:36:35,28,Male,Teacher,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.3,97.66
+2025-11-26 14:38:20,26,Male,Artist,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.3,97.66
+2025-11-26 14:38:53,29,Male,Doctor,,,,High Risk,7,8.7,70,,87.0,Normal,6000.0,120.0,80.0,,Insomnia,,66.0,4.09,9.29,97.66
+2025-11-26 14:41:38,40,Male,Scientist,,,,High Risk,5,7.0,70,,45.0,Overweight,6000.0,120.0,80.0,,Insomnia,,85.0,4.95,9.36,92.15
+2025-11-26 14:44:47,32,Male,Office Worker,,,,High Risk,5,5.1,70,,0.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,6.1,9.31,94.17
+2025-11-26 14:46:34,33,Male,Artist,,,,High Risk,5,7.0,70,,45.0,Normal,2000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.35,92.15
+2025-11-26 14:52:51,31,Male,Manager,,,,High Risk,7,5.8,70,,0.0,Normal,5000.0,120.0,80.0,,Insomnia,,53.0,6.7,9.33,94.17
+2025-11-26 14:57:41,32,Female,Salesperson,,,,High Risk,8,5.6,70,,30.0,Normal,10500.0,120.0,80.0,,Insomnia,,55.0,6.1,9.37,91.73
+2025-11-26 15:04:12,20,Female,Student,,,,High Risk,5,7.0,70,,45.0,Underweight,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.32,94.43
+2025-11-26 15:09:42,37,Male,Retired,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.36,92.22
+2025-11-26 15:10:34,43,Female,Retired,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.37,91.81
+2025-11-26 15:11:35,22,Male,Other,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.3,97.66
+2025-11-26 15:12:45,39,Male,Office Worker,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.36,92.15
+2025-11-26 15:13:04,39,Male,Office Worker,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.36,92.15
+2025-11-26 15:14:13,39,Male,Office Worker,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.36,92.15
+2025-11-26 15:15:17,39,Male,Office Worker,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.36,92.15
+2025-11-26 15:15:30,39,Male,Office Worker,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.36,92.15
+2025-11-26 15:15:37,39,Male,Office Worker,,,,High Risk,5,7.0,70,,45.0,Normal,6000.0,120.0,80.0,,Insomnia,,85.0,4.75,9.36,92.15
+2025-11-26 15:15:54,39,Male,Office Worker,,,,High Risk,5,7.0,70,,45.0,Normal,3500.0,120.0,80.0,,Insomnia,,85.0,4.75,9.35,92.15
