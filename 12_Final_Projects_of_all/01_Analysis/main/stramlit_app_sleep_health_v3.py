@@ -2,7 +2,7 @@
 SLEEP HEALTH DATA COLLECTOR & ADVISOR - PREMIUM UI
 ==================================================
 Author: Data Science Team
-Version: 4.0 (Fixed Markdown + Enhanced Visuals)
+Version: 4.2 (Smart Recommendations V2 & Markdown Fix)
 """
 
 import streamlit as st
@@ -82,10 +82,7 @@ st.markdown("""
         border: 1px solid #4a5568;
         border-radius: 8px;
     }
-    .stSlider div[data-baseweb="slider"] {
-        
-    }
-
+    
     /* Submit Button */
     .stButton>button {
         width: 100%;
@@ -206,6 +203,7 @@ def save_prediction_history(data_dict):
 
 @st.cache_resource
 def load_models():
+    """Loads models and feature lists."""
     models = {}
     
     def get_path(filename):
@@ -213,38 +211,44 @@ def load_models():
 
     try:
         # Load Models with absolute paths
-        path = get_path('sleep_quality_model.pkl')
-        if os.path.exists(path):
-            with open(path, 'rb') as f: models['quality'] = pickle.load(f)
+        path_q = get_path('sleep_quality_model.pkl')
+        path_d = get_path('sleep_disorder_model.pkl')
+        path_e = get_path('disorder_label_encoder.pkl')
+
+        if os.path.exists(path_q):
+            with open(path_q, 'rb') as f: models['quality'] = pickle.load(f)
         else: return None
         
-        path = get_path('sleep_disorder_model.pkl')
-        if os.path.exists(path):
-            with open(path, 'rb') as f: models['disorder'] = pickle.load(f)
+        if os.path.exists(path_d):
+            with open(path_d, 'rb') as f: models['disorder'] = pickle.load(f)
                 
-        path = get_path('disorder_label_encoder.pkl')
-        if os.path.exists(path):
-            with open(path, 'rb') as f: models['encoder'] = pickle.load(f)
+        if os.path.exists(path_e):
+            with open(path_e, 'rb') as f: models['encoder'] = pickle.load(f)
         
-        # Load Feature Names
-        path_q = get_path('feature_names_quality.csv')
-        if os.path.exists(path_q):
-            models['features_quality'] = pd.read_csv(path_q)['feature'].tolist()
+        # Load Feature Names (Critical for model compatibility)
+        path_fq = get_path('feature_names_quality.csv')
+        if os.path.exists(path_fq):
+             models['features_quality'] = pd.read_csv(path_fq)['feature'].tolist()
         elif 'quality' in models and hasattr(models['quality'], 'feature_names_in_'):
              models['features_quality'] = models['quality'].feature_names_in_.tolist()
-
-        path_d = get_path('feature_names_disorder.csv')
-        if os.path.exists(path_d):
-            models['features_disorder'] = pd.read_csv(path_d)['feature'].tolist()
+        else:
+             st.warning("Feature list for Quality Model missing. Prediction may fail.")
+             
+        path_fd = get_path('feature_names_disorder.csv')
+        if os.path.exists(path_fd):
+             models['features_disorder'] = pd.read_csv(path_fd)['feature'].tolist()
         elif 'disorder' in models and hasattr(models['disorder'], 'feature_names_in_'):
              models['features_disorder'] = models['disorder'].feature_names_in_.tolist()
+        else:
+             st.warning("Feature list for Disorder Model missing. Prediction may fail.")
             
         return models
-    except:
+    except Exception as e:
+        st.error(f"Model Loading Failed: {e}")
         return None
 
 # ============================================================
-# 4. LOGIC HELPERS
+# 4. LOGIC HELPERS (Enhanced & Fixed Recommendations)
 # ============================================================
 
 def categorize_bp(systolic, diastolic):
@@ -270,43 +274,63 @@ def categorize_heart_rate(hr):
     elif hr <= 100: return 'Normal'
     else: return 'High'
 
-def get_smart_recommendations(inputs, disorder):
-    """Generate context-aware, smart recommendations"""
+def get_smart_recommendations(inputs, disorder, sleep_quality):
+    """
+    Generates context-aware, smart recommendations using compound conditions.
+    NOTE: Removed all internal Markdown (**bold**) from strings to fix the rendering issue.
+    """
     recs = []
     
-    # Occupation Logic
-    tech_jobs = ["Software Engineer", "Scientist", "Accountant", "Manager", "Office Worker"]
-    active_jobs = ["Nurse", "Doctor", "Construction Worker", "Firefighter", "Police Officer"]
+    # Extract Key Variables
+    stress = inputs['Stress_Level']
+    hr = inputs['Heart_Rate']
+    steps = inputs['Daily_Steps']
+    duration = inputs['Sleep_Duration']
+    efficiency = inputs['Sleep_Efficiency_Input']
+    bmi = inputs['BMI_Category']
+    sys_bp = inputs['Systolic_BP']
+
+    # --- Smarter Condition-Based Recommendations ---
     
+    # 1. High Stress & Physiological Arousal (Smarter Combination)
+    if stress >= 7 and hr > 75:
+        recs.append("🧠 Stress/Heart Rate: High cognitive and physical arousal. Implement a **15-minute relaxation ritual** (like 4-7-8 breathing or progressive muscle relaxation) immediately before bed.")
+
+    # 2. Low Activity & Low Sleep Quality (Smarter Combination)
+    if steps < 5000 and sleep_quality < 6.5:
+        recs.append("🚶 Activity & Quality: Sedentary behavior severely impacts deep sleep. Ensure you get **30 minutes of natural daylight exposure** every morning to help regulate your sleep-wake cycle.")
+
+    # 3. Low Efficiency (Clear CBT-I Principle)
+    if efficiency < 80 and duration > 7.0:
+        recs.append("⏳ Sleep Efficiency: Low time spent actually sleeping while in bed. Practice **Stimulus Control**—only go to bed when sleepy, and get out if awake for more than 20 minutes.")
+
+    # 4. Cardiovascular/Airway Risk (Smarter, Multi-factor Risk)
+    high_risk_bp = sys_bp >= 140
+    obese_risk = bmi == "Obese"
+    
+    if obese_risk and high_risk_bp:
+        recs.append("🫀 Metabolic Risk: Elevated BP and Obese BMI increases risk for sleep-disordered breathing. Consult your physician immediately for a comprehensive **sleep study and weight management plan**.")
+
+    # 5. Short Sleep Duration
+    if duration < 6.0:
+        recs.append("⏰ Duration Protocol: Your sleep is severely restricted. Work to extend your total time in bed by **15 minutes every week** until you reach 7-9 hours, prioritizing schedule consistency.")
+
+    # 6. Occupation/Screen Exposure (Passive Advice)
+    tech_jobs = ["Software Engineer", "Scientist", "Accountant", "Manager"]
     if inputs['Occupation'] in tech_jobs:
-        recs.append(" 💻 Digital Detox: High screen time detected. Use blue-light blockers and stop screens 90m before bed.")
-    elif inputs['Occupation'] in active_jobs:
-        recs.append("🏥 Physical Recovery: High-demand job. Ensure mattress supports spinal alignment and prioritize cool room temp.")
-    
-    # Stress Logic
-    if inputs['Stress_Level'] >= 7:
-        recs.append("🧘 Cortisol Management: High stress delays sleep. Try '4-7-8 Breathing' immediately upon getting into bed.")
-
-    # Efficiency Logic
-    if inputs['Sleep_Efficiency_Input'] < 80:
-        recs.append("⏳ Sleep Restriction: Too much time awake in bed. Go to bed *only* when tired to reset sleep drive.")
-
-    # BMI/BP Logic
-    if inputs['BMI_Category'] in ["Overweight", "Obese"] or inputs['Systolic_BP'] > 130:
-        recs.append("🫀 Cardio Health: Elevated markers correlate with airway obstruction. Try side-sleeping for immediate relief.")
-
-    # Activity Logic
-    if inputs['Daily_Steps'] < 5000:
-        recs.append("🚶 **Activity Boost:** Sedentary lifestyle affects deep sleep. A 20-min morning walk sets circadian rhythms.")
-
-    # Disorder Logic
-    if disorder == "Insomnia" and len(recs) < 3:
-        recs.append("🛌 CBT-I: Consider Cognitive Behavioral Therapy for Insomnia, the gold standard for long-term improvement.")
-    elif disorder == "Sleep Apnea" and len(recs) < 3:
-        recs.append("🌬️ Airway Check: Consult a specialist about CPAP or dental devices.")
+        recs.append("💻 Digital Detox: High screen time detected. Use blue-light filters and stop using all backlit screens **90 minutes before bed**.")
         
+    # --- Disorder-Specific Protocols (Fixed Markdown Issue) ---
+    
+    if disorder == "Insomnia":
+        recs.append("🚨 Insomnia Protocol: Focus on **CBT-I** principles, the gold standard for long-term improvement. Specifically, target correcting your association between the bed and wakefulness.")
+    
+    elif disorder == "Sleep Apnea":
+        recs.append("🌬️ Sleep Apnea Risk: High probability of airway obstruction. Consult a sleep specialist immediately to discuss diagnostic testing (polysomnography) and treatment options like CPAP.")
+        
+    # --- Fallback/Maintenance ---
     if not recs:
-        recs.append("🌟 Maintenance: Your habits look good! Keep maintaining a consistent sleep schedule.")
+        recs.append("✅ Excellent Sleep Metrics: Your sleep health and lifestyle indicators are optimal. Focus on maintaining a consistent bedtime and wake-up schedule, even on holidays.")
 
     return recs
 
@@ -325,7 +349,7 @@ def main():
 
     models = load_models()
     if not models:
-        st.error("⚠️ System Error: Model files not found. Please verify deployment files.")
+        st.error("⚠️ System Error: Model files not found or failed to load. Please verify deployment files (`.pkl` and `.csv`).")
         return
 
     with st.form("data_entry_form"):
@@ -354,7 +378,7 @@ def main():
             daily_steps = st.number_input("Daily Steps", 0, 30000, 6000, 500)
         with col4:
             physical_activity = st.slider("Physical Activity (mins/day)", 0, 120, 45)
-            sleep_efficiency_input = st.slider("Sleep Efficiency (%)", 50, 100, 85, help="% of time in bed spent sleeping")
+            sleep_efficiency_input = st.slider("Sleep Efficiency (%)", 50, 100, 85, help="% of time in bed spent sleeping") 
         st.markdown('</div>', unsafe_allow_html=True)
 
         # --- SECTION 3: BIOMETRICS ---
@@ -377,20 +401,21 @@ def main():
             step_cat = categorize_steps(daily_steps)
             hr_cat = categorize_heart_rate(heart_rate)
             
-            bmi_val = {'Normal': 1, 'Underweight': 1, 'Overweight': 2, 'Obese': 3}.get(bmi_category, 1)
-            health_score = (stress_level * 0.3) + ((10 - physical_activity/10) * 0.3) + (heart_rate/10 * 0.2) + (bmi_val * 0.2)
+            bmi_val = {'Normal': 1, 'Underweight': 0, 'Overweight': 2, 'Obese': 3}.get(bmi_category, 1)
+            # Adjusted calculation to reflect health risk factors
+            health_score = (stress_level * 0.4) + ((10 - physical_activity/10) * 0.2) + ((heart_rate/70) * 0.2) + (bmi_val * 0.2)
             sleep_eff = (sleep_duration * sleep_efficiency_input / 100)
 
-            # 2. Feature Vector Construction
-            cols = models['features_quality']
-            input_df = pd.DataFrame(0, index=[0], columns=cols)
+            # 2. Feature Vector Construction for Quality Model
+            cols_q = models.get('features_quality', [])
+            input_df_q = pd.DataFrame(0, index=[0], columns=cols_q)
             
             # Numericals
             vals = {'Age': age, 'Sleep Duration': sleep_duration, 'Physical Activity Level': physical_activity,
                     'Stress Level': stress_level, 'Heart Rate': heart_rate, 'Daily Steps': daily_steps,
                     'Systolic_BP': sys_bp, 'Diastolic_BP': dia_bp, 'Sleep_Efficiency': sleep_eff, 'Health_Risk_Score': health_score}
             for k, v in vals.items():
-                if k in input_df: input_df[k] = v
+                if k in input_df_q: input_df_q[k] = v
 
             # Ordinals
             bmi_m = {'Underweight': 0, 'Normal': 1, 'Normal Weight': 1, 'Overweight': 2, 'Obese': 3}
@@ -403,26 +428,29 @@ def main():
             ords = {'BMI Category_Encoded': bmi_m.get(bmi_category, 1), 'BP_Category_Encoded': bp_m.get(bp_cat, 0),
                     'Activity_Category_Encoded': act_cat, 'Stress_Category_Encoded': str_cat, 'Sleep_Duration_Category_Encoded': dur_cat}
             for k, v in ords.items():
-                if k in input_df: input_df[k] = v
+                if k in input_df_q: input_df_q[k] = v
 
             # One-Hot
             targets = [f"Gender_{gender}", f"Occupation_{occupation}", f"Age_Group_{age_grp}", 
-                       f"Heart_Rate_Category_{hr_cat}", f"Steps_Category_{step_cat}", f"BP_Category_{bp_cat}"]
+                        f"Heart_Rate_Category_{hr_cat}", f"Steps_Category_{step_cat}", f"BP_Category_{bp_cat}"]
             for t in targets:
-                if t in input_df: input_df[t] = 1
+                if t in input_df_q: input_df_q[t] = 1
 
-            # 3. Model Prediction
-            pred_qual = models['quality'].predict(input_df)[0]
+            # 3. Model Prediction - Sleep Quality
+            pred_qual = models['quality'].predict(input_df_q)[0]
             
+            # 3. Model Prediction - Sleep Disorder
             if 'features_disorder' in models:
-                in_dis = pd.DataFrame(0, index=[0], columns=models['features_disorder'])
-                com = list(set(input_df.columns) & set(in_dis.columns))
-                in_dis[com] = input_df[com]
-                for t in targets:
-                    if t in in_dis: in_dis[t] = 1
-                final_in = in_dis
+                # Align features specifically for the disorder model
+                cols_d = models['features_disorder']
+                input_df_d = pd.DataFrame(0, index=[0], columns=cols_d)
+                
+                # Transfer common columns
+                com_cols = list(set(input_df_q.columns) & set(input_df_d.columns))
+                input_df_d[com_cols] = input_df_q[com_cols]
+                final_in = input_df_d.reindex(columns=cols_d, fill_value=0) # Ensure column order
             else:
-                final_in = input_df
+                final_in = input_df_q
 
             pred_idx = models['disorder'].predict(final_in)[0]
             pred_dis = models['encoder'].inverse_transform([pred_idx])[0] if 'encoder' in models else "Unknown"
@@ -430,8 +458,8 @@ def main():
             try: conf = np.max(models['disorder'].predict_proba(final_in)) * 100
             except: conf = 0.0
             
-            risk = "Low Risk" if pred_dis == "None" else "High Risk"
-            if conf < 50: risk = "Low Confidence"
+            risk = "Low Risk" if pred_dis == "None" and pred_qual >= 6.5 else "Moderate Risk"
+            if pred_dis != "None" and conf > 75: risk = "High Risk"
 
             # 4. Save to Backend (Include Prediction Results)
             success = save_prediction_history({
@@ -451,16 +479,18 @@ def main():
             if success:
                 st.success("✅ Analysis Complete & Data Logged!")
                 
-                # 5. Frontend Recommendations (Smart & Stylish)
+                # 5. Frontend Recommendations (Smart & Fixed)
                 tips_list = get_smart_recommendations({
                     'Occupation': occupation, 'Stress_Level': stress_level,
                     'Sleep_Duration': sleep_duration, 'Sleep_Efficiency_Input': sleep_efficiency_input,
-                    'BMI_Category': bmi_category, 'Systolic_BP': sys_bp, 'Daily_Steps': daily_steps
-                }, pred_dis)
+                    'BMI_Category': bmi_category, 'Systolic_BP': sys_bp, 'Daily_Steps': daily_steps,
+                    'Physical_Activity': physical_activity, 'Heart_Rate': heart_rate
+                }, pred_dis, pred_qual)
 
                 # Format tips HTML for cleaner rendering
                 formatted_tips = ""
                 for tip in tips_list:
+                    # Note: No Markdown like ** or * is used within the tip string itself
                     formatted_tips += f'<div class="rec-item"><span class="rec-icon">👉</span><span>{tip}</span></div>'
                 
                 # Display prediction cards
@@ -468,13 +498,13 @@ def main():
                 r1, r2, r3 = st.columns(3)
                 
                 with r1:
-                    st.markdown(f"""<div class="metric-container"><div style="color:#9ca3af;">Sleep Quality</div><div style="font-size:3.5em; color:#f3f4f6;">{pred_qual:.1f}</div></div>""", unsafe_allow_html=True)
+                    st.markdown(f"""<div class="metric-container"><div style="color:#9ca3af;">Sleep Quality (1-10)</div><div style="font-size:3.5em; color:#f3f4f6;">{pred_qual:.1f}</div></div>""", unsafe_allow_html=True)
                 with r2:
-                    col = "#10b981" if pred_dis == "None" else "#ef4444"
+                    col = "#10b981" if pred_dis == "None" else ("#f59e0b" if risk == "Moderate Risk" else "#ef4444")
                     icon = "🛡️" if pred_dis == "None" else "⚠️"
-                    st.markdown(f"""<div class="metric-container" style="border-bottom: 4px solid {col};"><div style="color:#9ca3af;">Diagnosis</div><div style="font-size:2em; color:{col}; margin-top:10px;">{icon} {pred_dis}</div></div>""", unsafe_allow_html=True)
+                    st.markdown(f"""<div class="metric-container" style="border-bottom: 4px solid {col};"><div style="color:#9ca3af;">Diagnosis ({risk})</div><div style="font-size:1.8em; color:{col}; margin-top:10px;">{icon} {pred_dis}</div></div>""", unsafe_allow_html=True)
                 with r3:
-                    st.markdown(f"""<div class="metric-container"><div style="color:#9ca3af;">Certainty</div><div style="font-size:3.5em; color:#f3f4f6;">{conf:.1f}%</div></div>""", unsafe_allow_html=True)
+                    st.markdown(f"""<div class="metric-container"><div style="color:#9ca3af;">Model Certainty</div><div style="font-size:3.5em; color:#f3f4f6;">{conf:.1f}%</div></div>""", unsafe_allow_html=True)
                 
                 # Display Recommendation Box
                 st.markdown(f"""
@@ -485,7 +515,7 @@ def main():
                     </p>
                     {formatted_tips}
                     <div style="margin-top: 20px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); color: #a0aec0; font-size: 0.9rem;">
-                        <i>*Analysis stored securely for clinical review.</i>
+                        <i>*Disclaimer: This is an AI-based analysis, not a medical diagnosis. Consult a doctor for any health concerns.</i>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -494,7 +524,7 @@ def main():
                 st.error("Submission failed. Please try again.")
 
         except Exception as e:
-            st.error(f"Processing Error: {e}")
+            st.error(f"Processing Error: An unexpected error occurred during prediction: {e}")
 
 if __name__ == "__main__":
     main()
