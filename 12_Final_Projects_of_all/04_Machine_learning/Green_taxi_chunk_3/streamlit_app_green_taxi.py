@@ -134,6 +134,8 @@ st.markdown("""
         font-size: 1.1rem;
         margin-bottom: 10px;
         display: block;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 8px;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -142,7 +144,7 @@ st.markdown("""
 # 2. LOGIC: GEOGRAPHY & MATH
 # ==========================================
 
-# Extended List of Locations (40+ Locations)
+# Extended List of Locations (Massive Update)
 NYC_LOCATIONS = {
     "Custom Coordinate": None,
     # Airports
@@ -158,6 +160,7 @@ NYC_LOCATIONS = {
     "Bryant Park": (40.7536, -73.9832),
     "Grand Central Terminal": (40.7527, -73.9772),
     "Penn Station": (40.7505, -73.9934),
+    "Port Authority Bus Terminal": (40.7569, -73.9905),
     "MoMA (Museum of Modern Art)": (40.7614, -73.9776),
     "St. Patrick's Cathedral": (40.7584, -73.9759),
     "Carnegie Hall": (40.7651, -73.9799),
@@ -167,6 +170,7 @@ NYC_LOCATIONS = {
     "Metropolitan Museum of Art": (40.7794, -73.9632),
     "Javits Center": (40.7580, -74.0021),
     "Columbia University": (40.8075, -73.9626),
+    "Harlem (Apollo Theater)": (40.8101, -73.9501),
     
     # Manhattan - Downtown/Village
     "One World Trade Center": (40.7127, -74.0134),
@@ -177,7 +181,9 @@ NYC_LOCATIONS = {
     "Chelsea Market": (40.7420, -74.0048),
     "The High Line": (40.7480, -74.0048),
     "Whitney Museum": (40.7396, -74.0089),
-    "NYU (Washington Sq)": (40.7295, -73.9965),
+    "Washington Square Park (NYU)": (40.7308, -73.9973),
+    "SoHo": (40.7233, -74.0030),
+    "Chinatown": (40.7158, -73.9974),
     
     # Brooklyn
     "Barclays Center": (40.6829, -73.9754),
@@ -186,12 +192,14 @@ NYC_LOCATIONS = {
     "Brooklyn Botanic Garden": (40.6675, -73.9630),
     "Prospect Park": (40.6602, -73.9690),
     "Coney Island": (40.5744, -73.9785),
+    "Williamsburg": (40.7128, -73.9619),
     
     # Queens
     "Citi Field": (40.7571, -73.8458),
     "Arthur Ashe Stadium": (40.7503, -73.8457),
     "Flushing Meadows Corona Park": (40.7400, -73.8407),
     "Queens Museum": (40.7458, -73.8467),
+    "Astoria Park": (40.7797, -73.9224),
     
     # Bronx & Others
     "Yankee Stadium": (40.8296, -73.9262),
@@ -286,30 +294,49 @@ def generate_smart_insight(dist, duration, rate_id, surcharges, arrival_time):
     """
     insight_html = f"""
     <div class="insight-header">💡 Smart Trip Insight</div>
-    <ul style="margin: 0; padding-left: 20px; list-style-type: circle;">
-        <li><b>Logistics:</b> This trip covers <b>{dist:.1f} miles</b> with an estimated time of <b>{duration:.0f} mins</b>.</li>
-        <li><b>Arrival:</b> You should reach your destination around <b>{arrival_time.strftime('%H:%M')}</b>.</li>
-        <li><b>Rate Applied:</b> The fare is calculated using the <b>{RATE_CODE_MAP[rate_id]}</b>.</li>
+    <ul style="margin: 0; padding-left: 20px; list-style-type: none; color: #E6EAF1;">
+        <li style="margin-bottom: 8px;">📍 <b>Logistics:</b> {dist:.1f} miles • ~{duration:.0f} mins</li>
+        <li style="margin-bottom: 8px;">🏁 <b>Arrival:</b> You should reach by <b>{arrival_time.strftime('%H:%M')}</b></li>
+        <li style="margin-bottom: 8px;">💲 <b>Rate Applied:</b> {RATE_CODE_MAP[rate_id]}</li>
     """
     
     if surcharges:
         surcharge_text = ", ".join(surcharges)
-        insight_html += f"<li><b>Active Surcharges:</b> {surcharge_text}.</li>"
+        insight_html += f"<li>⚠️ <b>Surcharges:</b> <span style='color: #FF4B4B'>{surcharge_text}</span></li>"
     else:
-        insight_html += f"<li><b>Surcharges:</b> No additional time-based fees active.</li>"
+        insight_html += f"<li>✅ <b>Surcharges:</b> None active</li>"
     
     insight_html += "</ul>"
     return insight_html
 
 # ==========================================
-# 3. LOAD RESOURCES
+# 3. LOAD RESOURCES (FIXED PATH FINDING)
 # ==========================================
+
+# Robust function to find files in cloud environment
+def find_file_in_dir(filename):
+    if os.path.exists(filename):
+        return filename
+    # Search current directory and subdirectories
+    for root, dirs, files in os.walk('.'):
+        if filename in files:
+            return os.path.join(root, filename)
+    return None
+
 @st.cache_resource
 def load_model():
-    model_path = 'best_model_green_taxi_trained_on_100000_sample.pkl'
-    if os.path.exists(model_path):
-        return joblib.load(model_path)
-    return None
+    filename = 'best_model_green_taxi_trained_on_100000_sample.pkl'
+    model_path = find_file_in_dir(filename)
+    
+    if model_path:
+        try:
+            return joblib.load(model_path)
+        except Exception as e:
+            st.error(f"Error loading model from {model_path}: {e}")
+            return None
+    else:
+        st.error(f"❌ Model file '{filename}' not found. Please upload it to your repository.")
+        return None
 
 model = load_model()
 
@@ -483,23 +510,24 @@ if page == "Ride Predictor":
         
         st.markdown("<br>", unsafe_allow_html=True)
         if st.button("CALCULATE FINAL FARE"):
-            input_data = {
-                'VendorID': 2, 'RateCodeID': rate_code, 'passenger_count': passengers,
-                'trip_distance': calc_distance, 'pickup_longitude': st.session_state.pu_lon, 'pickup_latitude': st.session_state.pu_lat,
-                'dropoff_longitude': st.session_state.do_lon, 'dropoff_latitude': st.session_state.do_lat,
-                'payment_type': payment_type, 'pickup_datetime': pickup_dt,
-                'trip_type': 1, 'Extra': smart_extra, 'MTA_tax': 0.5, 'Tolls_amount': 0.0,
-                'trip_duration_min': est_duration_min
-            }
-            
             if model:
                 try:
+                    input_data = {
+                        'VendorID': 2, 'RateCodeID': rate_code, 'passenger_count': passengers,
+                        'trip_distance': calc_distance, 'pickup_longitude': st.session_state.pu_lon, 'pickup_latitude': st.session_state.pu_lat,
+                        'dropoff_longitude': st.session_state.do_lon, 'dropoff_latitude': st.session_state.do_lat,
+                        'payment_type': payment_type, 'pickup_datetime': pickup_dt,
+                        'trip_type': 1, 'Extra': smart_extra, 'MTA_tax': 0.5, 'Tolls_amount': 0.0,
+                        'trip_duration_min': est_duration_min
+                    }
                     df = preprocess_input(input_data)
                     prediction = model.predict(df)[0]
                     st.session_state['last_pred'] = prediction
                     st.session_state['insight'] = generate_smart_insight(calc_distance, est_duration_min, rate_code, surcharge_reason, dropoff_dt)
                 except Exception as e:
                     st.error(f"Error: {e}")
+            else:
+                st.error("Model not loaded. Please check if the .pkl file is uploaded.")
 
         if 'last_pred' in st.session_state:
             st.markdown(f"""
@@ -514,12 +542,16 @@ if page == "Ride Predictor":
 
 elif page == "Data Analytics":
     st.title("📊 Data Analytics")
-    report_file = "Advanced_pandas_profiling_green_taxi_2013_chunk_3_report.html"
-    if os.path.exists(report_file):
-        with open(report_file, 'r', encoding='utf-8') as f:
+    
+    # Robust file finding for the report too
+    report_filename = "Advanced_pandas_profiling_green_taxi_2013_chunk_3_report.html"
+    report_path = find_file_in_dir(report_filename)
+    
+    if report_path:
+        with open(report_path, 'r', encoding='utf-8') as f:
             components.html(f.read(), height=1000, scrolling=True)
     else:
-        st.warning("Analysis report file not found.")
+        st.warning(f"Analysis report file '{report_filename}' not found.")
 
 elif page == "System Specs":
     st.title("🛠 System Specifications")
