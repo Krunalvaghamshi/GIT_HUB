@@ -182,14 +182,24 @@ DEPOSIT_MAP = {
     "No Deposit": 0, "Non-Refundable": 1, "Refundable": 2
 }
 
-# --- 4. ROBUST MODEL LOADING (SYNC FIX) ---
+# --- 4. LOAD RESOURCES (FIXED PATH FINDING) ---
+
+# Robust function to find files in cloud environment
+def find_file_in_dir(filename):
+    if os.path.exists(filename):
+        return filename
+    # Search current directory and subdirectories
+    for root, dirs, files in os.walk('.'):
+        if filename in files:
+            return os.path.join(root, filename)
+    return None
 
 @st.cache_resource
 def load_system(uploaded_file=None):
     """
     Tries to load model from:
     1. Uploaded file (Manual Sync)
-    2. Local path (Automatic Sync)
+    2. Robust Path Finding (Automatic Sync)
     """
     if uploaded_file is not None:
         try:
@@ -197,13 +207,16 @@ def load_system(uploaded_file=None):
         except Exception as e:
             st.error(f"Error loading uploaded file: {e}")
             return None
-            
-    path = "xgboost_booking_model.pkl"
-    if os.path.exists(path):
-        try: 
-            return joblib.load(path)
+    
+    filename = "xgboost_booking_model.pkl"
+    model_path = find_file_in_dir(filename)
+    
+    if model_path:
+        try:
+            return joblib.load(model_path)
         except Exception as e:
-            return None # Return None if corrupted/version mismatch
+            # Silent fail to allow fallback to manual upload if needed
+            return None
     return None
 
 def calculate_stay_details(check_in, check_out):
@@ -401,7 +414,7 @@ def main():
     # 1. Check for manual upload first
     uploaded_file = st.sidebar.file_uploader("Admin: Upload Model (.pkl)", type="pkl")
     
-    # 2. Try loading
+    # 2. Try loading with robust path finding
     artifacts = load_system(uploaded_file)
     
     if not artifacts:
