@@ -1,0 +1,15 @@
+user_id,timestamp,genres,languages,age_filter,mood,recommended_movie_id,recommended_movie_title
+1,2025-11-10 14:19:29,Mystery,English,Published in the last 10 years.,Neutral,,
+1,2025-11-10 14:20:15,Mystery,English,Published in the last 10 years.,Neutral,,
+1,2025-11-10 14:22:02,Fantasy,English,Published in the last 10 years.,Neutral,,
+1,2025-11-10 14:29:00,Romance,English,Published in the last 5 years.,Neutral,818750.0,The In Between
+1,2025-11-10 14:29:37,Romance,English,Published in the last 5 years.,Neutral,1242011.0,Together
+1,2025-11-10 14:30:12,Romance,English,Published in the last 5 years.,Neutral,506281.0,The World to Come
+1,2025-11-10 14:31:16,Action,Hindi,Published in the last 5 years.,Happy,,No movies found
+1,2025-11-10 14:31:26,Action,Hindi,Published in the last 5 years.,Happy,1160018.0,Kill
+1,2025-11-29 13:32:59,"Action, Adventure, Animation",Hindi,Published in the last 5 years.,Neutral,,No movies found
+1,2025-11-29 13:33:10,Action,Hindi,Published in the last 5 years.,Neutral,799155.0,Attack
+1,2025-11-29 13:33:22,Action,Hindi,Published in the last 5 years.,Neutral,592508.0,Sooryavanshi
+1,2025-11-29 13:33:26,Action,Hindi,Published in the last 5 years.,Neutral,592508.0,Sooryavanshi
+1,2025-11-30 19:17:27,,,Published in the last 5 years.,Neutral,1232493.0,No Other Land
+1,2025-11-30 19:18:15,,,Doesn’t matter.,Neutral,1058694.0,Radical
