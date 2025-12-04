@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleep Health AI - The Development Journey</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                    },
+                    colors: {
+                        night: '#000000', 
+                        glass: 'rgba(255, 255, 255, 0.03)',
+                        glassBorder: 'rgba(255, 255, 255, 0.1)',
+                        neonBlue: '#3b82f6',
+                        neonPurple: '#8b5cf6',
+                        accent: '#10b981',
+                        danger: '#ef4444',
+                        appHeader: '#1e3a8a', // Dark blue for app header mock
+                        appCard: '#1e293b'    // Dark slate for app sections
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'blob': 'blob 10s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #000000; /* Pure Black */
+            color: #e2e8f0; /* Brighter Text */
+            overflow-x: hidden;
+            background-image: radial-gradient(circle at 50% 0%, #0f172a 0%, #000000 70%);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b82f6;
+        }
+
+        /* Glass Cards - Made more opaque/solid */
+        .glass-card {
+            background: rgba(8, 8, 10, 0.95); /* Increased opacity to 95% for solid look */
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.95); 
+        }
+
+        .glass-highlight {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .glass-danger {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .glass-code {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-family: 'Space Grotesk', monospace;
+        }
+
+        /* Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Enhanced Glow Effects */
+        .glow-text {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+        }
+        
+        .timeline-line {
+            background: linear-gradient(to bottom, #1e293b, #3b82f6, #8b5cf6, #1e293b);
+        }
+
+        /* Subtle Grid */
+        .bg-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+
+        /* App Mockup Specifics */
+        .app-mock-input {
+            background-color: #334155;
+            border-radius: 0.375rem;
+            height: 2rem;
+        }
+        .app-mock-slider {
+            height: 0.25rem;
+            background-color: #ef4444;
+            border-radius: 9999px;
+            position: relative;
+        }
+        .app-mock-slider::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -0.25rem;
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: #ef4444;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-grid relative">
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-10">
+        <!-- Darker Animated Blobs -->
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-blue-900/10 rounded-full mix-blend-screen filter blur-[120px] animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-900/10 rounded-full mix-blend-screen filter blur-[120px] animate-blob" style="animation-delay: 2s;"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-6xl mx-auto">
+            <div class="inline-flex items-center gap-2 mb-8 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-950/30 text-blue-400 text-sm font-mono tracking-wider animate-float shadow-[0_0_15px_rgba(59,130,246,0.1)]">
+                <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                END-TO-END TECHNICAL LOG
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl font-bold mb-8 tracking-tight leading-tight">
+                <span class="text-white drop-shadow-lg">Sleep Health</span>
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 block mt-2 drop-shadow-none">Intelligence</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+                Bridging the gap between raw data and clinical insights. An end-to-end system powered by 
+                <span class="text-blue-300 font-semibold">XGBoost</span> and <span class="text-purple-300 font-semibold">Random Forest</span> algorithms,
+                developed to predict sleep disorders with high precision.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                <a href="https://app-vuytw223yxmfjabq76neu4.streamlit.app/" target="_blank" class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-blue-600 hover:bg-blue-500 rounded-xl hover:scale-105 shadow-[0_0_25px_rgba(59,130,246,0.3)] border border-blue-400/20">
+                    <span>Launch Master App</span>
+                    <i class="fas fa-rocket ml-3 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+                
+                <a href="#technical-log" class="group inline-flex items-center justify-center px-8 py-4 font-semibold text-gray-300 transition-all duration-200 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 hover:text-white hover:border-white/20">
+                    <span>View Technical Log</span>
+                    <i class="fas fa-code-branch ml-3 group-hover:translate-y-1 transition-transform"></i>
+                </a>
+            </div>
+            
+            <div class="mt-16 text-sm font-mono text-gray-600">
+                Designed & Developed by <span class="text-blue-500 font-semibold">Krunal Vaghamshi</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative max-w-7xl mx-auto px-4 pb-20">
+        
+        <!-- Stats / Quick View -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-32 reveal">
+            <div class="glass-card p-6 rounded-2xl text-center border-t-4 border-t-blue-500">
+                <div class="text-3xl font-bold mb-2 text-white">0.98</div>
+                <div class="text-xs font-mono text-blue-400 uppercase tracking-widest font-bold">XGBoost R²</div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl text-center border-t-4 border-t-purple-500">
+                <div class="text-3xl font-bold mb-2 text-white">21</div>
+                <div class="text-xs font-mono text-purple-400 uppercase tracking-widest font-bold">Iterations</div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl text-center border-t-4 border-t-green-500">
+                <div class="text-3xl font-bold mb-2 text-white">Hybrid</div>
+                <div class="text-xs font-mono text-green-400 uppercase tracking-widest font-bold">Storage Strategy</div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl text-center border-t-4 border-t-red-500">
+                <div class="text-3xl font-bold mb-2 text-white">0</div>
+                <div class="text-xs font-mono text-red-400 uppercase tracking-widest font-bold">Data Leaks</div>
+            </div>
+        </div>
+
+        <!-- Timeline Container -->
+        <div id="technical-log" class="relative">
+            <div class="text-center mb-24">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">Development Log</h2>
+                <div class="h-1 w-24 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full mb-4"></div>
+                <p class="text-gray-500 font-mono text-sm">Target: Production Stability & Clinical Accuracy</p>
+            </div>
+
+            <!-- Vertical Line -->
+            <div class="absolute left-4 md:left-1/2 top-32 bottom-0 w-0.5 timeline-line transform md:-translate-x-1/2 opacity-20"></div>
+
+            <!-- Phase 1: Data Science Core -->
+            <div class="mb-24 relative md:flex justify-between items-start reveal group">
+                <div class="md:w-[45%] mb-8 md:mb-0 order-1">
+                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden transition-all duration-300 hover:border-blue-500/50 bg-black/40">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-blue-500/5 rounded-full blur-3xl"></div>
+                        <h4 class="text-blue-500 font-mono text-sm tracking-widest mb-2 font-bold">PHASE 1: DATA SCIENCE CORE</h4>
+                        <h2 class="text-2xl font-bold mb-4 text-white">The Foundation & The Leak</h2>
+                        
+                        <div class="space-y-4 text-sm text-gray-300">
+                            <p><strong>Goal:</strong> Establish a reliable predictive engine from 374 records.</p>
+                            
+                            <ul class="list-disc pl-4 space-y-2 text-gray-400">
+                                <li><strong>EDA Findings:</strong> Strong negative correlation (-0.81) between Stress & Sleep. BP column ("126/83") required splitting into Systolic/Diastolic integers.</li>
+                                <li><strong>Model Winners:</strong> XGBoost (Regression, R² 0.98) & Random Forest (Classification, F1 0.93).</li>
+                            </ul>
+
+                            <!-- Technical Deep Dive: Leakage -->
+                            <div class="glass-danger p-4 rounded-xl border-l-2 border-l-red-500 bg-red-950/10 mt-4">
+                                <div class="flex items-center text-red-400 font-bold text-xs mb-2">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i> CRITICAL BUG: DATA LEAKAGE
+                                </div>
+                                <p class="text-xs text-gray-400 mb-2">
+                                    Used <code>Sleep_Efficiency</code> to predict <code>Sleep_Quality</code>. 
+                                    Since Efficiency = (Duration/8) * Quality, the target was hiding in the features.
+                                </p>
+                                <div class="glass-code p-2 rounded text-xs text-green-500 font-mono">
+                                    X_train = df.drop(['Sleep_Quality', 'Sleep_Efficiency'], axis=1)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dot -->
+                <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-5 h-5 rounded-full bg-blue-600 shadow-[0_0_20px_rgba(59,130,246,0.5)] z-10 border-4 border-black mt-8"></div>
+                
+                <div class="md:w-[45%] order-2 text-gray-600 text-xs md:pl-8 font-mono pt-8">
+                    // EDA & Feature Engineering<br>
+                    // Output: .pkl models
+                </div>
+            </div>
+
+            <!-- Phase 2: Application Dev -->
+            <div class="mb-24 relative md:flex justify-between items-start reveal group">
+                <div class="md:w-[45%] order-1 md:order-2 text-gray-600 text-xs md:text-right md:pr-8 hidden md:block font-mono pt-8">
+                    // Streamlit Iterations
+                </div>
+                
+                <!-- Dot -->
+                <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-5 h-5 rounded-full bg-purple-600 shadow-[0_0_20px_rgba(139,92,246,0.5)] z-10 border-4 border-black mt-8"></div>
+
+                <div class="md:w-[45%] mb-8 md:mb-0 order-2 md:order-1 text-right-md">
+                     <div class="glass-card p-8 rounded-2xl relative overflow-hidden transition-all duration-300 hover:border-purple-500/50 bg-black/40">
+                        <h4 class="text-purple-500 font-mono text-sm tracking-widest mb-2 font-bold">PHASE 2: APP DEVELOPMENT</h4>
+                        <h2 class="text-2xl font-bold mb-4 text-white">MVP & Execution Context</h2>
+                        <div class="space-y-4 text-left">
+                            <p class="text-gray-300 text-sm">Transitioned from notebook to <code>streamlit_app.py</code>. Initial builds were functional but raw.</p>
+                            
+                            <!-- Bug 1 -->
+                            <div class="bg-white/5 p-3 rounded border border-gray-800">
+                                <div class="text-xs font-bold text-red-400 mb-1">Bug: ScriptRunContext Error</div>
+                                <p class="text-xs text-gray-500">User ran <code>python app.py</code> instead of <code>streamlit run app.py</code>. Added proper execution instructions.</p>
+                            </div>
+
+                             <!-- Bug 2 -->
+                             <div class="bg-white/5 p-3 rounded border border-gray-800">
+                                <div class="text-xs font-bold text-yellow-500 mb-1">Bug: Incomplete Logging</div>
+                                <p class="text-xs text-gray-500">CSV logs missed BP/BMI. Rewrote logging dictionary to capture complete session state.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 3: The Crisis -->
+            <div class="mb-24 relative md:flex justify-between items-start reveal group">
+                <div class="md:w-[45%] mb-8 md:mb-0 order-1">
+                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden hover:border-red-500/50 transition-all duration-300 bg-black/40">
+                        <div class="absolute -right-10 -top-10 w-40 h-40 bg-red-500/5 rounded-full blur-3xl"></div>
+                        <h4 class="text-red-500 font-mono text-sm tracking-widest mb-2 font-bold">PHASE 3: CRITICAL ARCHITECTURE</h4>
+                        <h2 class="text-2xl font-bold mb-6 text-white">The "Feature Mismatch" Crisis</h2>
+                        
+                        <div class="space-y-4">
+                            <p class="text-sm text-gray-300">
+                                <strong>The Crash:</strong> Model trained on <code>Occupation_Nurse</code>, <code>Occupation_Doctor</code> (One-Hot). App sent raw string "Nurse".
+                            </p>
+                            
+                            <div class="glass-code p-4 rounded-lg text-xs font-mono border-l-4 border-l-green-600">
+                                <div class="text-gray-500"># The Fix: Manual Vector Construction</div>
+                                <div class="text-blue-400">1. Load feature_names_quality.csv</div>
+                                <div class="text-blue-400">2. Init DataFrame of zeros (shape matches training)</div>
+                                <div class="text-green-500">3. input_df[f"Occupation_{user_input}"] = 1</div>
+                            </div>
+                            
+                            <p class="text-xs text-gray-400">This guaranteed mathematical alignment between live inputs and the trained model architecture.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dot -->
+                <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-5 h-5 rounded-full bg-red-600 shadow-[0_0_20px_rgba(239,68,68,0.5)] z-10 border-4 border-black mt-8"></div>
+                
+                <div class="md:w-[45%] order-2 text-gray-600 text-xs md:pl-8 font-mono pt-8">
+                    // Critical Architecture Fix
+                </div>
+            </div>
+
+            <!-- Phase 4: Intelligence -->
+            <div class="mb-24 relative md:flex justify-between items-start reveal group">
+                <div class="md:w-[45%] order-1 md:order-2 text-gray-600 text-xs md:text-right md:pr-8 hidden md:block font-mono pt-8">
+                    // UX & Logic Overhaul
+                </div>
+                
+                <!-- Dot -->
+                <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-5 h-5 rounded-full bg-green-600 shadow-[0_0_20px_rgba(16,185,129,0.5)] z-10 border-4 border-black mt-8"></div>
+
+                <div class="md:w-[45%] mb-8 md:mb-0 order-2 md:order-1">
+                     <div class="glass-card p-8 rounded-2xl relative overflow-hidden bg-black/40 hover:border-green-500/50">
+                        <h4 class="text-green-500 font-mono text-sm tracking-widest mb-2 font-bold">PHASE 4: INTELLIGENCE</h4>
+                        <h2 class="text-2xl font-bold mb-4 text-white">Smart Engine & Glassmorphism</h2>
+                        
+                        <div class="grid grid-cols-1 gap-4">
+                            <div class="glass-highlight p-3 rounded-lg border-green-500/20">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i class="fas fa-brain text-green-400"></i>
+                                    <span class="font-bold text-white text-sm">Smart Recommendations</span>
+                                </div>
+                                <div class="text-xs text-gray-400 font-mono">
+                                    if Stress > 7: return "Cortisol Management"<br>
+                                    if BMI > 30: return "Positional Therapy"
+                                </div>
+                            </div>
+                            <div class="bg-white/5 p-3 rounded border border-gray-800">
+                                <div class="text-xs font-bold text-white mb-1">Markdown Bug</div>
+                                <p class="text-xs text-gray-500">Recommendations appeared as text blobs. Fixed by joining list items with <code>\n\n</code> for clean rendering.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phase 5: Deployment Hell -->
+            <div class="mb-24 relative md:flex justify-between items-start reveal group">
+                <div class="md:w-[45%] mb-8 md:mb-0 order-1">
+                    <div class="glass-card p-8 rounded-2xl relative overflow-hidden bg-gradient-to-br from-gray-900 via-black to-orange-950/10 hover:border-orange-500/50">
+                        <h4 class="text-orange-500 font-mono text-sm tracking-widest mb-2 font-bold">PHASE 5: DEPLOYMENT</h4>
+                        <h2 class="text-2xl font-bold mb-4 text-white">Storage & Pathing Hell</h2>
+                        
+                        <div class="space-y-6">
+                            <!-- Issue 1 -->
+                            <div class="relative pl-4 border-l-2 border-orange-500">
+                                <h3 class="text-white font-bold text-sm">1. The "File Not Found" Crash</h3>
+                                <p class="text-xs text-gray-400 mt-1">Cloud repo root != App working directory.</p>
+                                <div class="glass-code mt-2 p-2 text-[10px] text-orange-200">
+                                    CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))<br>
+                                    model_path = os.path.join(CURRENT_DIR, 'model.pkl')
+                                </div>
+                            </div>
+
+                            <!-- Issue 2 -->
+                            <div class="relative pl-4 border-l-2 border-red-500">
+                                <h3 class="text-white font-bold text-sm">2. Ephemeral Storage Data Loss</h3>
+                                <p class="text-xs text-gray-400 mt-1">Cloud containers wipe local CSVs on reboot. Google Sheets API failed.</p>
+                                <div class="mt-2 text-xs font-bold text-green-400">
+                                    <i class="fas fa-check mr-1"></i> Final Solution: Hybrid Storage
+                                </div>
+                                <p class="text-[10px] text-gray-500">Use <code>st.session_state</code> for immediate session persistence + Best-effort CSV writing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Dot -->
+                <div class="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 w-5 h-5 rounded-full bg-orange-600 shadow-[0_0_20px_white] z-10 border-4 border-black mt-8"></div>
+                
+                <div class="md:w-[45%] order-2"></div>
+            </div>
+        </div>
+
+        <!-- Final Product Showcase (Mockup based on Screenshot) -->
+        <div class="mt-32 reveal text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">The Polished Master</h2>
+            <p class="text-gray-400 mb-12 max-w-2xl mx-auto">Seamless integration of ML models, robust error handling, and clinical-grade UI.</p>
+            
+            <div class="relative max-w-3xl mx-auto group text-left">
+                <!-- Outer Container (App Mockup) - Made Darker and More Solid -->
+                <div class="bg-[#050505] rounded-xl overflow-hidden shadow-2xl border border-gray-800 relative z-10">
+                    
+                    <!-- App Header (Blue Box) -->
+                    <div class="bg-[#1e3a8a] p-8 text-center">
+                        <div class="text-3xl mb-2">🌙 <span class="font-bold text-white">Sleep Health Advisor</span></div>
+                        <p class="text-blue-200 text-sm">Clinical-Grade Analysis & Personalized Recommendations</p>
+                    </div>
+
+                    <!-- App Body -->
+                    <div class="p-6 space-y-6">
+                        
+                        <!-- Section: Identity -->
+                        <div class="border border-gray-700 rounded-lg p-4 bg-[#1e293b]/50">
+                            <h3 class="text-blue-400 font-bold mb-4 flex items-center">
+                                <i class="fas fa-user mr-2"></i> Identity & Profile
+                            </h3>
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label class="text-xs text-gray-400 block mb-1">Biological Age</label>
+                                    <div class="app-mock-input flex items-center justify-between px-3 text-white text-sm">30 <span>- +</span></div>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-gray-400 block mb-1">BMI Classification</label>
+                                    <div class="app-mock-input flex items-center px-3 text-white text-sm">Normal <i class="fas fa-chevron-down ml-auto"></i></div>
+                                </div>
+                            </div>
+                             <!-- Slider Mock -->
+                             <div class="mt-4">
+                                <div class="flex justify-between text-xs text-white mb-2">
+                                    <span>Stress Level (1-10)</span>
+                                    <span class="text-red-400">5</span>
+                                </div>
+                                <div class="app-mock-slider w-full"></div>
+                            </div>
+                        </div>
+
+                        <!-- Section: Lifestyle -->
+                        <div class="border border-gray-700 rounded-lg p-4 bg-[#1e293b]/50">
+                            <h3 class="text-blue-400 font-bold mb-4 flex items-center">
+                                <i class="fas fa-running mr-2"></i> Lifestyle & Habits
+                            </h3>
+                            <div class="grid grid-cols-2 gap-6">
+                                <div>
+                                    <div class="flex justify-between text-xs text-white mb-2">
+                                        <span>Avg Sleep Duration</span>
+                                        <span class="text-red-400">7.00</span>
+                                    </div>
+                                    <div class="app-mock-slider w-full"></div>
+                                </div>
+                                <div>
+                                    <div class="flex justify-between text-xs text-white mb-2">
+                                        <span>Physical Activity</span>
+                                        <span class="text-red-400">45</span>
+                                    </div>
+                                    <div class="app-mock-slider w-full"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Analyze Button -->
+                        <button class="w-full py-3 bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-600 rounded text-white font-bold flex items-center justify-center hover:border-blue-500 transition-colors">
+                            <i class="fas fa-rocket mr-2 text-pink-500"></i> ANALYZE & GET INSIGHTS
+                        </button>
+
+                    </div>
+                </div>
+                
+                <!-- Glow Effect behind App (Darkened) -->
+                <div class="absolute -inset-2 bg-gradient-to-b from-blue-900/10 to-purple-900/10 rounded-xl blur-xl -z-10 opacity-60"></div>
+            </div>
+            
+            <!-- Bottom Call to Action -->
+            <div class="mt-20 mb-10">
+                <a href="https://app-vuytw223yxmfjabq76neu4.streamlit.app/" target="_blank" class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-white transition-all duration-300 bg-blue-600 hover:bg-blue-500 rounded-full shadow-[0_0_40px_rgba(37,99,235,0.3)] hover:scale-105 border border-blue-400/20">
+                    Launch Live App
+                    <i class="fas fa-external-link-alt ml-3"></i>
+                </a>
+            </div>
+        </div>
+        
+    </main>
+
+    <footer class="border-t border-gray-900 mt-20 bg-black py-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="mb-8">
+                 <div class="text-3xl font-bold tracking-tighter text-white mb-2">
+                    SLEEP<span class="text-blue-500">AI</span>
+                </div>
+                <p class="text-gray-600">Democratizing sleep health analysis.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row justify-center items-center gap-6 text-sm text-gray-500 mb-8">
+                <a href="#" class="hover:text-white transition-colors">Documentation</a>
+                <span class="hidden md:inline">&bull;</span>
+                <a href="https://www.kaggle.com/datasets/uom190346a/sleep-health-and-lifestyle-dataset" class="hover:text-white transition-colors" target="_blank">Dataset (Kaggle)</a>
+                <span class="hidden md:inline">&bull;</span>
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/tree/af7bbf2ee49ae3e0029caeb5aa0340355ac29f65/12_Final_Projects_of_all/01_Analysis/main" class="hover:text-white transition-colors" target="_blank">GitHub Repo</a>
+            </div>
+
+            <div class="pt-8 border-t border-gray-900">
+                <p class="text-gray-500 text-sm">
+                    Designed & Developed by <span class="text-blue-500 font-semibold">Krunal Vaghamshi</span>
+                </p>
+                <p class="text-gray-700 text-xs mt-2">&copy; 2025 Sleep Health AI Project. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Animations Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, observerOptions);
+
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(el => observer.observe(el));
+        });
+    </script>
+</body>
+</html>

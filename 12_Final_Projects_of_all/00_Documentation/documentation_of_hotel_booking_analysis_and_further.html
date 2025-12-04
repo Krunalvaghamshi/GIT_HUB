@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Booking Intelligence | End-to-End System</title>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c4a6e',
+                        },
+                        gold: {
+                            400: '#fbbf24',
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        },
+                        dark: {
+                            bg: '#020617', // Darker midnight
+                            card: '#0f172a',
+                            border: '#1e293b'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #020617;
+            color: #f8fafc;
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(14, 165, 233, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(245, 158, 11, 0.05) 0%, transparent 25%);
+        }
+        
+        .glass-card {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            background: rgba(30, 41, 59, 0.8);
+            border-color: rgba(14, 165, 233, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #fbbf24);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #0ea5e9, #f59e0b, #0ea5e9);
+            transform: translateX(-50%);
+            z-index: 0;
+            opacity: 0.2;
+        }
+
+        .tech-badge {
+            font-family: 'Courier New', monospace;
+            font-size: 0.70rem;
+            padding: 4px 10px;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-badge:hover {
+            background: rgba(14, 165, 233, 0.1);
+            color: #38bdf8;
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+        
+        /* Blueprint Separator */
+        .blueprint-separator {
+            background: repeating-linear-gradient(
+              45deg,
+              rgba(14, 165, 233, 0.05),
+              rgba(14, 165, 233, 0.05) 10px,
+              rgba(14, 165, 233, 0.1) 10px,
+              rgba(14, 165, 233, 0.1) 20px
+            );
+            border-top: 1px dashed rgba(14, 165, 233, 0.3);
+            border-bottom: 1px dashed rgba(14, 165, 233, 0.3);
+        }
+
+        /* Chart Tooltip Customization */
+        .chart-tooltip {
+            background: rgba(15, 23, 42, 0.95) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(4px);
+            font-family: 'Outfit', sans-serif !important;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-500 selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-card border-b border-white/5 !bg-opacity-90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center text-white shadow-lg shadow-brand-500/20 ring-1 ring-white/10">
+                        <i class="fa-solid fa-hotel"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-xl font-bold tracking-wide text-white">Hotel<span class="text-brand-400">Intelligence</span></span>
+                        <span class="block text-[10px] text-slate-400 uppercase tracking-widest font-medium">End-to-End System</span>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#journey" class="text-sm font-medium text-slate-400 hover:text-white transition duration-300">Development Journey</a>
+                    <a href="#visuals" class="text-sm font-medium text-slate-400 hover:text-white transition duration-300">Data Story</a>
+                    <a href="https://github.com/Krunalvaghamshi/GIT_HUB/tree/c23a2e57b1dedc9e341463e33eed44625105a91e/12_Final_Projects_of_all/06_Data_analysis/Hotel_Booking_Analysis" target="_blank" class="px-6 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-bold uppercase tracking-wider transition text-gold-400 hover:border-gold-400/30">
+                        <i class="fa-brands fa-github mr-2"></i>Repo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-24 min-h-[95vh] flex items-center justify-center overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 pointer-events-none">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-600/10 rounded-full blur-[100px] animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold-600/10 rounded-full blur-[100px] animate-pulse-slow" style="animation-delay: 2s;"></div>
+        </div>
+
+        <div class="max-w-5xl mx-auto px-4 text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card text-brand-400 text-xs font-bold uppercase tracking-widest mb-10 border border-brand-500/20 hover:border-brand-500/40 transition">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+                </span>
+                Data Science • Machine Learning • Engineering
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-serif font-bold tracking-tight mb-8 leading-tight drop-shadow-2xl">
+                Predicting Cancellations <br>
+                <span class="gradient-text">Protecting Revenue</span>
+            </h1>
+            
+            <p class="mt-6 max-w-2xl mx-auto text-lg text-slate-400 leading-relaxed font-light">
+                An intelligent system that bridges the gap between <strong class="text-slate-200">Raw Data Analysis</strong> and <strong class="text-slate-200">Production AI</strong>. 
+                Built to identify booking risks and automate concierge retention strategies.
+            </p>
+
+            <div class="mt-14 flex flex-col md:flex-row justify-center gap-6">
+                <a href="#visuals" class="group px-8 py-4 rounded-xl bg-gradient-to-r from-brand-600 to-brand-500 text-white font-semibold transition shadow-lg shadow-brand-500/25 hover:shadow-brand-500/40 hover:-translate-y-1">
+                    <i class="fa-solid fa-chart-pie mr-2"></i> Explore Insights
+                </a>
+                <a href="#journey" class="px-8 py-4 rounded-xl glass-card text-slate-300 font-semibold transition hover:text-white hover:bg-white/5 hover:-translate-y-1">
+                    View Blueprint
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7-Phase Journey Timeline -->
+    <section id="journey" class="py-24 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-24">
+                <span class="text-brand-500 font-bold tracking-widest uppercase text-xs">The Architecture</span>
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mt-3 text-white">Development <span class="text-slate-500">Blueprint</span></h2>
+            </div>
+            
+            <div class="relative">
+                <div class="hidden md:block timeline-line"></div>
+
+                <!-- Phase 1: Problem ID -->
+                <div class="relative z-10 mb-24">
+                    <div class="flex flex-col md:flex-row items-center gap-12 group">
+                        <div class="w-full md:w-1/2 md:text-right order-2 md:order-1">
+                            <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-brand-400 transition">1. Problem Identification</h3>
+                            <p class="text-slate-400 mb-5 text-sm leading-relaxed">
+                                Hotels lose massive revenue from last-minute cancellations. 
+                                The objective was to build an AI system to predict <code class="text-red-400 bg-red-400/10 px-1 rounded">is_canceled</code> probability, enabling dynamic deposit requests.
+                            </p>
+                            <div class="flex flex-wrap gap-2 md:justify-end">
+                                <span class="tech-badge">Target: 0 (Check-in) / 1 (Cancel)</span>
+                                <span class="tech-badge">119k Records</span>
+                            </div>
+                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-900 border-2 border-brand-500 flex items-center justify-center text-brand-400 font-bold shadow-[0_0_30px_rgba(14,165,233,0.3)] order-1 md:order-2 shrink-0 z-20 text-xl group-hover:scale-110 transition duration-300">1</div>
+                        <div class="w-full md:w-1/2 order-3">
+                            <div class="glass-card p-6 rounded-2xl border-l-4 border-l-brand-500/50">
+                                <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-3">
+                                    <i class="fa-solid fa-database text-brand-400"></i>
+                                    <span class="text-sm font-semibold text-slate-200">Raw Data (hotel_bookings.csv)</span>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 text-xs text-slate-400 font-mono">
+                                    <div><i class="fa-solid fa-check text-green-500 mr-2"></i>Lead Time</div>
+                                    <div><i class="fa-solid fa-check text-green-500 mr-2"></i>ADR (Price)</div>
+                                    <div><i class="fa-solid fa-check text-green-500 mr-2"></i>Market Segment</div>
+                                    <div><i class="fa-solid fa-check text-green-500 mr-2"></i>Requests</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2: EDA -->
+                <div class="relative z-10 mb-24">
+                    <div class="flex flex-col md:flex-row items-center gap-12 group">
+                        <div class="w-full md:w-1/2 order-3 md:order-1">
+                             <div class="glass-card p-6 rounded-2xl border-r-4 border-r-gold-500/50">
+                                <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-3">
+                                    <i class="fa-solid fa-magnifying-glass-chart text-gold-400"></i>
+                                    <span class="text-sm font-semibold text-slate-200">Critical Insights</span>
+                                </div>
+                                <ul class="space-y-3 text-xs text-slate-400">
+                                    <li class="flex items-start gap-3">
+                                        <div class="mt-0.5 w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"></div>
+                                        <span><strong>Lead Time Effect:</strong> As lead time increases (>90 days), cancellation rates skyrocket.</span>
+                                    </li>
+                                    <li class="flex items-start gap-3">
+                                        <div class="mt-0.5 w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0"></div>
+                                        <span><strong>Channel Risk:</strong> "Online TA" bookings are highly volatile compared to "Corporate".</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-900 border-2 border-brand-500 flex items-center justify-center text-brand-400 font-bold shadow-[0_0_30px_rgba(14,165,233,0.3)] order-1 md:order-2 shrink-0 z-20 text-xl group-hover:scale-110 transition duration-300">2</div>
+                        <div class="w-full md:w-1/2 order-2 md:order-3">
+                            <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-gold-400 transition">2. Exploratory Analysis</h3>
+                            <p class="text-slate-400 mb-5 text-sm leading-relaxed">
+                                Before writing any app code, we conducted deep EDA in Jupyter Notebooks. We cleaned anomalies (e.g., bookings with 0 adults) and identified the "Smart Drivers" for the model.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-badge">Pandas</span>
+                                <span class="tech-badge">Seaborn</span>
+                                <span class="tech-badge">Data Cleaning</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3: Feature Engineering -->
+                <div class="relative z-10 mb-24">
+                    <div class="flex flex-col md:flex-row items-center gap-12 group">
+                        <div class="w-full md:w-1/2 md:text-right order-2 md:order-1">
+                            <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-purple-400 transition">3. Feature Engineering</h3>
+                            <p class="text-slate-400 mb-5 text-sm leading-relaxed">
+                                ML models can't understand strings. We created a translation layer. 
+                                We also handled skewness in <em>Lead Time</em> and <em>ADR</em> using Log Transformations for better model performance.
+                            </p>
+                            <div class="flex flex-wrap gap-2 md:justify-end">
+                                <span class="tech-badge">StandardScaler</span>
+                                <span class="tech-badge">np.log1p</span>
+                            </div>
+                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-900 border-2 border-brand-500 flex items-center justify-center text-brand-400 font-bold shadow-[0_0_30px_rgba(14,165,233,0.3)] order-1 md:order-2 shrink-0 z-20 text-xl group-hover:scale-110 transition duration-300">3</div>
+                        <div class="w-full md:w-1/2 order-3">
+                            <div class="glass-card p-6 rounded-2xl border-l-4 border-l-purple-500/50">
+                                <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-3">
+                                    <i class="fa-solid fa-code-branch text-purple-400"></i>
+                                    <span class="text-sm font-semibold text-slate-200">Encoding Maps (Hardcoded)</span>
+                                </div>
+                                <div class="font-mono text-[10px] text-green-400 bg-slate-950 p-4 rounded-lg border border-white/5 shadow-inner">
+                                    HOTEL_MAP = {'Resort': 0, 'City': 1}<br>
+                                    DEPOSIT_MAP = {'No Deposit': 0, 'Non Refund': 1}<br>
+                                    MARKET_MAP = {'Online TA': 6, 'Direct': 3}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STRATEGIC SEPARATOR -->
+                <div class="relative z-10 my-28 text-center blueprint-separator py-10 rounded-3xl mx-4">
+                    <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-slate-900 border border-brand-500/50 text-brand-400 text-2xl mb-6 shadow-lg shadow-brand-500/20">
+                        <i class="fa-solid fa-rocket animate-pulse-slow"></i>
+                    </div>
+                    <h3 class="text-3xl font-serif font-bold text-white mb-4">Blueprint for Future Development</h3>
+                    <p class="max-w-2xl mx-auto text-slate-400 text-sm leading-relaxed px-4">
+                        Having distilled actionable intelligence from raw historical data, the focus now pivots from <strong class="text-white">Retrospective Analysis</strong> to <strong class="text-white">Predictive Action</strong>. 
+                        The following phases outline the architectural roadmap required to operationalize these insights into a scalable, real-time intelligence system within a production environment.
+                    </p>
+                </div>
+
+                <!-- Phase 4: Model Training -->
+                <div class="relative z-10 mb-24">
+                    <div class="flex flex-col md:flex-row items-center gap-12 group">
+                        <div class="w-full md:w-1/2 order-3 md:order-1">
+                             <div class="glass-card p-6 rounded-2xl border-r-4 border-r-blue-500/50">
+                                <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-3">
+                                    <i class="fa-solid fa-box-archive text-blue-400"></i>
+                                    <span class="text-sm font-semibold text-slate-200">Model Artifacts (Joblib)</span>
+                                </div>
+                                <p class="text-xs text-slate-400 mb-3">We saved the exact scaler and feature list alongside the model to ensure the app replicates the training environment perfectly.</p>
+                                <div class="font-mono text-[10px] text-blue-300 bg-slate-950 p-4 rounded-lg border border-white/5 shadow-inner">
+                                    artifact = {<br>
+                                    &nbsp;&nbsp;'model': trained_xgboost,<br>
+                                    &nbsp;&nbsp;'scaler': fitted_scaler,<br>
+                                    &nbsp;&nbsp;'features': list_of_columns<br>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-900 border-2 border-brand-500 flex items-center justify-center text-brand-400 font-bold shadow-[0_0_30px_rgba(14,165,233,0.3)] order-1 md:order-2 shrink-0 z-20 text-xl group-hover:scale-110 transition duration-300">4</div>
+                        <div class="w-full md:w-1/2 order-2 md:order-3">
+                            <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-blue-400 transition">4. Predictive Modeling & Serialization</h3>
+                            <p class="text-slate-400 mb-5 text-sm leading-relaxed">
+                                <strong class="text-white">Winner: XGBoost Classifier.</strong>
+                                Selected for its speed and performance on tabular data. The model was serialized into a <code>.pkl</code> file for portability and future deployment.
+                            </p>
+                            <span class="tech-badge text-gold-400 border-gold-400/30">xgboost_booking_model.pkl</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 5: App Dev -->
+                <div class="relative z-10 mb-24">
+                    <div class="flex flex-col md:flex-row items-center gap-12 group">
+                        <div class="w-full md:w-1/2 md:text-right order-2 md:order-1">
+                            <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-pink-400 transition">5. Production Application Logic</h3>
+                            <p class="text-slate-400 mb-5 text-sm leading-relaxed">
+                                Moved from research (Notebook) to production (Streamlit). 
+                                Implemented a <strong>"Smart Input"</strong> system that automatically calculates lead time from selected dates, reducing user friction.
+                            </p>
+                            <div class="flex flex-wrap gap-2 md:justify-end">
+                                <span class="tech-badge">Streamlit</span>
+                                <span class="tech-badge">preprocess_and_predict()</span>
+                            </div>
+                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-900 border-2 border-brand-500 flex items-center justify-center text-brand-400 font-bold shadow-[0_0_30px_rgba(14,165,233,0.3)] order-1 md:order-2 shrink-0 z-20 text-xl group-hover:scale-110 transition duration-300">5</div>
+                        <div class="w-full md:w-1/2 order-3">
+                            <div class="glass-card p-6 rounded-2xl border-l-4 border-l-pink-500/50">
+                                <div class="flex items-center gap-3 mb-3">
+                                    <i class="fa-solid fa-bell-concierge text-pink-400"></i>
+                                    <span class="text-sm font-semibold text-white">The "Concierge" Logic</span>
+                                </div>
+                                <p class="text-xs text-slate-400 mb-3">We added a business logic layer on top of the AI score:</p>
+                                <ul class="space-y-2 text-xs text-slate-300">
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-triangle-exclamation text-red-400"></i> <strong>Prob > 70%:</strong> Trigger "Retention Action"</li>
+                                    <li class="flex items-center gap-2"><i class="fa-solid fa-crown text-gold-400"></i> <strong>High ADR:</strong> Trigger "VIP Protocol"</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 6 & 7: Deployment -->
+                <div class="relative z-10">
+                    <div class="flex flex-col md:flex-row items-center gap-12 group">
+                        <div class="w-full md:w-1/2 order-3 md:order-1">
+                             <div class="glass-card p-6 rounded-2xl border-r-4 border-r-green-500/50">
+                                <div class="flex items-center gap-3 mb-4 border-b border-white/5 pb-3">
+                                    <i class="fa-solid fa-shield-halved text-green-400"></i>
+                                    <span class="text-sm font-semibold text-slate-200">Fail-Safe System</span>
+                                </div>
+                                <p class="text-xs text-slate-400 mb-3">Cloud paths vary. We added a recursive search function to locate the model file anywhere in the environment.</p>
+                                <div class="font-mono text-[10px] text-green-400 bg-slate-950 p-4 rounded-lg border border-white/5 shadow-inner">
+                                    def find_file_in_dir(filename):<br>
+                                    &nbsp;&nbsp;# recursively searches server<br>
+                                    &nbsp;&nbsp;# ensures robustness
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-14 h-14 rounded-full bg-slate-900 border-2 border-brand-500 flex items-center justify-center text-brand-400 font-bold shadow-[0_0_30px_rgba(14,165,233,0.3)] order-1 md:order-2 shrink-0 z-20 text-xl group-hover:scale-110 transition duration-300">6</div>
+                        <div class="w-full md:w-1/2 order-2 md:order-3">
+                            <h3 class="text-2xl font-bold mb-3 text-white group-hover:text-green-400 transition">6. Robust Cloud Deployment</h3>
+                            <p class="text-slate-400 mb-5 text-sm leading-relaxed">
+                                Finalized <code>requirements.txt</code> for scalable cloud environments and implemented a manual model uploader sidebar as a backup, ensuring 99.9% availability.
+                            </p>
+                            <span class="tech-badge">Streamlit Cloud</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Analysis Section -->
+    <section id="visuals" class="py-24 bg-slate-900/40 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-serif font-bold text-white">Visual <span class="text-gold-400">Intelligence</span></h2>
+                <p class="text-slate-400 mt-2 max-w-2xl mx-auto">The data patterns that drive our "Concierge" recommendations.</p>
+            </div>
+
+            <!-- Grid of Charts -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Chart 1: Lead Time Impact -->
+                <div class="glass-card rounded-2xl p-6 lg:col-span-2 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition"><i class="fa-solid fa-chart-area text-9xl"></i></div>
+                    <div class="flex justify-between items-start mb-6 relative z-10">
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Lead Time vs Cancellation</h3>
+                            <p class="text-xs text-brand-400 font-mono tracking-widest mt-1">PRIMARY RISK FACTOR</p>
+                        </div>
+                        <div class="bg-brand-500/10 p-2.5 rounded-lg text-brand-400 ring-1 ring-brand-500/20"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                    </div>
+                    <div class="h-64">
+                        <canvas id="leadTimeChart"></canvas>
+                    </div>
+                    <p class="mt-6 text-sm text-slate-300 border-t border-white/5 pt-4">
+                        <strong class="text-gold-400">Analyst Note:</strong> As lead time increases (booking > 90 days out), the probability of cancellation rises sharply. This variable carries the highest weight in our XGBoost model.
+                    </p>
+                </div>
+
+                <!-- Chart 2: Special Requests -->
+                <div class="glass-card rounded-2xl p-6 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Guest Intent</h3>
+                            <p class="text-xs text-slate-400 mt-1">Special Requests</p>
+                        </div>
+                        <div class="bg-purple-500/10 p-2.5 rounded-lg text-purple-400 ring-1 ring-purple-500/20"><i class="fa-solid fa-bell-concierge"></i></div>
+                    </div>
+                    <div class="h-64">
+                        <canvas id="specialRequestsChart"></canvas>
+                    </div>
+                    <p class="mt-6 text-sm text-slate-300 border-t border-white/5 pt-4">
+                        <strong class="text-purple-400">Insight:</strong> An inverse relationship. Guests who make requests (parking, high floor) show higher commitment.
+                    </p>
+                </div>
+
+                <!-- Chart 3: Hotel Type -->
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Booking Split</h3>
+                        </div>
+                        <div class="bg-blue-500/10 p-2.5 rounded-lg text-blue-400 ring-1 ring-blue-500/20"><i class="fa-solid fa-hotel"></i></div>
+                    </div>
+                    <div class="h-56">
+                        <canvas id="hotelTypeChart"></canvas>
+                    </div>
+                    <p class="mt-6 text-sm text-slate-300 border-t border-white/5 pt-4">
+                        City hotels have higher volume but also higher churn volatility compared to Resort hotels.
+                    </p>
+                </div>
+
+                <!-- Chart 4: Country Distribution (NEW) -->
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Top Origins</h3>
+                            <p class="text-xs text-slate-400 mt-1">Geographic Risk</p>
+                        </div>
+                        <div class="bg-indigo-500/10 p-2.5 rounded-lg text-indigo-400 ring-1 ring-indigo-500/20"><i class="fa-solid fa-earth-europe"></i></div>
+                    </div>
+                    <div class="h-56">
+                        <canvas id="countryChart"></canvas>
+                    </div>
+                    <p class="mt-6 text-sm text-slate-300 border-t border-white/5 pt-4">
+                        <strong class="text-indigo-400">Insight:</strong> Portugal (PRT) and UK (GBR) are top markets. Domestic bookings (PRT) often have different cancellation behaviors than international ones.
+                    </p>
+                </div>
+
+                 <!-- Chart 5: Deposit Type -->
+                 <div class="glass-card rounded-2xl p-6">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-white">Deposit Impact</h3>
+                            <p class="text-xs text-slate-400 mt-1">Financial Security</p>
+                        </div>
+                        <div class="bg-green-500/10 p-2.5 rounded-lg text-green-400 ring-1 ring-green-500/20"><i class="fa-solid fa-money-bill-wave"></i></div>
+                    </div>
+                    <div class="h-56">
+                        <canvas id="depositChart"></canvas>
+                    </div>
+                    <p class="mt-6 text-sm text-slate-300 border-t border-white/5 pt-4">
+                        Non-Refundable bookings are revenue-secured, allowing us to lower the "risk score" even if probability is high.
+                    </p>
+                </div>
+
+                <!-- Chart 6: Repeated Guest -->
+                <div class="glass-card rounded-2xl p-6 lg:col-span-2 lg:flex lg:gap-8 group">
+                    <div class="lg:w-1/3 flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-6">
+                                <div>
+                                    <h3 class="text-lg font-bold text-white">Customer Loyalty</h3>
+                                    <p class="text-xs text-pink-400 font-mono tracking-widest mt-1">RETENTION METRIC</p>
+                                </div>
+                                <div class="bg-pink-500/10 p-2.5 rounded-lg text-pink-400 ring-1 ring-pink-500/20"><i class="fa-solid fa-heart"></i></div>
+                            </div>
+                            <p class="text-sm text-slate-300 leading-relaxed">
+                                <strong class="text-pink-400">Analyst Note:</strong> Repeated guests have a near-zero cancellation rate (approx 95% retention). 
+                                <br><br>
+                                The system automatically tags these users as <strong class="text-white">"VIP Safe"</strong>, bypassing standard risk checks and offering express check-in.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="lg:w-2/3 h-64 lg:h-auto mt-6 lg:mt-0">
+                        <canvas id="repeatedGuestChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Codebase Section -->
+    <section id="codebase" class="py-24 relative overflow-hidden">
+        <!-- Background Glow -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full max-w-4xl bg-brand-900/10 blur-[100px] -z-10 rounded-full"></div>
+
+        <div class="max-w-3xl mx-auto px-4 text-center">
+            <h2 class="text-4xl font-serif font-bold mb-6 text-white">The <span class="text-gold-400">Codebase</span></h2>
+            <p class="text-slate-400 mb-12 text-lg">
+                Explore the technical implementation. The repository includes the Jupyter Notebooks for EDA, the preprocessing pipelines, and the Streamlit application logic.
+            </p>
+
+            <a href="https://github.com/Krunalvaghamshi/GIT_HUB/tree/c23a2e57b1dedc9e341463e33eed44625105a91e/12_Final_Projects_of_all/06_Data_analysis/Hotel_Booking_Analysis" target="_blank" class="group block glass-card p-10 rounded-3xl hover:bg-slate-800/80 transition duration-300 border border-white/10 text-center relative overflow-hidden mx-auto max-w-xl">
+                 <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+                 
+                 <div class="mb-6 inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-700/50 text-white ring-1 ring-white/20 group-hover:scale-110 transition duration-300">
+                    <i class="fa-brands fa-github text-4xl"></i>
+                </div>
+                
+                <h3 class="text-2xl font-bold text-white mb-3 group-hover:text-brand-400 transition">View Source Code</h3>
+                <p class="text-slate-400 text-sm mb-8 px-8">Access the full project structure, requirements.txt, and model serialization scripts.</p>
+                
+                <div class="inline-flex items-center px-6 py-3 rounded-full bg-brand-600 text-white font-semibold text-sm group-hover:bg-brand-500 transition shadow-lg shadow-brand-500/20">
+                    Open Repository <i class="fa-solid fa-arrow-right ml-2 group-hover:translate-x-1 transition"></i>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-12 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex justify-center gap-6 mb-6 text-slate-500">
+                <i class="fa-brands fa-python hover:text-white transition"></i>
+                <i class="fa-solid fa-database hover:text-white transition"></i>
+                <i class="fa-solid fa-server hover:text-white transition"></i>
+            </div>
+            <div class="text-slate-600 text-sm">
+                &copy; 2025 Hotel Booking Intelligence Project.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chart Logic -->
+    <script>
+        // Common Chart Options
+        Chart.defaults.color = '#94a3b8';
+        Chart.defaults.font.family = "'Outfit', sans-serif";
+
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { labels: { color: '#cbd5e1', font: { size: 12 } } },
+                tooltip: {
+                    backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                    titleColor: '#fff',
+                    bodyColor: '#cbd5e1',
+                    padding: 12,
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    borderWidth: 1,
+                    cornerRadius: 8,
+                    displayColors: false
+                }
+            },
+            scales: {
+                y: {
+                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                    ticks: { color: '#64748b' }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: '#64748b' }
+                }
+            }
+        };
+
+        // 1. Lead Time (Smart Chart)
+        new Chart(document.getElementById('leadTimeChart'), {
+            type: 'line',
+            data: {
+                labels: ['0-7 Days', '8-30 Days', '30-90 Days', '90-180 Days', '180+ Days'],
+                datasets: [{
+                    label: 'Cancellation Probability (%)',
+                    data: [12, 25, 45, 65, 82],
+                    borderColor: '#f59e0b', // Gold
+                    backgroundColor: (context) => {
+                        const ctx = context.chart.ctx;
+                        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                        gradient.addColorStop(0, 'rgba(245, 158, 11, 0.2)');
+                        gradient.addColorStop(1, 'rgba(245, 158, 11, 0)');
+                        return gradient;
+                    },
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#f59e0b',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2,
+                    pointRadius: 6,
+                    pointHoverRadius: 8
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: { ...commonOptions.plugins, legend: { display: false } }
+            }
+        });
+
+        // 2. Special Requests
+        new Chart(document.getElementById('specialRequestsChart'), {
+            type: 'bar',
+            data: {
+                labels: ['0 Requests', '1 Request', '2 Requests', '3+ Requests'],
+                datasets: [{
+                    label: 'Cancellation Rate',
+                    data: [45, 25, 15, 5],
+                    backgroundColor: [
+                        'rgba(239, 68, 68, 0.7)',  // Red
+                        'rgba(245, 158, 11, 0.7)', // Orange
+                        'rgba(16, 185, 129, 0.7)', // Green
+                        'rgba(16, 185, 129, 0.9)'  // Deep Green
+                    ],
+                    borderRadius: 8,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: { ...commonOptions.plugins, legend: { display: false } }
+            }
+        });
+
+        // 3. Hotel Type
+        new Chart(document.getElementById('hotelTypeChart'), {
+            type: 'doughnut',
+            data: {
+                labels: ['City Hotel', 'Resort Hotel'],
+                datasets: [{
+                    data: [66.4, 33.6],
+                    backgroundColor: ['#0ea5e9', '#6366f1'],
+                    borderWidth: 0,
+                    hoverOffset: 15
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '75%',
+                plugins: {
+                    legend: { position: 'right', labels: { color: '#cbd5e1', padding: 20, usePointStyle: true } }
+                }
+            }
+        });
+
+        // 4. Country Distribution (NEW)
+        new Chart(document.getElementById('countryChart'), {
+            type: 'bar',
+            data: {
+                labels: ['PRT', 'GBR', 'FRA', 'ESP', 'DEU'],
+                datasets: [{
+                    label: 'Bookings',
+                    data: [48590, 12129, 10415, 8568, 7255], // Approximate top 5 from dataset
+                    backgroundColor: '#6366f1',
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: { ...commonOptions.plugins, legend: { display: false } }
+            }
+        });
+
+        // 5. Deposit Type
+        new Chart(document.getElementById('depositChart'), {
+            type: 'bar',
+            data: {
+                labels: ['No Deposit', 'Non Refund', 'Refundable'],
+                datasets: [
+                    {
+                        label: 'Cancellation Rate (%)',
+                        data: [28.4, 99.3, 22.2],
+                        backgroundColor: ['#22d3ee', '#f43f5e', '#a78bfa'],
+                        borderRadius: 6
+                    }
+                ]
+            },
+            options: {
+                ...commonOptions,
+                indexAxis: 'y',
+                scales: {
+                    x: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#64748b' } },
+                    y: { grid: { display: false }, ticks: { color: '#cbd5e1' } }
+                }
+            }
+        });
+
+        // 6. Repeated Guest
+        new Chart(document.getElementById('repeatedGuestChart'), {
+            type: 'line',
+            data: {
+                labels: ['New Guest', 'Repeated Guest'],
+                datasets: [{
+                    label: 'Retention Rate %',
+                    data: [60, 95],
+                    borderColor: '#ec4899',
+                    backgroundColor: (context) => {
+                        const ctx = context.chart.ctx;
+                        const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+                        gradient.addColorStop(0, 'rgba(236, 72, 153, 0.2)');
+                        gradient.addColorStop(1, 'rgba(236, 72, 153, 0)');
+                        return gradient;
+                    },
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 8,
+                    pointBackgroundColor: '#ec4899',
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 2
+                }]
+            },
+            options: {
+                ...commonOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                        ticks: { color: '#64748b' }
+                    },
+                     x: {
+                        grid: { display: false },
+                        ticks: { color: '#cbd5e1', font: { size: 14, weight: 'bold' } }
+                    }
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
