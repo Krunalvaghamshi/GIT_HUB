@@ -1,0 +1,241 @@
+### Jio ###
+
+#1
+Jio Churned Customer = COUNTROWS(FILTER(telecom_churn,telecom_churn[Reliance_Jio_Churned]=1))
+
+#2
+Jio Total Customers = COUNTROWS(FILTER(telecom_churn,telecom_churn[telecom_partner] = "Reliance Jio"))
+
+#3
+Jio Stayed Customers = 'Jio Measures Table'[Jio Total Customers] - 'Jio Measures Table'[Jio Churned Customer]
+
+#4
+Total Calls Made in Jio = CALCULATE(SUM(telecom_churn[Calls_Made_p] ),telecom_churn[telecom_partner] = "Reliance Jio")
+
+#5 
+Total SMS Sent in Jio = CALCULATE(SUM(telecom_churn[SMS_Sent_p]),telecom_churn[telecom_partner] = "Reliance Jio")
+
+#6
+Total Data Used By Customer in Jio = CALCULATE(SUM(telecom_churn[Data_used_p] ),telecom_churn[telecom_partner] = "Reliance Jio")
+
+#7
+AVG Calls Made By pc in Jio = CALCULATE(AVERAGE(telecom_churn[Calls_Made_p] ),telecom_churn[telecom_partner] = "Reliance Jio")
+
+#8
+AVG SMS Sent  by pc in Jio = CALCULATE(AVERAGE(telecom_churn[SMS_Sent_p]),telecom_churn[telecom_partner] = "Reliance Jio")
+
+#9
+AVG Data Used By Customer in Jio = CALCULATE(AVERAGE(telecom_churn[Data_used_p] ),telecom_churn[telecom_partner] = "Reliance Jio")
+
+#10
+MostFrequentAgeJio = 
+VAR AgeWithCount =
+    SUMMARIZE(
+        FILTER(telecom_churn, telecom_churn[telecom_partner] = "Reliance Jio"),
+        telecom_churn[Age],
+        "AgeCount", COUNT(telecom_churn[Age])
+    )
+VAR MaxAgeCount =
+    MAXX(AgeWithCount, [AgeCount])
+VAR Result =
+    CALCULATE(
+        MAX(telecom_churn[Age]),
+        FILTER(AgeWithCount, [AgeCount] = MaxAgeCount)
+    )
+RETURN Result
+
+
+### Airtel ###
+
+#1
+Airtel Churned Customer = COUNTROWS(FILTER(telecom_churn,telecom_churn[Airtel_Churned]=1))
+
+#2
+Airtel Total Customers = COUNTROWS(FILTER(telecom_churn,telecom_churn[telecom_partner] = "Airtel"))
+
+#3
+Airtel Stayed Customers = 'Airtel Measures Table'[Airtel Total Customers] - 'Airtel Measures Table'[Airtel Churned Customer]
+
+#4
+Total Calls Made in Airtel = CALCULATE(SUM(telecom_churn[Calls_Made_p] ),telecom_churn[telecom_partner] = "Airtel")
+
+#5 
+Total SMS Sent in Airtel = CALCULATE(SUM(telecom_churn[SMS_Sent_p]),telecom_churn[telecom_partner] = "Airtel")
+
+#6
+Total Data Used By Customer in Airtel = CALCULATE(SUM(telecom_churn[Data_used_p] ),telecom_churn[telecom_partner] = "Airtel")
+
+#7
+AVG Calls Made By pc in Airtel = CALCULATE(AVERAGE(telecom_churn[Calls_Made_p] ),telecom_churn[telecom_partner] = "Airtel")
+
+#8
+AVG SMS Sent  by pc in Airtel = CALCULATE(AVERAGE(telecom_churn[SMS_Sent_p]),telecom_churn[telecom_partner] = "Airtel")
+
+#9
+AVG Data Used By Customer in Airtel = CALCULATE(AVERAGE(telecom_churn[Data_used_p] ),telecom_churn[telecom_partner] = "Airtel")
+
+#10 
+MostFrequentAgeAirtel = 
+VAR AgeWithCount =
+    SUMMARIZE(
+        FILTER(telecom_churn, telecom_churn[telecom_partner] = "Airtel"),
+        telecom_churn[Age],
+        "AgeCount", COUNT(telecom_churn[Age])
+    )
+VAR MaxAgeCount =
+    MAXX(AgeWithCount, [AgeCount])
+VAR Result =
+    CALCULATE(
+        MAX(telecom_churn[Age]),
+        FILTER(AgeWithCount, [AgeCount] = MaxAgeCount)
+    )
+RETURN Result
+
+
+
+### Vodafone ###
+
+
+#1
+Vodafone Churned Customer = COUNTROWS(FILTER(telecom_churn,telecom_churn[Vodafone_Churned]=1))
+
+#2
+Vodafone Total Customers = COUNTROWS(FILTER(telecom_churn,telecom_churn[telecom_partner] = "Vodafone"))
+
+#3
+Vodafone Stayed Customers = 'Vodafone Measures Table'[Vodafone Total Customers] - 'Vodafone Measures Table'[Vodafone Churned Customer]
+
+#4
+Total Calls Made in Vodafone = CALCULATE(SUM(telecom_churn[Calls_Made_p] ),telecom_churn[telecom_partner] = "Vodafone")
+
+#5 
+Total SMS Sent in Vodafone = CALCULATE(SUM(telecom_churn[SMS_Sent_p]),telecom_churn[telecom_partner] = "Vodafone")
+
+#6
+Total Data Used By Customer in Vodafone = CALCULATE(SUM(telecom_churn[Data_used_p] ),telecom_churn[telecom_partner] = "Vodafone")
+
+#7
+AVG Calls Made By pc in Vodafone = CALCULATE(AVERAGE(telecom_churn[Calls_Made_p] ),telecom_churn[telecom_partner] = "Vodafone")
+
+#8
+AVG SMS Sent  by pc in Vodafone = CALCULATE(AVERAGE(telecom_churn[SMS_Sent_p]),telecom_churn[telecom_partner] = "Vodafone")
+
+#9
+AVG Data Used By Customer in Vodafone = CALCULATE(AVERAGE(telecom_churn[Data_used_p] ),telecom_churn[telecom_partner] = "Vodafone")
+
+#10
+MostFrequentAgeVodafone = 
+VAR AgeWithCount =
+    SUMMARIZE(
+        FILTER(telecom_churn, telecom_churn[telecom_partner] = "Vodafone"),
+        telecom_churn[Age],
+        "AgeCount", COUNT(telecom_churn[Age])
+    )
+VAR MaxAgeCount =
+    MAXX(AgeWithCount, [AgeCount])
+VAR Result =
+    CALCULATE(
+        MAX(telecom_churn[Age]),
+        FILTER(AgeWithCount, [AgeCount] = MaxAgeCount)
+    )
+RETURN Result
+
+
+### BSNL ###
+
+
+#1
+BSNL Churned Customer = COUNTROWS(FILTER(telecom_churn,telecom_churn[BSNL_Churned]=1))
+
+#2
+BSNL Total Customers = COUNTROWS(FILTER(telecom_churn,telecom_churn[telecom_partner] = "BSNL"))
+
+#3
+BSNL Stayed Customers = 'BSNL Measures Table'[BSNL Total Customers] - 'BSNL Measures Table'[BSNL Churned Customer]
+
+#4
+Total Calls Made in BSNL = CALCULATE(SUM(telecom_churn[Calls_Made_p] ),telecom_churn[telecom_partner] = "BSNL")
+
+#5 
+Total SMS Sent in BSNL = CALCULATE(SUM(telecom_churn[SMS_Sent_p]),telecom_churn[telecom_partner] = "BSNL")
+
+#6
+Total Data Used By Customer in BSNL = CALCULATE(SUM(telecom_churn[Data_used_p] ),telecom_churn[telecom_partner] = "BSNL")
+
+#7
+AVG Calls Made By pc in BSNL = CALCULATE(AVERAGE(telecom_churn[Calls_Made_p] ),telecom_churn[telecom_partner] = "BSNL")
+
+#8
+AVG SMS Sent  by pc in BSNL = CALCULATE(AVERAGE(telecom_churn[SMS_Sent_p]),telecom_churn[telecom_partner] = "BSNL")
+
+#9
+AVG Data Used By Customer in BSNL = CALCULATE(AVERAGE(telecom_churn[Data_used_p] ),telecom_churn[telecom_partner] = "BSNL")
+
+#10
+MostFrequentAgeBSNL = 
+VAR AgeWithCount =
+    SUMMARIZE(
+        FILTER(telecom_churn, telecom_churn[telecom_partner] = "BSNL"),
+        telecom_churn[Age],
+        "AgeCount", COUNT(telecom_churn[Age])
+    )
+VAR MaxAgeCount =
+    MAXX(AgeWithCount, [AgeCount])
+VAR Result =
+    CALCULATE(
+        MAX(telecom_churn[Age]),
+        FILTER(AgeWithCount, [AgeCount] = MaxAgeCount)
+    )
+RETURN Result
+
+
+### OverALL ###
+
+#1
+Total TeleCome Users = COUNT(telecom_churn[telecom_partner])
+
+#2
+Total TeleCom Users churned = SUM(telecom_churn[churn])
+
+#3
+Total Stayed TeleCom Users = [Total TeleCome Users] - [Total TeleCom Users churned]
+
+#4
+Total Calls Made = SUM(telecom_churn[Calls_Made_p])
+
+#5
+Total SMS Sent = SUM(telecom_churn[SMS_Sent_p])
+
+#6
+Total Data Used = SUM(telecom_churn[Data_used_p])
+
+#7
+AVG Of Calls Made By pc = AVERAGE(telecom_churn[Calls_Made_p])
+
+#8
+AVG Of SMS Sent By pc = AVERAGE(telecom_churn[SMS_Sent_p])
+
+#9
+AVG Of Data Used By pc = AVERAGE(telecom_churn[Data_used_p])
+
+#10
+MostFrequentAge = 
+VAR AgeWithCount =
+    SUMMARIZE(
+        telecom_churn,
+        telecom_churn[Age],
+        "AgeCount", COUNT(telecom_churn[Age])
+    )
+VAR MaxAgeCount =
+    MAXX(AgeWithCount, [AgeCount])
+VAR Result =
+    CALCULATE(
+        MAX(telecom_churn[Age]),
+        FILTER(AgeWithCount, [AgeCount] = MaxAgeCount)
+    )
+RETURN Result
+
+
+
+
+

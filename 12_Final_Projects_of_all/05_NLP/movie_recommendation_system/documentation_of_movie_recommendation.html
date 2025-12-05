@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineMind AI | Development Case Study</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #151b2b;
+            --accent-primary: #00f2ff;
+            --accent-secondary: #7000ff;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.1);
+            --code-bg: #0d1117;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-weight: 900;
+            letter-spacing: -0.05em;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-primary);
+        }
+
+        .highlight-text {
+            color: var(--accent-primary);
+        }
+
+        /* --- LAYOUT UTILS --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-primary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: var(--accent-primary);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--accent-primary);
+            color: var(--accent-primary);
+            margin-left: 10px;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 242, 255, 0.1);
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, rgba(112, 0, 255, 0.15) 0%, transparent 50%);
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 5rem;
+            line-height: 1;
+            margin-bottom: 20px;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .stat-item i {
+            color: var(--accent-secondary);
+            margin-right: 8px;
+        }
+
+        /* --- JOURNEY TIMELINE --- */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: var(--border);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+        }
+
+        .phase {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            margin-bottom: 50px;
+        }
+
+        .phase::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            right: -10px;
+            background-color: var(--bg-color);
+            border: 4px solid var(--accent-secondary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .left {
+            left: 0;
+        }
+
+        .right {
+            left: 50%;
+        }
+
+        .left::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            right: 30px;
+            border: medium solid white;
+            border-width: 10px 0 10px 10px;
+            border-color: transparent transparent transparent var(--card-bg);
+        }
+
+        .right::before {
+            content: " ";
+            height: 0;
+            position: absolute;
+            top: 22px;
+            width: 0;
+            z-index: 1;
+            left: 30px;
+            border: medium solid white;
+            border-width: 10px 10px 10px 0;
+            border-color: transparent var(--card-bg) transparent transparent;
+        }
+
+        .right::after {
+            left: -10px;
+        }
+
+        .phase-content {
+            padding: 20px 30px;
+            background: var(--card-bg);
+            position: relative;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s;
+        }
+
+        .phase-content:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-secondary);
+        }
+
+        .phase-number {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-secondary);
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        /* --- ARCHITECTURE DEEP DIVE --- */
+        .arch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-block::before {
+            content: "secrets.toml";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: var(--text-muted);
+            font-size: 0.7rem;
+        }
+
+        .arch-info h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* --- CHALLENGES GRID --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 30px;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent-primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            color: var(--accent-primary);
+            margin-bottom: 20px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: #000;
+            padding: 50px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .developer-signature {
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .developer-signature span {
+            font-weight: 900;
+            color: var(--accent-primary);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media screen and (max-width: 900px) {
+            .arch-grid { grid-template-columns: 1fr; }
+        }
+        @media screen and (max-width: 600px) {
+            .timeline::after { left: 31px; }
+            .phase { width: 100%; padding-left: 70px; padding-right: 25px; }
+            .phase::before { left: 60px; border: medium solid white; border-width: 10px 10px 10px 0; border-color: transparent var(--card-bg) transparent transparent; }
+            .left::after, .right::after { left: 21px; }
+            .right { left: 0%; }
+            .hero-content h1 { font-size: 3rem; }
+            .hero-stats { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <div class="container nav-content">
+            <div class="logo">CineMind<span style="color:#fff;">AI</span></div>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#architecture">Secret Sauce</a>
+                <a href="#journey">Journey</a>
+                <a href="https://app-n9reblxcyanyfqshfdykcm.streamlit.app/" target="_blank" class="btn btn-primary">Live App <i class="fas fa-external-link-alt"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header>
+        <div class="container hero-content">
+            <div class="mono" style="margin-bottom: 20px;">v2.0 STABLE RELEASE</div>
+            <h1>The Evolution of<br><span style="background: linear-gradient(to right, #00f2ff, #7000ff); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Semantic Intelligence</span></h1>
+            <p>An end-to-end development journey from a CLI script to a cloud-native, persistence-enabled recommendation engine powered by Neural Embeddings.</p>
+            
+            <div style="margin-top: 40px;">
+                <a href="https://app-n9reblxcyanyfqshfdykcm.streamlit.app/" target="_blank" class="btn btn-primary">Launch App</a>
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/tree/b51fce691e518bbe4ab76f043de50de08aca1ef5/12_Final_Projects_of_all/05_NLP/movie_recommendation_system" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> View Code</a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item"><i class="fas fa-brain"></i> Hugging Face Transformers</div>
+                <div class="stat-item"><i class="fas fa-cloud"></i> Google Sheets DB</div>
+                <div class="stat-item"><i class="fas fa-database"></i> Ephemeral Persistence</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ABOUT / INTRO -->
+    <section id="about" class="section-padding" style="background: var(--card-bg);">
+        <div class="container">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 20px;">Beyond Keywords. <span style="color: var(--accent-primary);">Pure Meaning.</span></h2>
+                <p style="color: var(--text-muted); font-size: 1.1rem;">
+                    Most recommendation systems match "Action" to "Action". CineMind AI is different. 
+                    It constructs a semantic profile of the user based on mood, era, and language preferences, converting these into 
+                    high-dimensional vector embeddings to find movies that match the <em>feeling</em>, not just the tag.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE SECRET SAUCE: GOOGLE SHEETS DB -->
+    <section id="architecture" class="section-padding">
+        <div class="container">
+            <div class="arch-grid">
+                <div class="arch-info">
+                    <div class="mono">THE SECRET SAUCE</div>
+                    <h3>Persistence in a Stateless World</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">
+                        The biggest challenge in deploying free Python apps is the <strong>"Amnesia Effect"</strong>. 
+                        Cloud containers (like Streamlit Cloud) are ephemeral—they destroy local files (`users.csv`) every time they restart.
+                    </p>
+                    <p style="color: var(--text-main); margin-bottom: 20px;">
+                        <strong>The Rare Solution:</strong> instead of paying for a SQL database, we engineered a custom connection to the 
+                        <span class="highlight-text">Google Sheets API</span>. This effectively turns a spreadsheet into a real-time, 
+                        cloud-native NoSQL database that persists forever and is free to use.
+                    </p>
+                    <ul style="list-style: none; color: var(--text-muted);">
+                        <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--accent-primary); margin-right: 10px;"></i> <strong>GCP Service Account:</strong> A "Robot" user with Editor access.</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--accent-primary); margin-right: 10px;"></i> <strong>Streamlit Secrets:</strong> Injecting JSON credentials securely at runtime via TOML.</li>
+                        <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: var(--accent-primary); margin-right: 10px;"></i> <strong>gspread Library:</strong> Python wrapper for read/write operations.</li>
+                    </ul>
+                </div>
+                <div class="code-block">
+<span style="color: #ff79c6;">[gcp_service_account]</span>
+<span style="color: #8be9fd;">type</span> = <span style="color: #f1fa8c;">"service_account"</span>
+<span style="color: #8be9fd;">project_id</span> = <span style="color: #f1fa8c;">"cinemind-ai-backend"</span>
+<span style="color: #8be9fd;">private_key</span> = <span style="color: #f1fa8c;">"-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkq..."</span>
+<span style="color: #8be9fd;">client_email</span> = <span style="color: #f1fa8c;">"movie-bot@cinemind.iam.gserviceaccount.com"</span>
+
+<span style="color: #6272a4;"># Python Implementation</span>
+<span style="color: #ff79c6;">def</span> <span style="color: #50fa7b;">get_db_connection</span>():
+    scope = [<span style="color: #f1fa8c;">'https://spreadsheets.google.com/feeds'</span>]
+    creds = ServiceAccountCredentials.from_json(st.secrets)
+    <span style="color: #ff79c6;">return</span> gspread.authorize(creds)
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEVELOPMENT JOURNEY -->
+    <section id="journey" class="section-padding" style="background: var(--card-bg);">
+        <div class="container">
+            <h2 style="text-align: center; margin-bottom: 70px;">The Development Lifecycle</h2>
+            
+            <div class="timeline">
+                <!-- Phase 1 -->
+                <div class="phase left">
+                    <div class="phase-content">
+                        <div class="phase-number">PHASE 01</div>
+                        <h3>The Foundation (CLI)</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">
+                            Built the core logic using <code>sentence-transformers</code> (all-MiniLM-L6-v2) and Cosine Similarity. 
+                            The initial prototype ran entirely in the terminal using <code>input()</code> loops and local CSV storage.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="phase right">
+                    <div class="phase-content">
+                        <div class="phase-number">PHASE 02</div>
+                        <h3>Interface Transformation</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">
+                            Migrated from CLI to <strong>Streamlit</strong>. Replaced <code>while</code> loops with Session State management 
+                            to handle user flow without refreshing variables. Added progress bars for AI confidence scores.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="phase left">
+                    <div class="phase-content">
+                        <div class="phase-number">PHASE 03</div>
+                        <h3>The "Amnesia" Crisis</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">
+                            Upon cloud deployment, I encountered the "Ephemeral File System" issue. 
+                            Local CSVs were wiped every time the app slept or rebooted, causing total data loss for users.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Phase 4 -->
+                <div class="phase right">
+                    <div class="phase-content" style="border-color: var(--accent-primary); box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);">
+                        <div class="phase-number">PHASE 04</div>
+                        <h3>Cloud Persistence Architecture</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">
+                            <strong>Major Pivot:</strong> Engineered a connection to Google Sheets via GCP Service Accounts. 
+                            Configured TOML secrets management to inject sensitive API keys securely at runtime, solving the data loss problem permanently.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Phase 5 -->
+                <div class="phase left">
+                    <div class="phase-content">
+                        <div class="phase-number">PHASE 05</div>
+                        <h3>Intelligence & UX Refinement</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 10px;">
+                            Solved the "Infinite Recommendation Loop" using Session Exclusion Sets. 
+                            Added rich metadata fetching (Directors, Cast, Trailers) and a "Vision-Full" UI with dark mode and movie posters.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHALLENGES & SOLUTIONS -->
+    <section id="tech" class="section-padding">
+        <div class="container">
+            <h2 style="margin-bottom: 50px;">Engineering Challenges Solved</h2>
+            <div class="grid-container">
+                
+                <!-- Card 1 -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-server"></i></div>
+                    <h3>Ephemeral Data Loss</h3>
+                    <p style="color: var(--text-muted); margin: 15px 0;">
+                        <strong>Problem:</strong> Cloud containers destroy local files on restart.
+                    </p>
+                    <p>
+                        <strong>Solution:</strong> Integrated <code>gspread</code> and Google Cloud Platform (GCP) Service Accounts to externalize the database layer, ensuring permanent history storage.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-lock"></i></div>
+                    <h3>Security & Secrets</h3>
+                    <p style="color: var(--text-muted); margin: 15px 0;">
+                        <strong>Problem:</strong> Cannot push API keys or JSON credentials to GitHub public repos.
+                    </p>
+                    <p>
+                        <strong>Solution:</strong> Utilized TOML-based Streamlit Secrets injection for secure, environment-variable style credential management in production.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-undo"></i></div>
+                    <h3>The Loop Bug</h3>
+                    <p style="color: var(--text-muted); margin: 15px 0;">
+                        <strong>Problem:</strong> AI recommending skipped movies repeatedly.
+                    </p>
+                    <p>
+                        <strong>Solution:</strong> Implemented a real-time <code>skipped_ids</code> session set that unions with the permanent <code>seen_ids</code> database to dynamically filter the recommendation pool.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="section-padding" style="background: var(--bg-color); border-top: 1px solid var(--border);">
+        <div class="container" style="text-align: center; max-width: 800px;">
+            <h2 style="margin-bottom: 30px;">Project Summary</h2>
+            <p style="font-size: 1.1rem; color: var(--text-muted);">
+                CineMind AI represents a complete transformation from a local Python script to a resilient, cloud-native application. 
+                By leveraging <strong>Semantic Search</strong> (Hugging Face) for intelligence and <strong>Google Sheets API</strong> for persistence, 
+                it solves the "stateless container" problem that plagues most hobbyist deployments. The result is a robust, data-driven 
+                recommendation engine that learns from user behavior without incurring expensive database costs.
+            </p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="developer-signature">
+                Developed by <span>Krunal Vaghamshi</span>
+            </div>
+            
+            <div style="margin-bottom: 30px; font-size: 0.9rem; color: var(--text-muted);">
+                <p>Python • Streamlit • PyTorch • Google Cloud Platform</p>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 20px;">
+                <a href="https://app-n9reblxcyanyfqshfdykcm.streamlit.app/" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-play"></i> Launch App
+                </a>
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/tree/b51fce691e518bbe4ab76f043de50de08aca1ef5/12_Final_Projects_of_all/05_NLP/movie_recommendation_system" target="_blank" class="btn btn-outline" style="background: transparent; border-color: #333; color: #fff;">
+                    <i class="fab fa-github"></i> Repository
+                </a>
+            </div>
+            
+            <div style="margin-top: 50px; color: #333; font-size: 0.8rem;">
+                © 2025 CineMind AI Project. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
