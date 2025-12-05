@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telecom Churn Analysis | Krunal Vaghamshi</title>
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#050505',
+                            card: '#121212',
+                            accent: '#3b82f6',
+                            secondary: '#8b5cf6',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+        
+        .glass-nav {
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 20px;
+            width: 2px;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #10b981);
+            z-index: 0;
+        }
+        
+        @media (min-width: 768px) {
+            .timeline-line::before {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-gray-300 font-sans antialiased selection:bg-brand-accent selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex-shrink-0">
+                    <span class="font-bold text-xl tracking-tighter text-white">
+                        KRUVS<span class="text-brand-accent">.Data</span>
+                    </span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#overview" class="hover:text-white transition-colors text-sm font-medium">Overview</a>
+                        <a href="#journey" class="hover:text-white transition-colors text-sm font-medium">Full Journey</a>
+                        <a href="#visuals" class="hover:text-white transition-colors text-sm font-medium">Gallery</a>
+                        <a href="#pdf-analysis" class="hover:text-white transition-colors text-sm font-medium">Report Audit</a>
+                        <a href="https://github.com/Krunalvaghamshi/GIT_HUB/tree/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn" target="_blank" class="bg-white text-black hover:bg-gray-200 transition-colors px-5 py-2.5 rounded-full text-sm font-bold">
+                            <i class="fab fa-github mr-2"></i>Repo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="overview" class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full bg-brand-accent opacity-[0.03] blur-[120px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <div class="inline-flex items-center px-4 py-1.5 rounded-full border border-gray-800 bg-gray-900/80 mb-8 animate-fade-in-up">
+                <span class="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
+                <span class="text-xs uppercase tracking-widest font-bold text-gray-400">End-to-End Analytics</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-8 leading-[1.1] animate-fade-in-up" style="animation-delay: 0.1s;">
+                Decoding <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-brand-secondary">Customer Behavior</span>
+            </h1>
+            
+            <p class="mt-6 text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed animate-fade-in-up" style="animation-delay: 0.2s;">
+                A complete data journey analyzing <strong>243,000+ telecom records</strong>. 
+                From fixing dirty data with Python to building complex DAX models and delivering executive insights in Power BI.
+            </p>
+
+            <div class="mt-10 animate-fade-in-up" style="animation-delay: 0.25s;">
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/tree/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn" target="_blank" class="inline-flex items-center px-8 py-3 bg-brand-accent text-white font-semibold rounded-lg hover:bg-blue-600 transition-all gap-2">
+                    <i class="fab fa-github"></i> View Source Code
+                </a>
+            </div>
+
+            <!-- KPI Row -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-16 animate-fade-in-up" style="animation-delay: 0.3s;">
+                <div class="p-6 rounded-2xl bg-brand-card border border-gray-800">
+                    <div class="text-3xl font-bold text-white">243k+</div>
+                    <div class="text-xs text-gray-500 uppercase mt-1">Records Processed</div>
+                </div>
+                <div class="p-6 rounded-2xl bg-brand-card border border-gray-800">
+                    <div class="text-3xl font-bold text-brand-accent">20.3%</div>
+                    <div class="text-xs text-gray-500 uppercase mt-1">Avg Churn Rate</div>
+                </div>
+                <div class="p-6 rounded-2xl bg-brand-card border border-gray-800">
+                    <div class="text-3xl font-bold text-white">4</div>
+                    <div class="text-xs text-gray-500 uppercase mt-1">Providers Tracked</div>
+                </div>
+                <div class="p-6 rounded-2xl bg-brand-card border border-gray-800">
+                    <div class="text-3xl font-bold text-brand-secondary">20k</div>
+                    <div class="text-xs text-gray-500 uppercase mt-1">Anomalies Fixed</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FULL DEVELOPMENT JOURNEY (TIMELINE) -->
+    <section id="journey" class="py-24 relative bg-black/20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <h2 class="text-4xl font-bold text-white mb-16 text-center">The Development <span class="text-brand-accent">Journey</span></h2>
+            
+            <div class="relative timeline-line space-y-24">
+                
+                <!-- Step 1: Discovery -->
+                <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2 flex justify-end">
+                        <div class="bg-brand-card border border-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-lg relative">
+                            <div class="absolute -right-3 top-1/2 w-4 h-4 bg-blue-500 rounded-full hidden md:block border-4 border-gray-900 transform -translate-y-1/2 z-20"></div>
+                            <span class="text-blue-500 text-xs font-bold uppercase tracking-widest mb-2 block">Phase 1: Scoping</span>
+                            <h3 class="text-2xl font-bold text-white mb-4">Requirement Gathering</h3>
+                            <p class="text-gray-400">The project began with a clear business question: <em>"Why are we losing customers?"</em>. Stakeholders needed a consolidated view of Churn, Usage (Call/SMS/Data), and Demographics across 4 major players: Jio, Airtel, Vodafone, and BSNL.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 pl-12 hidden md:block text-gray-600 font-mono text-sm">
+                        Input: telecom_churn.csv (243k rows)
+                    </div>
+                </div>
+
+                <!-- Step 2: Data Engineering -->
+                <div class="relative z-10 flex flex-col md:flex-row-reverse items-center gap-12">
+                    <div class="md:w-1/2 flex justify-start">
+                        <div class="bg-brand-card border border-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-lg relative">
+                            <div class="absolute -left-3 top-1/2 w-4 h-4 bg-purple-500 rounded-full hidden md:block border-4 border-gray-900 transform -translate-y-1/2 z-20"></div>
+                            <span class="text-purple-500 text-xs font-bold uppercase tracking-widest mb-2 block">Phase 2: Data Engineering (ETL)</span>
+                            <h3 class="text-2xl font-bold text-white mb-4">Cleaning & Feature Engineering</h3>
+                            <p class="text-gray-400 mb-4">Profiling revealed a critical bug: <strong>Negative Usage Values</strong> (e.g., Data = -361 MB). I engineered a Python/Excel pipeline to:</p>
+                            <ul class="list-disc list-inside text-gray-500 text-sm space-y-2">
+                                <li>Convert negative usage to <strong>Absolute Values</strong>.</li>
+                                <li>Create <strong>One-Hot Encoded</strong> flags (`Jio_Churned`, `Airtel_Churned`) to optimize Power BI performance.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 pr-12 text-right hidden md:block">
+                        <div class="inline-block bg-gray-900 p-4 rounded-lg border border-gray-800 text-left font-mono text-xs text-green-400">
+                            df['Data_Clean'] = df['Data'].abs()<br>
+                            df['Jio_Flag'] = (df['Partner']=='Jio').astype(int)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Modeling -->
+                <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2 flex justify-end">
+                        <div class="bg-brand-card border border-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-lg relative">
+                            <div class="absolute -right-3 top-1/2 w-4 h-4 bg-pink-500 rounded-full hidden md:block border-4 border-gray-900 transform -translate-y-1/2 z-20"></div>
+                            <span class="text-pink-500 text-xs font-bold uppercase tracking-widest mb-2 block">Phase 3: Advanced Logic (DAX)</span>
+                            <h3 class="text-2xl font-bold text-white mb-4">Statistical Modeling</h3>
+                            <p class="text-gray-400">To find the <strong>"Most Frequent Age"</strong> (Mode), standard aggregations failed. I wrote a complex DAX pattern using virtual tables (`SUMMARIZE`) to group users by age, count them, and extract the peak value dynamically for each provider.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 pl-12 hidden md:block">
+                        <div class="inline-block bg-gray-900 p-4 rounded-lg border border-gray-800 text-left font-mono text-xs text-blue-400">
+                            MAXX(SUMMARIZE(Table, [Age], "Count", ...), [Count])
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4: Visualization -->
+                <div class="relative z-10 flex flex-col md:flex-row-reverse items-center gap-12">
+                    <div class="md:w-1/2 flex justify-start">
+                        <div class="bg-brand-card border border-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-lg relative">
+                            <div class="absolute -left-3 top-1/2 w-4 h-4 bg-green-500 rounded-full hidden md:block border-4 border-gray-900 transform -translate-y-1/2 z-20"></div>
+                            <span class="text-green-500 text-xs font-bold uppercase tracking-widest mb-2 block">Phase 4: UI/UX Design</span>
+                            <h3 class="text-2xl font-bold text-white mb-4">Dark Mode Architecture</h3>
+                            <p class="text-gray-400">Designed a high-contrast "App-Like" interface. Features include:</p>
+                            <ul class="list-disc list-inside text-gray-500 text-sm space-y-2 mt-2">
+                                <li><strong>Persistent Navigation:</strong> Sidebar for instant switching between providers.</li>
+                                <li><strong>Bookmark Actions:</strong> A "RESET" button to clear complex slicers instantly.</li>
+                                <li><strong>Branding:</strong> Custom assets for each competitor page.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 pr-12 text-right hidden md:block text-gray-600 font-mono text-sm">
+                        Output: 5 Interactive Report Pages
+                    </div>
+                </div>
+
+                <!-- Step 5: Insights -->
+                <div class="relative z-10 flex flex-col md:flex-row items-center gap-12">
+                    <div class="md:w-1/2 flex justify-end">
+                        <div class="bg-brand-card border border-gray-800 p-8 rounded-2xl shadow-xl w-full max-w-lg relative">
+                            <div class="absolute -right-3 top-1/2 w-4 h-4 bg-yellow-500 rounded-full hidden md:block border-4 border-gray-900 transform -translate-y-1/2 z-20"></div>
+                            <span class="text-yellow-500 text-xs font-bold uppercase tracking-widest mb-2 block">Phase 5: Executive Insights</span>
+                            <h3 class="text-2xl font-bold text-white mb-4">The Findings</h3>
+                            <p class="text-gray-400">The final analysis revealed a critical risk: <strong>Vodafone's aging user base (Mode Age: 73)</strong> vs competitors (Age: 48). It also confirmed a systemic industry churn floor of ~20%, proving that customers are highly price-sensitive.</p>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 pl-12 hidden md:block text-gray-600 font-mono text-sm">
+                        Result: Strategic Pivot Recommended
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- THEATRICAL VISUAL GALLERY (LARGE IMAGES) -->
+    <section id="visuals" class="py-24 relative bg-brand-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-5xl font-bold text-white mb-20 text-center">Visual Intelligence <span class="text-brand-accent">Gallery</span></h2>
+            
+            <div class="space-y-32">
+                
+                <!-- 1. Executive Overview -->
+                <div class="group">
+                    <div class="flex items-center justify-between mb-6 px-2">
+                        <div>
+                            <span class="text-brand-accent text-sm font-bold tracking-widest uppercase">Dashboard View 1</span>
+                            <h3 class="text-3xl font-bold text-white">Executive Command Center</h3>
+                        </div>
+                        <div class="hidden md:block text-right">
+                            <div class="text-gray-500 text-sm">Focus</div>
+                            <div class="text-white font-medium">High-Level KPIs & Navigation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl group-hover:border-brand-accent transition-all duration-500">
+                        <!-- Primary: GitHub Raw, Secondary: Local, Fallback: Unsplash -->
+                        <img src="https://raw.githubusercontent.com/Krunalvaghamshi/GIT_HUB/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/page_1.jpeg" 
+                             class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
+                             alt="Executive Overview Dashboard"
+                             onerror="this.onerror=null; this.src='page_1.jpeg'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1920&auto=format&fit=crop'}">
+                        
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <p class="text-gray-300 max-w-3xl text-lg">
+                                The landing page aggregates <strong>243,000 users</strong>. Key features include the custom sidebar navigation and binary donut charts showing the strict 25% churn split across the industry.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Reliance Jio -->
+                <div class="group">
+                    <div class="flex items-center justify-between mb-6 px-2">
+                        <div>
+                            <span class="text-green-500 text-sm font-bold tracking-widest uppercase">Dashboard View 2</span>
+                            <h3 class="text-3xl font-bold text-white">Reliance Jio Deep Dive</h3>
+                        </div>
+                        <div class="hidden md:block text-right">
+                            <div class="text-gray-500 text-sm">Key Metric</div>
+                            <div class="text-white font-medium">12k Churned Users</div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl group-hover:border-green-500 transition-all duration-500">
+                        <img src="https://raw.githubusercontent.com/Krunalvaghamshi/GIT_HUB/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/page_2.jpeg" 
+                             class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
+                             alt="Reliance Jio Analysis"
+                             onerror="this.onerror=null; this.src='page_2.jpeg'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1560472355-536de3962603?q=80&w=1920&auto=format&fit=crop'}">
+                        
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <p class="text-gray-300 max-w-3xl text-lg">
+                                A dedicated view for the market leader. Note the <strong>Mode Age of 48</strong> and data usage in the billions. Specific branding (Mukesh Ambani) is used to contextualize the report for stakeholders.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Airtel -->
+                <div class="group">
+                    <div class="flex items-center justify-between mb-6 px-2">
+                        <div>
+                            <span class="text-red-500 text-sm font-bold tracking-widest uppercase">Dashboard View 3</span>
+                            <h3 class="text-3xl font-bold text-white">Airtel Competitor Analysis</h3>
+                        </div>
+                        <div class="hidden md:block text-right">
+                            <div class="text-gray-500 text-sm">Churn Rate</div>
+                            <div class="text-white font-medium">20.36% (Highest)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl group-hover:border-red-500 transition-all duration-500">
+                        <img src="https://raw.githubusercontent.com/Krunalvaghamshi/GIT_HUB/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/page_3.jpeg" 
+                             class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
+                             alt="Airtel Analysis"
+                             onerror="this.onerror=null; this.src='page_3.jpeg'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1543286386-713df548e9cc?q=80&w=1920&auto=format&fit=crop'}">
+                             
+                         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <p class="text-gray-300 max-w-3xl text-lg">
+                                Tracking the primary competitor. This page allows regional filtering to see if churn is driven by specific states (e.g., higher churn in rural vs urban centers).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Vodafone -->
+                <div class="group">
+                    <div class="flex items-center justify-between mb-6 px-2">
+                        <div>
+                            <span class="text-red-800 text-sm font-bold tracking-widest uppercase">Dashboard View 4</span>
+                            <h3 class="text-3xl font-bold text-white">Vodafone Anomaly Detection</h3>
+                        </div>
+                        <div class="hidden md:block text-right">
+                            <div class="text-gray-500 text-sm">Critical Finding</div>
+                            <div class="text-white font-medium">Age Mode: 73 Years</div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl group-hover:border-red-800 transition-all duration-500">
+                        <img src="https://raw.githubusercontent.com/Krunalvaghamshi/GIT_HUB/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/page_4.jpeg" 
+                             class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
+                             alt="Vodafone Analysis"
+                             onerror="this.onerror=null; this.src='page_4.jpeg'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1535320903710-d9cf5b3ebdb5?q=80&w=1920&auto=format&fit=crop'}">
+                             
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <p class="text-gray-300 max-w-3xl text-lg">
+                                The most startling insight: Vodafone's user base is significantly older (73 years) compared to the industry average (~48). This signals a "legacy trap" and urgent need for youth-targeted acquisition.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. BSNL -->
+                <div class="group">
+                    <div class="flex items-center justify-between mb-6 px-2">
+                        <div>
+                            <span class="text-purple-500 text-sm font-bold tracking-widest uppercase">Dashboard View 5</span>
+                            <h3 class="text-3xl font-bold text-white">BSNL Seasonality & Trends</h3>
+                        </div>
+                        <div class="hidden md:block text-right">
+                            <div class="text-gray-500 text-sm">Peak Usage</div>
+                            <div class="text-white font-medium">July-August</div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl group-hover:border-purple-500 transition-all duration-500">
+                        <img src="https://raw.githubusercontent.com/Krunalvaghamshi/GIT_HUB/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/page_5.jpeg" 
+                             class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
+                             alt="BSNL Analysis"
+                             onerror="this.onerror=null; this.src='page_5.jpeg'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1920&auto=format&fit=crop'}">
+                             
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                            <p class="text-gray-300 max-w-3xl text-lg">
+                                Line chart analysis reveals clear consumption patterns across the fiscal year, identifying infrastructure stress points in mid-year months.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: PDF REPORT ANALYSIS -->
+    <section id="pdf-analysis" class="py-24 bg-gradient-to-b from-brand-dark to-black border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-end justify-between mb-12">
+                <div>
+                    <h2 class="text-4xl font-bold text-white">Static Report <span class="text-brand-accent">Analysis</span></h2>
+                    <p class="text-gray-400 mt-2">Digital audit of the attached <span class="font-mono bg-gray-900 px-2 rounded text-red-400">tele_com_power_bi_exm.pdf</span>.</p>
+                </div>
+                <div class="hidden md:block">
+                    <i class="fas fa-file-pdf text-6xl text-gray-800"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+                <!-- Card 1 -->
+                <div class="bg-brand-card p-6 rounded-xl border border-gray-800">
+                    <div class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Churn Consistency</div>
+                    <div class="text-3xl font-bold text-white mb-1">~12.2k</div>
+                    <p class="text-sm text-gray-400">Average churn per provider. The PDF confirms a nearly identical loss across all 4 brands (Airtel: 12.4k vs BSNL: 12.0k).</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-brand-card p-6 rounded-xl border border-gray-800">
+                    <div class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Total Stayed</div>
+                    <div class="text-3xl font-bold text-brand-success mb-1">195k</div>
+                    <p class="text-sm text-gray-400">Total retained user base confirmed on Page 1. Represents a ~80% retention rate industry-wide.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-brand-card p-6 rounded-xl border border-gray-800">
+                    <div class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Volume Leader</div>
+                    <div class="text-3xl font-bold text-blue-500 mb-1">305M</div>
+                    <p class="text-sm text-gray-400">Total Data Used (Page 6). Jio and Airtel are tied for top data consumption volume.</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-brand-card p-6 rounded-xl border border-gray-800">
+                    <div class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Demographic Split</div>
+                    <div class="text-3xl font-bold text-purple-500 mb-1">51 vs 73</div>
+                    <p class="text-sm text-gray-400">BSNL (51) vs Vodafone (73). The PDF stats validate the "Aging Userbase" hypothesis for Vodafone.</p>
+                </div>
+            </div>
+
+            <!-- PDF Conclusion Block -->
+            <div class="bg-gray-900/50 rounded-2xl p-8 border border-gray-800">
+                <h3 class="text-xl font-bold text-white mb-4"><i class="fas fa-search text-brand-accent mr-3"></i>Report Audit Conclusion</h3>
+                <p class="text-gray-400 leading-relaxed">
+                    Analyzing the static PDF export confirms the integrity of the Power BI dashboard data. The report explicitly details the <strong>"Month Wise"</strong> usage peaks (July/August) shown in the line charts and validates the provider-specific churn counts. The breakdown proves that churn is not an isolated incident but a <strong>market-wide systemic failure</strong> to retain users beyond the 20% threshold.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: FINAL SUMMARY -->
+    <section id="summary" class="py-24 bg-brand-dark">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="w-16 h-1 bg-brand-accent mx-auto block mb-8 rounded-full"></span>
+            <h2 class="text-4xl font-bold text-white mb-6">Project Executive Summary</h2>
+            <p class="text-xl text-gray-400 leading-relaxed mb-12">
+                "What started as a raw CSV with 243,000 messy records was transformed into a strategic asset. By applying rigorous <strong>Python data cleaning</strong> to fix negative usage anomalies and leveraging <strong>advanced DAX patterns</strong> for demographic modeling, this dashboard provides the Telecom management team with the first clear view of their retention crisis. The finding that <strong>Vodafone's user base is aging (73 years)</strong> while <strong>Airtel bleeds high-value users</strong> allows for immediate, targeted marketing intervention."
+            </p>
+            <div class="inline-flex items-center gap-2 text-brand-accent font-mono text-sm border border-brand-accent/30 bg-brand-accent/10 px-4 py-2 rounded-lg">
+                <span class="w-2 h-2 bg-brand-accent rounded-full animate-pulse"></span>
+                Status: Analysis Complete & Delivered
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Downloads -->
+    <section id="downloads" class="py-24 bg-black border-t border-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold text-white mb-12">Project Artifacts</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/blob/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/telecom_churn.csv" target="_blank" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
+                    <i class="fas fa-file-csv text-green-500 text-xl group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500">Raw Data</div>
+                        <div class="text-white font-bold">telecom_churn.csv</div>
+                    </div>
+                </a>
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/blob/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/tele_com_dashboard.pbix" target="_blank" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
+                    <i class="fas fa-chart-bar text-yellow-500 text-xl group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500">Power BI File</div>
+                        <div class="text-white font-bold">Dashboard.pbix</div>
+                    </div>
+                </a>
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/blob/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/tele_com_power_bi_exm.pdf" target="_blank" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
+                    <i class="fas fa-file-pdf text-red-500 text-xl group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500">Executive Report</div>
+                        <div class="text-white font-bold">Analysis.pdf</div>
+                    </div>
+                </a>
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/blob/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/telecom_churn_expiremental.xlsx" target="_blank" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
+                    <i class="fas fa-file-excel text-green-600 text-xl group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500">Processed Data</div>
+                        <div class="text-white font-bold">Experimental.xlsx</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark border-t border-gray-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center opacity-60 hover:opacity-100 transition-opacity">
+            <div class="mb-4 md:mb-0">
+                <span class="font-bold text-white">KRUVS<span class="text-brand-accent">.Data</span></span>
+            </div>
+            <div class="text-sm text-gray-500">
+                Engineered by <span class="text-white">Krunal Vaghamshi</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

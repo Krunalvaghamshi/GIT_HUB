@@ -52,7 +52,6 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        /* Timeline Connector Line */
         .timeline-line::before {
             content: '';
             position: absolute;
@@ -74,19 +73,6 @@
 </head>
 <body class="bg-brand-dark text-gray-300 font-sans antialiased selection:bg-brand-accent selection:text-white">
 
-    <!-- Image Diagnostic Banner -->
-    <div id="img-warning" class="fixed top-20 left-0 w-full bg-orange-900/90 text-orange-100 px-4 py-3 z-40 hidden border-b border-orange-500 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <i class="fas fa-exclamation-circle text-xl"></i>
-                <p class="text-sm font-medium">
-                    <strong>Images Missing?</strong> Ensure the downloaded screenshots (e.g., <em>Screenshot_29-1-2025_111319_.jpg</em>) are saved in the same folder as this HTML file.
-                </p>
-            </div>
-            <button onclick="document.getElementById('img-warning').style.display='none'" class="text-white hover:text-gray-200"><i class="fas fa-times"></i></button>
-        </div>
-    </div>
-
     <!-- Navigation -->
     <nav class="fixed w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -102,8 +88,8 @@
                         <a href="#journey" class="hover:text-white transition-colors text-sm font-medium">Full Journey</a>
                         <a href="#visuals" class="hover:text-white transition-colors text-sm font-medium">Gallery</a>
                         <a href="#pdf-analysis" class="hover:text-white transition-colors text-sm font-medium">Report Audit</a>
-                        <a href="#downloads" class="bg-white text-black hover:bg-gray-200 transition-colors px-5 py-2.5 rounded-full text-sm font-bold">
-                            <i class="fas fa-download mr-2"></i>Assets
+                        <a href="https://github.com/Krunalvaghamshi/GIT_HUB/tree/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn" target="_blank" class="bg-white text-black hover:bg-gray-200 transition-colors px-5 py-2.5 rounded-full text-sm font-bold">
+                            <i class="fab fa-github mr-2"></i>Repo
                         </a>
                     </div>
                 </div>
@@ -129,6 +115,12 @@
                 A complete data journey analyzing <strong>243,000+ telecom records</strong>. 
                 From fixing dirty data with Python to building complex DAX models and delivering executive insights in Power BI.
             </p>
+
+            <div class="mt-10 animate-fade-in-up" style="animation-delay: 0.25s;">
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/tree/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn" target="_blank" class="inline-flex items-center px-8 py-3 bg-brand-accent text-white font-semibold rounded-lg hover:bg-blue-600 transition-all gap-2">
+                    <i class="fab fa-github"></i> View Source Code
+                </a>
+            </div>
 
             <!-- KPI Row -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-16 animate-fade-in-up" style="animation-delay: 0.3s;">
@@ -273,10 +265,11 @@
                     </div>
                     
                     <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl group-hover:border-brand-accent transition-all duration-500">
-                        <img src="Screenshot_29-1-2025_111319_.jpg" 
+                        <!-- Primary: GitHub Raw, Secondary: Local, Fallback: Unsplash -->
+                        <img src="https://raw.githubusercontent.com/Krunalvaghamshi/GIT_HUB/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/page_1.jpeg" 
                              class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
                              alt="Executive Overview Dashboard"
-                             onerror="document.getElementById('img-warning').classList.remove('hidden'); this.src='https://placehold.co/1920x1080/151515/333?text=Executive+Overview+Missing';">
+                             onerror="this.onerror=null; this.src='page_1.jpeg'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1920&auto=format&fit=crop'}">
                         
                         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                             <p class="text-gray-300 max-w-3xl text-lg">
@@ -300,10 +293,10 @@
                     </div>
                     
                     <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl group-hover:border-green-500 transition-all duration-500">
-                        <img src="Screenshot_29-1-2025_111355_.jpg" 
+                        <img src="https://raw.githubusercontent.com/Krunalvaghamshi/GIT_HUB/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/page_2.jpeg" 
                              class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
                              alt="Reliance Jio Analysis"
-                             onerror="this.src='https://placehold.co/1920x1080/151515/333?text=Jio+Screenshot+Missing';">
+                             onerror="this.onerror=null; this.src='page_2.jpeg'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1560472355-536de3962603?q=80&w=1920&auto=format&fit=crop'}">
                         
                         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                             <p class="text-gray-300 max-w-3xl text-lg">
@@ -327,10 +320,10 @@
                     </div>
                     
                     <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl group-hover:border-red-500 transition-all duration-500">
-                        <img src="Screenshot_29-1-2025_111420_.jpg" 
+                        <img src="https://raw.githubusercontent.com/Krunalvaghamshi/GIT_HUB/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/page_3.jpeg" 
                              class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
                              alt="Airtel Analysis"
-                             onerror="this.src='https://placehold.co/1920x1080/151515/333?text=Airtel+Screenshot+Missing';">
+                             onerror="this.onerror=null; this.src='page_3.jpeg'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1543286386-713df548e9cc?q=80&w=1920&auto=format&fit=crop'}">
                              
                          <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                             <p class="text-gray-300 max-w-3xl text-lg">
@@ -354,10 +347,10 @@
                     </div>
                     
                     <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl group-hover:border-red-800 transition-all duration-500">
-                        <img src="Screenshot_29-1-2025_111449_.jpg" 
+                        <img src="https://raw.githubusercontent.com/Krunalvaghamshi/GIT_HUB/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/page_4.jpeg" 
                              class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
                              alt="Vodafone Analysis"
-                             onerror="this.src='https://placehold.co/1920x1080/151515/333?text=Vodafone+Screenshot+Missing';">
+                             onerror="this.onerror=null; this.src='page_4.jpeg'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1535320903710-d9cf5b3ebdb5?q=80&w=1920&auto=format&fit=crop'}">
                              
                         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                             <p class="text-gray-300 max-w-3xl text-lg">
@@ -367,12 +360,12 @@
                     </div>
                 </div>
 
-                <!-- 5. Trends -->
+                <!-- 5. BSNL -->
                 <div class="group">
                     <div class="flex items-center justify-between mb-6 px-2">
                         <div>
                             <span class="text-purple-500 text-sm font-bold tracking-widest uppercase">Dashboard View 5</span>
-                            <h3 class="text-3xl font-bold text-white">Seasonality & Trends</h3>
+                            <h3 class="text-3xl font-bold text-white">BSNL Seasonality & Trends</h3>
                         </div>
                         <div class="hidden md:block text-right">
                             <div class="text-gray-500 text-sm">Peak Usage</div>
@@ -381,10 +374,10 @@
                     </div>
                     
                     <div class="relative w-full aspect-[16/9] rounded-2xl overflow-hidden border border-gray-800 shadow-2xl group-hover:border-purple-500 transition-all duration-500">
-                        <img src="Screenshot_29-1-2025_111513_.jpg" 
+                        <img src="https://raw.githubusercontent.com/Krunalvaghamshi/GIT_HUB/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/page_5.jpeg" 
                              class="w-full h-full object-cover transform transition-transform duration-1000 group-hover:scale-105"
-                             alt="Trend Analysis"
-                             onerror="this.src='https://placehold.co/1920x1080/151515/333?text=Trend+Screenshot+Missing';">
+                             alt="BSNL Analysis"
+                             onerror="this.onerror=null; this.src='page_5.jpeg'; this.onerror=function(){this.src='https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1920&auto=format&fit=crop'}">
                              
                         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 via-black/50 to-transparent p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
                             <p class="text-gray-300 max-w-3xl text-lg">
@@ -468,21 +461,28 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold text-white mb-12">Project Artifacts</h2>
             <div class="flex flex-wrap justify-center gap-4">
-                <a href="telecom_churn.csv" download class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/blob/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/telecom_churn.csv" target="_blank" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
                     <i class="fas fa-file-csv text-green-500 text-xl group-hover:scale-110 transition-transform"></i>
                     <div class="text-left">
                         <div class="text-xs text-gray-500">Raw Data</div>
                         <div class="text-white font-bold">telecom_churn.csv</div>
                     </div>
                 </a>
-                <a href="tele_com_power_bi_exm.pdf" download class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/blob/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/tele_com_dashboard.pbix" target="_blank" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
+                    <i class="fas fa-chart-bar text-yellow-500 text-xl group-hover:scale-110 transition-transform"></i>
+                    <div class="text-left">
+                        <div class="text-xs text-gray-500">Power BI File</div>
+                        <div class="text-white font-bold">Dashboard.pbix</div>
+                    </div>
+                </a>
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/blob/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/dashboard%20pdf%20n%20image%20n%20documentation/tele_com_power_bi_exm.pdf" target="_blank" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
                     <i class="fas fa-file-pdf text-red-500 text-xl group-hover:scale-110 transition-transform"></i>
                     <div class="text-left">
                         <div class="text-xs text-gray-500">Executive Report</div>
                         <div class="text-white font-bold">Analysis.pdf</div>
                     </div>
                 </a>
-                <a href="telecom_churn_expiremental.xlsx" download class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/blob/43f91eb18868902ec9f06118ac8d75fed6364b94/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn/telecom_churn_expiremental.xlsx" target="_blank" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-900 hover:bg-gray-800 border border-gray-800 transition-all group">
                     <i class="fas fa-file-excel text-green-600 text-xl group-hover:scale-110 transition-transform"></i>
                     <div class="text-left">
                         <div class="text-xs text-gray-500">Processed Data</div>
