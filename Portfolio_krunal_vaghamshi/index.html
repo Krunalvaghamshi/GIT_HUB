@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Krunal Vaghamshi | Systems That See, Think, & Predict</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Space Grotesk for that "Intellectual/Tech" feel, Inter for readability -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
+    <style>
+        :root {
+            --accent-purple: #a855f7;
+            --accent-cyan: #06b6d4;
+            --bg-deep: #000205; /* Darker than slate-950 */
+        }
+
+        html {
+            scroll-padding-top: 100px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-deep);
+            color: #e2e8f0;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1, h2, h3, .brand-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* --- 3D Background Canvas --- */
+        #neural-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+
+        /* Overlay Gradient for depth */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, var(--bg-deep) 90%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* --- 3D Holographic Glass Cards --- */
+        .tilt-card {
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 1rem;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.1s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* The Glare Effect */
+        .tilt-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(125deg, rgba(255,255,255,0.1) 0%, transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .tilt-card:hover::before {
+            opacity: 1;
+        }
+
+        .tilt-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.15);
+        }
+
+        /* --- Typography & Gradients --- */
+        .gradient-text {
+            background: linear-gradient(135deg, #e2e8f0 0%, #c084fc 50%, #22d3ee 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textShimmer 4s linear infinite;
+        }
+        
+        @keyframes textShimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .mono-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.70rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        /* --- Interactive Buttons --- */
+        .btn-cyber {
+            position: relative;
+            padding: 14px 28px;
+            background: rgba(168, 85, 247, 0.05);
+            color: #fff;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            overflow: hidden;
+            transition: 0.3s;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-cyber::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn-cyber:hover::before {
+            left: 100%;
+        }
+        
+        .btn-cyber:hover {
+            border-color: #22d3ee;
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* --- Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Navbar Blur */
+        .nav-blur {
+            background: rgba(2, 6, 23, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        /* Timeline */
+        .timeline-container {
+            border-left: 2px solid rgba(168, 85, 247, 0.2);
+            margin-left: 1rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.4rem;
+            top: 0.5rem;
+            width: 0.8rem;
+            height: 0.8rem;
+            background: #020617;
+            border: 2px solid #a855f7;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+        }
+
+        /* Typewriter Cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- Zig Zag Layout --- */
+        .project-section {
+            padding: 4rem 0;
+        }
+        
+        .tech-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-family: 'JetBrains Mono', monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 3D Neural Background -->
+    <canvas id="neural-canvas"></canvas>
+
+    <!-- Navigation -->
+    <header class="fixed top-0 w-full z-50 nav-blur transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-24">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/20 to-cyan-500/20 border border-white/10 flex items-center justify-center backdrop-blur-md">
+                        <i data-lucide="brain-circuit" class="text-cyan-400 w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-white block leading-none brand-font">Krunal Vaghamshi</span>
+                        <span class="text-[10px] text-purple-400 uppercase tracking-[0.2em] font-medium">Vision-Full Data Scientist</span>
+                    </div>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#about" class="text-sm font-medium text-gray-400 hover:text-white hover:text-cyan-400 transition-colors">Philosophy</a>
+                    <a href="#skills" class="text-sm font-medium text-gray-400 hover:text-white hover:text-cyan-400 transition-colors">Arsenal</a>
+                    <a href="#projects" class="text-sm font-medium text-gray-400 hover:text-white hover:text-cyan-400 transition-colors">Systems</a>
+                    <a href="#rnd" class="text-sm font-medium text-cyan-400 hover:text-white transition-colors relative">
+                        <span class="absolute -top-1 -right-2 w-1.5 h-1.5 bg-cyan-500 rounded-full animate-pulse"></span>
+                        R&D Lab
+                    </a>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/90 border-b border-gray-800 absolute w-full backdrop-blur-xl">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#about" class="block py-3 text-gray-300 border-b border-gray-800">Philosophy</a>
+                <a href="#skills" class="block py-3 text-gray-300 border-b border-gray-800">Arsenal</a>
+                <a href="#projects" class="block py-3 text-gray-300 border-b border-gray-800">Systems</a>
+                <a href="#rnd" class="block py-3 text-cyan-400">R&D Lab</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32">
+
+        <!-- HERO SECTION -->
+        <section id="about" class="min-h-[85vh] flex flex-col justify-center items-center text-center py-20 reveal">
+            <div class="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-slate-900/80 border border-purple-500/30 text-purple-300 text-xs font-bold uppercase tracking-[0.2em] mb-10 shadow-[0_0_30px_rgba(168,85,247,0.2)] backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></span> <span class="typing-cursor">Architecting Intelligence</span>
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl font-bold text-white mb-8 leading-[1.1] tracking-tight">
+                Systems That <br>
+                <span class="gradient-text">See, Think, & Predict.</span>
+            </h1>
+            
+            <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed font-light">
+                I don't just analyze data; I engineer <strong class="text-white">Vision-Full</strong> solutions. 
+                Combining deep technical expertise in <span class="text-cyan-400">Computer Vision</span>, <span class="text-purple-400">NLP</span>, and <span class="text-pink-400">Predictive Modeling</span>, 
+                I build robust, full-stack AI architectures that solve complex real-world problems.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-6">
+                <a href="#projects" class="btn-cyber rounded-lg">
+                    <i data-lucide="cpu" class="w-5 h-5"></i> Examine Systems
+                </a>
+                <a href="mailto:krunalv1510@gmail.com" class="px-8 py-3.5 rounded-lg border border-gray-700/50 text-gray-400 hover:text-white hover:border-gray-500 transition-all flex items-center justify-center gap-2 text-sm uppercase tracking-widest font-semibold hover:bg-white/5">
+                    krunalv1510@gmail.com
+                </a>
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <section id="skills" class="py-24 border-t border-gray-800/50">
+            <div class="mb-20 reveal flex items-end justify-between">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-2">Technical <span class="text-cyan-400">Arsenal</span></h2>
+                    <p class="text-gray-500 font-mono text-sm tracking-wide text-purple-400">// SYSTEM ARCHITECTURE COMPONENTS</p>
+                </div>
+                <div class="hidden md:block opacity-50">
+                    <i data-lucide="layers" class="w-16 h-16 text-gray-800"></i>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Core -->
+                <div class="tilt-card p-8 reveal delay-100 min-h-[300px]">
+                    <div class="card-content w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-3 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20"><i data-lucide="code-2" class="w-6 h-6"></i></div>
+                            <h3 class="text-xl font-bold text-white brand-font">Core Intelligence</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="text-sm text-gray-400 leading-relaxed">Foundational mathematics and programming logic driving high-performance computation.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs font-mono text-blue-300 bg-blue-500/10 px-2 py-1 rounded border border-blue-500/20">Python (Adv)</span>
+                                <span class="text-xs font-mono text-blue-300 bg-blue-500/10 px-2 py-1 rounded border border-blue-500/20">C++</span>
+                                <span class="text-xs font-mono text-blue-300 bg-blue-500/10 px-2 py-1 rounded border border-blue-500/20">SQL</span>
+                                <span class="text-xs font-mono text-blue-300 bg-blue-500/10 px-2 py-1 rounded border border-blue-500/20">Linear Algebra</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deep Learning -->
+                <div class="tilt-card p-8 reveal delay-200 min-h-[300px]">
+                    <div class="card-content w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-3 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20"><i data-lucide="eye" class="w-6 h-6"></i></div>
+                            <h3 class="text-xl font-bold text-white brand-font">Vision & Deep Learning</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="text-sm text-gray-400 leading-relaxed">Neural architectures for visual perception and pattern recognition.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs font-mono text-purple-300 bg-purple-500/10 px-2 py-1 rounded border border-purple-500/20">TensorFlow</span>
+                                <span class="text-xs font-mono text-purple-300 bg-purple-500/10 px-2 py-1 rounded border border-purple-500/20">MediaPipe</span>
+                                <span class="text-xs font-mono text-purple-300 bg-purple-500/10 px-2 py-1 rounded border border-purple-500/20">OpenCV</span>
+                                <span class="text-xs font-mono text-purple-300 bg-purple-500/10 px-2 py-1 rounded border border-purple-500/20">CNNs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- NLP -->
+                <div class="tilt-card p-8 reveal delay-300 min-h-[300px]">
+                    <div class="card-content w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-3 rounded-lg bg-pink-500/10 text-pink-400 border border-pink-500/20"><i data-lucide="message-square-text" class="w-6 h-6"></i></div>
+                            <h3 class="text-xl font-bold text-white brand-font">NLP & Transformers</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="text-sm text-gray-400 leading-relaxed">Advanced linguistic processing using state-of-the-art transformer models.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs font-mono text-pink-300 bg-pink-500/10 px-2 py-1 rounded border border-pink-500/20">Hugging Face</span>
+                                <span class="text-xs font-mono text-pink-300 bg-pink-500/10 px-2 py-1 rounded border border-pink-500/20">Embeddings</span>
+                                <span class="text-xs font-mono text-pink-300 bg-pink-500/10 px-2 py-1 rounded border border-pink-500/20">Cosine Sim</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ML Engineering -->
+                <div class="tilt-card p-8 reveal min-h-[300px]">
+                    <div class="card-content w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-3 rounded-lg bg-green-500/10 text-green-400 border border-green-500/20"><i data-lucide="brain-circuit" class="w-6 h-6"></i></div>
+                            <h3 class="text-xl font-bold text-white brand-font">Predictive ML</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="text-sm text-gray-400 leading-relaxed">Robust regression and classification pipelines for decision support.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs font-mono text-green-300 bg-green-500/10 px-2 py-1 rounded border border-green-500/20">XGBoost</span>
+                                <span class="text-xs font-mono text-green-300 bg-green-500/10 px-2 py-1 rounded border border-green-500/20">Random Forest</span>
+                                <span class="text-xs font-mono text-green-300 bg-green-500/10 px-2 py-1 rounded border border-green-500/20">Scikit-learn</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deployment -->
+                <div class="tilt-card p-8 reveal delay-100 min-h-[300px]">
+                    <div class="card-content w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-3 rounded-lg bg-orange-500/10 text-orange-400 border border-orange-500/20"><i data-lucide="cloud" class="w-6 h-6"></i></div>
+                            <h3 class="text-xl font-bold text-white brand-font">Cloud Architecture</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="text-sm text-gray-400 leading-relaxed">Full-stack deployment and persistence strategies for production environments.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs font-mono text-orange-300 bg-orange-500/10 px-2 py-1 rounded border border-orange-500/20">Streamlit</span>
+                                <span class="text-xs font-mono text-orange-300 bg-orange-500/10 px-2 py-1 rounded border border-orange-500/20">NoSQL API</span>
+                                <span class="text-xs font-mono text-orange-300 bg-orange-500/10 px-2 py-1 rounded border border-orange-500/20">Git/GitHub</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Visual Analytics -->
+                <div class="tilt-card p-8 reveal delay-200 min-h-[300px]">
+                    <div class="card-content w-full">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-3 rounded-lg bg-yellow-500/10 text-yellow-400 border border-yellow-500/20"><i data-lucide="bar-chart-big" class="w-6 h-6"></i></div>
+                            <h3 class="text-xl font-bold text-white brand-font">Visual Analytics</h3>
+                        </div>
+                        <div class="space-y-4">
+                            <p class="text-sm text-gray-400 leading-relaxed">Translating complex datasets into actionable strategic insights.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs font-mono text-yellow-300 bg-yellow-500/10 px-2 py-1 rounded border border-yellow-500/20">Power BI</span>
+                                <span class="text-xs font-mono text-yellow-300 bg-yellow-500/10 px-2 py-1 rounded border border-yellow-500/20">PyDeck 3D</span>
+                                <span class="text-xs font-mono text-yellow-300 bg-yellow-500/10 px-2 py-1 rounded border border-yellow-500/20">Seaborn</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS SECTION (ZIG ZAG LAYOUT) -->
+        <section id="projects" class="py-24">
+            <div class="text-center mb-32 reveal">
+                <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">Deployed <span class="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Systems</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                    Production-Grade Architectures solving problems in Vision, Language, and Strategy.
+                </p>
+            </div>
+
+            <div class="max-w-7xl mx-auto space-y-32">
+
+                <!-- 1. Nirakshak -->
+                <div class="reveal flex flex-col md:flex-row items-center gap-12 group">
+                    <div class="w-full md:w-1/2">
+                        <div class="tilt-card h-[400px] border-indigo-500/30">
+                            <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/40 to-slate-900/90 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <i data-lucide="scan-face" class="w-32 h-32 text-indigo-400 drop-shadow-[0_0_25px_rgba(99,102,241,0.6)]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-4">
+                            <span class="mono-tag text-indigo-300 bg-indigo-500/10 px-3 py-1 rounded border border-indigo-500/20">COMPUTER VISION</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-6 brand-font">Nirakshak: Guard Tracking</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            A sophisticated real-time surveillance architecture designed for security personnel monitoring. It leverages <strong class="text-indigo-300">MediaPipe Pose Estimation</strong> to track vigilance states (Standing vs. Sitting) and integrates a specialized module for <strong class="text-indigo-300">Fugitive Detection</strong> with instant audio alerts.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tech-pill">OpenCV</span>
+                            <span class="tech-pill">MediaPipe</span>
+                            <span class="tech-pill">Face Rec</span>
+                            <span class="tech-pill">Python</span>
+                        </div>
+                        <a href="https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/Nirakshak_GUIDE.html" target="_blank" class="btn-cyber text-indigo-300 border-indigo-500/50 hover:text-white w-auto inline-flex">
+                            Analyze System Architecture <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 2. CineMind AI -->
+                <div class="reveal flex flex-col md:flex-row-reverse items-center gap-12 group">
+                    <div class="w-full md:w-1/2">
+                        <div class="tilt-card h-[400px] border-purple-500/30">
+                            <div class="absolute inset-0 bg-gradient-to-bl from-purple-900/40 to-slate-900/90 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <i data-lucide="clapperboard" class="w-32 h-32 text-purple-400 drop-shadow-[0_0_25px_rgba(168,85,247,0.6)]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-4">
+                            <span class="mono-tag text-purple-300 bg-purple-500/10 px-3 py-1 rounded border border-purple-500/20">NLP & CLOUD</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-6 brand-font">CineMind AI</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            A next-gen semantic recommendation engine that understands context, not just keywords. Powered by <strong class="text-purple-300">Hugging Face Transformers</strong> for deep embedding extraction. Uniquely solves the "cloud amnesia" problem by architecting a persistent NoSQL layer using the <strong class="text-purple-300">Google Sheets API</strong>.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tech-pill">Transformers</span>
+                            <span class="tech-pill">Streamlit</span>
+                            <span class="tech-pill">Google Cloud API</span>
+                            <span class="tech-pill">Embeddings</span>
+                        </div>
+                        <a href="https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/documentation_of_movie_recommendation.html" target="_blank" class="btn-cyber text-purple-300 border-purple-500/50 hover:text-white w-auto inline-flex">
+                            Analyze System Architecture <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 3. Sleep Health App -->
+                <div class="reveal flex flex-col md:flex-row items-center gap-12 group">
+                    <div class="w-full md:w-1/2">
+                        <div class="tilt-card h-[400px] border-blue-500/30">
+                            <div class="absolute inset-0 bg-gradient-to-br from-blue-900/40 to-slate-900/90 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <i data-lucide="activity" class="w-32 h-32 text-blue-400 drop-shadow-[0_0_25px_rgba(59,130,246,0.6)]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-4">
+                            <span class="mono-tag text-blue-300 bg-blue-500/10 px-3 py-1 rounded border border-blue-500/20">HEALTHCARE ML</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-6 brand-font">Sleep Health Intelligence</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            A clinical-grade diagnostic system. Leverages <strong class="text-blue-300">XGBoost Regression</strong> (R² 0.98) for sleep quality prediction and Random Forest for disorder classification. Features a hybrid storage architecture to ensure session robustness in ephemeral environments.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tech-pill">XGBoost</span>
+                            <span class="tech-pill">Random Forest</span>
+                            <span class="tech-pill">Streamlit</span>
+                            <span class="tech-pill">Medical ML</span>
+                        </div>
+                        <a href="https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/Documentation_of_sleep_health_app.html" target="_blank" class="btn-cyber text-blue-300 border-blue-500/50 hover:text-white w-auto inline-flex">
+                            Analyze System Architecture <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 4. FloraMind -->
+                <div class="reveal flex flex-col md:flex-row-reverse items-center gap-12 group">
+                    <div class="w-full md:w-1/2">
+                        <div class="tilt-card h-[400px] border-green-500/30">
+                            <div class="absolute inset-0 bg-gradient-to-bl from-green-900/40 to-slate-900/90 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <i data-lucide="flower-2" class="w-32 h-32 text-green-400 drop-shadow-[0_0_25px_rgba(34,197,94,0.6)]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-4">
+                            <span class="mono-tag text-green-300 bg-green-500/10 px-3 py-1 rounded border border-green-500/20">DEEP LEARNING</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-6 brand-font">FloraMind: Comp. Botany</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            A computational field guide for the digital age. Uses <strong class="text-green-300">MobileNetV2</strong> via Transfer Learning to achieve high-accuracy botanical classification. The interface provides real-time taxonomy details and scientific confidence metrics.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tech-pill">TensorFlow</span>
+                            <span class="tech-pill">MobileNetV2</span>
+                            <span class="tech-pill">Transfer Learning</span>
+                            <span class="tech-pill">Keras</span>
+                        </div>
+                        <a href="https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/documentation_of_flower_prediction.html" target="_blank" class="btn-cyber text-green-300 border-green-500/50 hover:text-white w-auto inline-flex">
+                            Analyze System Architecture <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 5. NYC Green Taxi -->
+                <div class="reveal flex flex-col md:flex-row items-center gap-12 group">
+                    <div class="w-full md:w-1/2">
+                        <div class="tilt-card h-[400px] border-yellow-500/30">
+                            <div class="absolute inset-0 bg-gradient-to-br from-yellow-900/40 to-slate-900/90 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <i data-lucide="map" class="w-32 h-32 text-yellow-400 drop-shadow-[0_0_25px_rgba(234,179,8,0.6)]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-4">
+                            <span class="mono-tag text-yellow-300 bg-yellow-500/10 px-3 py-1 rounded border border-yellow-500/20">GEOSPATIAL ML</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-6 brand-font">NYC Smart Taxi Predictor</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            Processing the pulse of New York City. Trained on <strong class="text-yellow-300">100k+ GPS logs</strong> to predict taxi fares with 97% accuracy. Features a stunning <strong class="text-yellow-300">PyDeck 3D</strong> visualization engine for mapping complex trip trajectories.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tech-pill">PyDeck 3D</span>
+                            <span class="tech-pill">XGBoost</span>
+                            <span class="tech-pill">GeoSpatial Analysis</span>
+                            <span class="tech-pill">Pandas</span>
+                        </div>
+                        <a href="https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/documentation_green_taxi_app_v1.html" target="_blank" class="btn-cyber text-yellow-300 border-yellow-500/50 hover:text-white w-auto inline-flex">
+                            Analyze System Architecture <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 6. Telecom Churn -->
+                <div class="reveal flex flex-col md:flex-row-reverse items-center gap-12 group">
+                    <div class="w-full md:w-1/2">
+                        <div class="tilt-card h-[400px] border-pink-500/30">
+                            <div class="absolute inset-0 bg-gradient-to-bl from-pink-900/40 to-slate-900/90 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <i data-lucide="bar-chart-2" class="w-32 h-32 text-pink-400 drop-shadow-[0_0_25px_rgba(236,72,153,0.6)]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-4">
+                            <span class="mono-tag text-pink-300 bg-pink-500/10 px-3 py-1 rounded border border-pink-500/20">BUSINESS INTEL</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-6 brand-font">Telecom Churn Analysis</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            Decoding customer retention strategies from a massive 243k+ dataset. Uses complex <strong class="text-pink-300">DAX modeling</strong> to uncover critical insights, such as identifying the specific demographic aging risks for Vodafone.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tech-pill">Power BI</span>
+                            <span class="tech-pill">Advanced DAX</span>
+                            <span class="tech-pill">Data Modeling</span>
+                            <span class="tech-pill">KPIs</span>
+                        </div>
+                        <a href="https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/Documentation_telecom_churn.html" target="_blank" class="btn-cyber text-pink-300 border-pink-500/50 hover:text-white w-auto inline-flex">
+                            Analyze System Architecture <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 7. Hotel Revenue Concierge -->
+                <div class="reveal flex flex-col md:flex-row items-center gap-12 group">
+                    <div class="w-full md:w-1/2">
+                        <div class="tilt-card h-[400px] border-amber-500/30">
+                            <div class="absolute inset-0 bg-gradient-to-br from-amber-900/40 to-slate-900/90 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <i data-lucide="bell-plus" class="w-32 h-32 text-amber-400 drop-shadow-[0_0_25px_rgba(245,158,11,0.6)]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-4">
+                            <span class="mono-tag text-amber-300 bg-amber-500/10 px-3 py-1 rounded border border-amber-500/20">PREDICTIVE AI</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-6 brand-font">Hotel Revenue Concierge</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            A revenue protection system predicting cancellation probabilities to trigger preemptive deposit requests. Implements a <strong class="text-amber-300">Smart Input System</strong> that bridges raw booking data with a production-grade risk assessment engine.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tech-pill">XGBoost</span>
+                            <span class="tech-pill">Risk Analysis</span>
+                            <span class="tech-pill">Automation</span>
+                            <span class="tech-pill">Streamlit</span>
+                        </div>
+                        <a href="https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/documentation_of_hotel_booking_.html" target="_blank" class="btn-cyber text-amber-300 border-amber-500/50 hover:text-white w-auto inline-flex">
+                            Analyze System Architecture <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 8. Mobile Price Intelligence -->
+                <div class="reveal flex flex-col md:flex-row-reverse items-center gap-12 group">
+                    <div class="w-full md:w-1/2">
+                        <div class="tilt-card h-[400px] border-cyan-500/30">
+                            <div class="absolute inset-0 bg-gradient-to-bl from-cyan-900/40 to-slate-900/90 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <i data-lucide="smartphone" class="w-32 h-32 text-cyan-400 drop-shadow-[0_0_25px_rgba(6,182,212,0.6)]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-4">
+                            <span class="mono-tag text-cyan-300 bg-cyan-500/10 px-3 py-1 rounded border border-cyan-500/20">DATA ENGINEERING</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-6 brand-font">Mobile Price Intelligence</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            From unstructured chaos to clarity. An end-to-end data pipeline transforming messy market signals (nested specs, mixed currencies) into predictive datasets using <strong class="text-cyan-300">Advanced Regex</strong> and Plotly visualizations.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tech-pill">Feature Engineering</span>
+                            <span class="tech-pill">Regex</span>
+                            <span class="tech-pill">Plotly</span>
+                            <span class="tech-pill">Data Pipelines</span>
+                        </div>
+                        <a href="https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/documentation_of_mobile_price_data_analysis.html" target="_blank" class="btn-cyber text-cyan-300 border-cyan-500/50 hover:text-white w-auto inline-flex">
+                            Analyze System Architecture <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 9. Population Health Dashboard -->
+                <div class="reveal flex flex-col md:flex-row items-center gap-12 group">
+                    <div class="w-full md:w-1/2">
+                        <div class="tilt-card h-[400px] border-teal-500/30">
+                            <div class="absolute inset-0 bg-gradient-to-br from-teal-900/40 to-slate-900/90 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <i data-lucide="layout-dashboard" class="w-32 h-32 text-teal-400 drop-shadow-[0_0_25px_rgba(20,184,166,0.6)]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-4">
+                            <span class="mono-tag text-teal-300 bg-teal-500/10 px-3 py-1 rounded border border-teal-500/20">STRATEGIC VIZ</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-6 brand-font">Population Health Dashboard</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            Executive-level strategic view. Identifies the strong correlation (-0.81) between stress and sleep quality, enabling data-driven healthcare policy and population management strategies.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tech-pill">Power BI</span>
+                            <span class="tech-pill">Healthcare Analytics</span>
+                            <span class="tech-pill">Statistical Correlation</span>
+                        </div>
+                        <a href="https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/Documentaion_sleep_health_dashboard.html" target="_blank" class="btn-cyber text-teal-300 border-teal-500/50 hover:text-white w-auto inline-flex">
+                            Analyze System Architecture <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 10. Hotel Analysis (BluePrint) -->
+                <div class="reveal flex flex-col md:flex-row-reverse items-center gap-12 group">
+                    <div class="w-full md:w-1/2">
+                        <div class="tilt-card h-[400px] border-rose-500/30">
+                            <div class="absolute inset-0 bg-gradient-to-bl from-rose-900/40 to-slate-900/90 flex items-center justify-center">
+                                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+                                <i data-lucide="pie-chart" class="w-32 h-32 text-rose-400 drop-shadow-[0_0_25px_rgba(244,63,94,0.6)]"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <div class="mb-4">
+                            <span class="mono-tag text-rose-300 bg-rose-500/10 px-3 py-1 rounded border border-rose-500/20">EXPLORATORY ANALYSIS</span>
+                        </div>
+                        <h3 class="text-4xl font-bold text-white mb-6 brand-font">Hotel Intelligence Blueprint</h3>
+                        <p class="text-gray-400 text-lg mb-8 leading-relaxed">
+                            The analytical foundation of the Revenue Concierge AI. A deep-dive Exploratory Data Analysis (EDA) that uncovered critical behavioral insights, such as <strong class="text-rose-300">Lead Time effects</strong> and channel-specific risks.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="tech-pill">EDA</span>
+                            <span class="tech-pill">Seaborn</span>
+                            <span class="tech-pill">Behavioral Stats</span>
+                            <span class="tech-pill">Data Storytelling</span>
+                        </div>
+                        <a href="https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/documentation_of_hotel_booking_analysis_and_further.html" target="_blank" class="btn-cyber text-rose-300 border-rose-500/50 hover:text-white w-auto inline-flex">
+                            Analyze System Architecture <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- R&D LAB (Upcoming Projects) -->
+        <section id="rnd" class="py-24 border-t border-dashed border-gray-800">
+            <div class="text-center mb-16 reveal">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded border border-cyan-500/30 bg-cyan-900/10 text-cyan-400 text-xs font-bold uppercase tracking-widest mb-4">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span> R&D Lab
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-white">Upcoming <span class="text-gray-500">Innovations</span></h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto px-4">
+                
+                <!-- Upcoming 1 -->
+                <div class="tilt-card flex flex-col reveal group border border-dashed border-gray-700 hover:border-gray-500 bg-slate-900/30">
+                    <div class="card-content flex-1 flex flex-col">
+                        <div class="h-48 bg-slate-900/50 flex items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+                            <i data-lucide="bot" class="w-20 h-20 text-gray-600 group-hover:text-cyan-400 transition-colors duration-500"></i>
+                            <div class="absolute top-4 right-4 px-3 py-1 bg-yellow-500/10 border border-yellow-500/50 text-yellow-500 text-xs font-bold rounded-full">IN DEVELOPMENT</div>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col">
+                            <div class="mb-4">
+                                <span class="mono-tag text-gray-400 border border-gray-700 px-2 py-1 rounded">GEN AI</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-300 group-hover:text-white mb-3 transition-colors brand-font">Institutional Knowledge Bot</h3>
+                            <p class="text-gray-500 text-sm mb-6 flex-1 leading-relaxed">
+                                An intelligent RAG-based assistant designed to ingest and query vast institutional learning materials. Provides instant, context-aware academic support for students and faculty.
+                            </p>
+                            <div class="w-full py-3 rounded-lg border border-gray-800 bg-slate-950 text-gray-600 cursor-not-allowed text-center font-mono text-xs uppercase tracking-widest">
+                                // Awaiting Deployment
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming 2 -->
+                <div class="tilt-card flex flex-col reveal delay-100 group border border-dashed border-gray-700 hover:border-gray-500 bg-slate-900/30">
+                    <div class="card-content flex-1 flex flex-col">
+                        <div class="h-48 bg-slate-900/50 flex items-center justify-center relative overflow-hidden">
+                            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+                            <i data-lucide="mic-2" class="w-20 h-20 text-gray-600 group-hover:text-purple-400 transition-colors duration-500"></i>
+                            <div class="absolute top-4 right-4 px-3 py-1 bg-yellow-500/10 border border-yellow-500/50 text-yellow-500 text-xs font-bold rounded-full">IN DEVELOPMENT</div>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col">
+                            <div class="mb-4">
+                                <span class="mono-tag text-gray-400 border border-gray-700 px-2 py-1 rounded">AUDIO TRANSFORMERS</span>
+                            </div>
+                            <h3 class="text-2xl font-bold text-gray-300 group-hover:text-white mb-3 transition-colors brand-font">Voice Neural Interface</h3>
+                            <p class="text-gray-500 text-sm mb-6 flex-1 leading-relaxed">
+                                Next-generation voice processing model leveraging transformer architecture and advanced NLP logic for high-fidelity speech recognition and synthesis.
+                            </p>
+                            <div class="w-full py-3 rounded-lg border border-gray-800 bg-slate-950 text-gray-600 cursor-not-allowed text-center font-mono text-xs uppercase tracking-widest">
+                                // Awaiting Deployment
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- EDUCATION SECTION -->
+        <section id="education" class="py-24 border-t border-gray-800/50">
+            <div class="mb-16 reveal text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Academic <span class="text-purple-500">Timeline</span></h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto pl-4 timeline-container">
+                
+                <div class="timeline-item reveal">
+                    <div class="tilt-card p-6 border-l-4 border-purple-500 !block !h-auto">
+                        <div class="card-content">
+                            <div class="flex flex-col md:flex-row justify-between mb-2">
+                                <h3 class="text-xl font-bold text-white brand-font">Master of Computer Applications (MCA)</h3>
+                                <span class="text-purple-400 font-mono text-sm font-bold bg-purple-500/10 px-2 py-1 rounded">2024 - Present</span>
+                            </div>
+                            <p class="text-gray-400">Swarnim Startup & Innovation University</p>
+                            <p class="text-sm text-gray-500 mt-1">Pursuing</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal delay-100">
+                    <div class="tilt-card p-6 border-l-4 border-cyan-500 !block !h-auto">
+                        <div class="card-content">
+                            <div class="flex flex-col md:flex-row justify-between mb-2">
+                                <h3 class="text-xl font-bold text-white brand-font">Data Science Certification</h3>
+                                <span class="text-cyan-400 font-mono text-sm font-bold bg-cyan-500/10 px-2 py-1 rounded">2024 - Present</span>
+                            </div>
+                            <p class="text-gray-400 mb-2">Red & White Skills Education</p>
+                            <p class="text-sm text-gray-500">Focus: Data Science, AI/ML, and End-to-End Project Development.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item reveal delay-200">
+                    <div class="tilt-card p-6 border-l-4 border-blue-500 !block !h-auto">
+                        <div class="card-content">
+                            <div class="flex flex-col md:flex-row justify-between mb-2">
+                                <h3 class="text-xl font-bold text-white brand-font">Bachelor of Commerce (B.Com)</h3>
+                                <span class="text-blue-400 font-mono text-sm font-bold bg-blue-500/10 px-2 py-1 rounded">2021 - 2024</span>
+                            </div>
+                            <p class="text-gray-400">SDJ International College</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="py-16 border-t border-gray-800 bg-slate-950 mt-20">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-center md:text-left">
+                <span class="text-xl font-bold text-white brand-font tracking-tight">Kruvs<span class="text-purple-500">.world</span></span>
+                <p class="text-gray-500 text-sm mt-2">© 2025 Krunal Vaghamshi. Systems That See, Think, & Predict.</p>
+            </div>
+            
+            <div class="flex items-center gap-6">
+                <a href="https://github.com/Krunalvaghamshi/GIT_HUB/tree/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all" target="_blank" class="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-all">
+                    <i data-lucide="github" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+                    <span class="text-sm text-gray-400 group-hover:text-white">GitHub Repo</span>
+                </a>
+                <a href="mailto:krunalv1510@gmail.com" class="group flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-all">
+                    <i data-lucide="mail" class="w-4 h-4 text-gray-400 group-hover:text-white"></i>
+                    <span class="text-sm text-gray-400 group-hover:text-white">krunalv1510@gmail.com</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Init Lucide Icons
+        lucide.createIcons();
+
+        // --- 3D Neural Starfield Background (Canvas) ---
+        const canvas = document.getElementById('neural-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        
+        // Particle properties
+        const particles = [];
+        const numParticles = 100;
+        const connectionDistance = 150;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        // Particle constructor
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+            
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                // Bounce off edges
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(168, 85, 247, 0.5)"; // Purple tint
+                ctx.fill();
+            }
+        }
+
+        // Init particles
+        function initParticles() {
+            particles.length = 0;
+            for(let i=0; i<numParticles; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        // Animation Loop
+        function animateParticles() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Update and draw particles
+            particles.forEach((p, index) => {
+                p.update();
+                p.draw();
+
+                // Draw connections
+                for (let j = index + 1; j < particles.length; j++) {
+                    const p2 = particles[j];
+                    const dx = p.x - p2.x;
+                    const dy = p.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+
+                    if (distance < connectionDistance) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(168, 85, 247, ${1 - distance / connectionDistance})`; // Fade with distance
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
+                }
+            });
+            
+            requestAnimationFrame(animateParticles);
+        }
+
+        // Setup Canvas
+        window.addEventListener('resize', () => { resize(); initParticles(); });
+        resize();
+        initParticles();
+        animateParticles();
+
+
+        // --- 3D Holographic Card Tilt Effect ---
+        const cards = document.querySelectorAll('.tilt-card');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -5; // Max 5deg rotation
+                const rotateY = ((x - centerX) / centerX) * 5;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+
+
+        // --- Scroll Reveal Logic ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+    </script>
+</body>
+</html>
