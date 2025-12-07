@@ -44,6 +44,6 @@ The final output is a multi-page Power BI report (`tele_com_dashboard.pbix`) tha
 
 ### **Project Links**
 
-* **GitHub Repository:** [https://github.com/Krunalvaghamshi/GIT_HUB/tree/3940aed3b5af12da16f876e85332728c5216eed3/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn]
-* **Live Portfolio:** [https://kruvs-portfolio.vercel.app/]
-* **Project Documentation:** [https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/Documentation_telecom_churn.html]
+* **GitHub Repository:** https://github.com/Krunalvaghamshi/GIT_HUB/tree/3940aed3b5af12da16f876e85332728c5216eed3/12_Final_Projects_of_all/02_power_bi_dashboard/telecom%20company%20churn
+* **Live Portfolio:** https://kruvs-portfolio.vercel.app/
+* **Project Documentation:** https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/Documentation_telecom_churn.html
