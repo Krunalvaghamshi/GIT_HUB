@@ -117,7 +117,7 @@ The project execution followed the industry-standard **CRISP-DM** (Cross-Industr
 
 ### 🔗 **Project Links**
 
-  * **GitHub Repository:** `[https://github.com/Krunalvaghamshi/GIT_HUB/tree/3940aed3b5af12da16f876e85332728c5216eed3/12_Final_Projects_of_all/01_Analysis]`
-  * **Project Portfolio:** `[https://kruvs-portfolio.vercel.app/]`
-  * **Documentation:** `[https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/Documentation_of_sleep_health_app.html]`
-  * **Streamlit Application:** `[https://app-vuytw223yxmfjabq76neu4.streamlit.app/]`
+  * **GitHub Repository:** https://github.com/Krunalvaghamshi/GIT_HUB/tree/3940aed3b5af12da16f876e85332728c5216eed3/12_Final_Projects_of_all/01_Analysis
+  * **Project Portfolio:** https://kruvs-portfolio.vercel.app/
+  * **Documentation:** https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/Documentation_of_sleep_health_app.html
+  * **Streamlit Application:** https://app-vuytw223yxmfjabq76neu4.streamlit.app/
