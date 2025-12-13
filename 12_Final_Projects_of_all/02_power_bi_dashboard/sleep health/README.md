@@ -68,6 +68,6 @@ Based on the final report, the project delivered three major strategic conclusio
 
 ### **Project Links**
 
-* **GitHub Repository:** https://github.com/Krunalvaghamshi/GIT_HUB/tree/7af962d02fadd16e8aa1a680f31e42e41c9d892e/12_Final_Projects_of_all/02_power_bi_dashboard/sleep%20health
-* **Project Documentation:** https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/Documentaion_sleep_health_dashboard.html
+* **GitHub Repository:** https://github.com/Krunalvaghamshi/GIT_HUB/tree/main/12_Final_Projects_of_all/02_power_bi_dashboard/sleep%20health
+* **Project Documentation:** https://raw.githack.com/Krunalvaghamshi/GIT_HUB/main/12_Final_Projects_of_all/02_power_bi_dashboard/sleep%20health/Documentaion_sleep_health_dashboard.html
 * **Portfolio link:** https://kruvs-portfolio.vercel.app/

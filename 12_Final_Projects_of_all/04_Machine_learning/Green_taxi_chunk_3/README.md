@@ -64,9 +64,9 @@ The final phase involved building an interactive frontend using **Streamlit**:
 
 ### **Project Links**
 
-* **GitHub Repository:** https://github.com/Krunalvaghamshi/GIT_HUB/tree/7e9c1307bad179b2d433ee70e1c298f56726febd/12_Final_Projects_of_all/04_Machine_learning/Green_taxi_chunk_3
+* **GitHub Repository:** https://github.com/Krunalvaghamshi/GIT_HUB/tree/main/12_Final_Projects_of_all/04_Machine_learning/Green_taxi_chunk_3
 
-* **Project Documentation:** https://raw.githack.com/Krunalvaghamshi/GIT_HUB/2845f8a66d7b8dd775926b27c07a979001f78d99/12_Final_Projects_of_all/00_Documentation/documentation_green_taxi_app_v1.html
+* **Project Documentation:** https://raw.githack.com/Krunalvaghamshi/GIT_HUB/main/12_Final_Projects_of_all/00_Documentation/documentation_green_taxi_app_v1.html
 
 * **Developer Portfolio:** https://kruvs-portfolio.vercel.app/
 
