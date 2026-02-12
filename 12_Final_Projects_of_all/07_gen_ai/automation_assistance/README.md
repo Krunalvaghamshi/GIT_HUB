@@ -46,6 +46,29 @@ The **Switch Node** acts as the central traffic controller, directing the payloa
 
 ---
 
+
+## 📸 Workflow Visualization
+
+![n8n Automation Workflow Diagram](./workflow_image.png)
+
+*The complete automation pipeline showing input processing, intent routing, and parallel execution branches for reminders, festivals, and financial reporting.*
+
+
+
+## 🎯 Workflow Architecture Diagram
+
+**Workflow Architecture Diagram:**
+
+n8n automation pipeline starting with form submission and chat message triggers flowing into a Basic LLM Chain powered by Google Gemini. The chain outputs structured JSON with intent, date, and item fields. A JavaScript Code Node validates the output before routing through a Switch Node based on intent type.
+
+Three parallel branches execute:
+- **Reminder branch:** Creates Google Calendar events and sends Gmail confirmations
+- **Festival branch:** Queries Calendarific API and uses Wait nodes to schedule celebratory messages
+- **Finance branch:** Aggregates data through FinanceData and Edit Fields nodes, converts HTML to PDF, and saves files to disk
+
+Multiple Gmail Send Message nodes distribute outputs throughout the workflow with green connection lines showing data flow between components against a dark background.
+
+
 ## 📋 Tech Stack
 
 | Component | Technology |
