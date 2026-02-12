@@ -1,0 +1,720 @@
+{
+  "name": "My workflow 6",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "AI Command Center",
+        "formDescription": "Enter your command in English, Hindi, or Gujarati",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Your Command",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -176,
+        -16
+      ],
+      "id": "bdd67404-4637-4897-8286-1d5bd4c06169",
+      "name": "On form submission",
+      "webhookId": "0409fc81-cfe9-4c5f-8d35-a38e686fa6cc"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "cd5e6b09-1c45-4097-be1f-dc6674120683",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "REMINDER",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Output 0"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "9cb486b2-238b-4b47-89c3-e4a1e74c9571",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "FESTIVAL",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Output 1 "
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "ed000c10-5643-4044-8d5e-545548c0d556",
+                    "leftValue": "={{ $json.intent }}",
+                    "rightValue": "FINANCE",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Output 2"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {
+          "allMatchingOutputs": true
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        992,
+        -176
+      ],
+      "id": "da3a3b10-2ca5-4434-9182-b7841c26adcb",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        176,
+        -208
+      ],
+      "id": "21cf5d3b-c652-4cba-bff3-f3eb8dd67ea6",
+      "name": "When chat message received",
+      "webhookId": "92e5a997-bf22-41ae-96e3-272ad359bcc4"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json['Your Command'] }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=Role: Act as a strict JSON-only API. You are a multilingual command parser for an Indian office automation system.\n\nInstructions:\n\nLanguage Support: Analyze input in English, Hindi, or Gujarati.\n\nToday's Date: Use {{ $now.toFormat('yyyy-MM-dd') }} as the reference for relative dates.\n\nEntity Extraction:\n\nintent: Must be one of [REMINDER, FESTIVAL, FINANCE].\n\ndate: Convert terms like 'tomorrow', 'agla hafta', or 'kaale' into YYYY-MM-DD.\n\nitem: Identify the document or topic (e.g., 'ledger', 'cash book', 'vahi-khatu').\n\ntime: Extract specific time if mentioned; otherwise, use null.\n\nFormatting Rules:\n\nOutput STRICT JSON ONLY.\n\nDo NOT include markdown backticks (like ```json).\n\nDo NOT include any preamble, greetings, or explanations.\n\nIf a value is missing, use null.\n\nOutput Schema:\n{\n\"intent\": \"string\",\n\"date\": \"string\",\n\"time\": \"string\",\n\"item\": \"string\"\n}"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        384,
+        -176
+      ],
+      "id": "83c1c8fc-ee75-4f39-b40d-bc6fe1d212b2",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        384,
+        160
+      ],
+      "id": "b7188507-b073-44c7-8bab-f53361582f34",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZUr05nnLal3BEWyQ",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// This assumes the Gemini output is in a field called 'text'\n// Change 'text' to 'output' if your node uses that name\nconst rawText = $input.first().json.text; \n\ntry {\n  // Parse the string into a real JSON object\n  const parsedData = JSON.parse(rawText);\n  \n  return {\n    intent: parsedData.intent,\n    date: parsedData.date,\n    time: parsedData.time,\n    item: parsedData.item\n  };\n} catch (e) {\n  // If Gemini sends something that isn't JSON, this prevents a crash\n  return {\n    error: \"Failed to parse JSON\",\n    raw: rawText\n  };\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        -176
+      ],
+      "id": "e1da42bf-3f13-4f23-9b77-c822ad4023b5",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "krunalv1510@gmail.com",
+          "mode": "list",
+          "cachedResultName": "krunalv1510@gmail.com"
+        },
+        "start": "={{ $json.date }}T{{ $json.time }}:00",
+        "end": "={{ $json.date }}T{{ $json.time }}:30",
+        "additionalFields": {
+          "summary": "=Automated Reminder: {{ $json.item || \"General Task\" }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        1168,
+        -512
+      ],
+      "id": "18ccca15-202b-4486-a993-842f00cc2ab8",
+      "name": "Create an event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "TWcpYlkZzsVeySv7",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "krunalv1510@gmail.com",
+        "subject": "Confirmation: Reminder Scheduled",
+        "message": "=Hello, this is an automated confirmation that your reminder for \"{{ $('Switch').item.json.item }}\" has been successfully added to your Google Calendar for {{ $('Switch').item.json.date }} at {{ $('Switch').item.json.time }}.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1440,
+        -560
+      ],
+      "id": "e9924aea-af10-4bdf-a0a5-1bcd6df4c60b",
+      "name": "Send a message",
+      "webhookId": "28453a90-d26b-49d6-94bc-febaaa4880fd",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "FsQzHkENeU9Vbsdi",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://calendarific.com/api/v2/holidays",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "api_key",
+              "value": "VbViTKIrjxMehZEE8Jnlt8sX2fHWbU6X"
+            },
+            {
+              "name": "country",
+              "value": "IN"
+            },
+            {
+              "name": "year",
+              "value": "2026"
+            },
+            {
+              "name": "day",
+              "value": "={{ $json.date.split('-')[2] }}"
+            },
+            {
+              "name": "month",
+              "value": "={{ $json.date.split('-')[1] }}"
+            }
+          ]
+        },
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1200,
+        -224
+      ],
+      "id": "b661fcd7-f891-4cb7-9d66-eba7f54f6365",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "741adf05-2e6e-49fd-b757-a380fb97f59d",
+              "leftValue": "={{ $json.response.holidays.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        1408,
+        -224
+      ],
+      "id": "2d1b102f-e693-4bb8-ac74-13cec89b5109",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "sendTo": "krunalv1510@gmail.com",
+        "subject": "=📅 Festival Task Set: {{ $node[\"HTTP Request\"].json[\"response\"][\"holidays\"][0][\"name\"] }}",
+        "message": "=Hello, I have successfully identified that {{ $json.response.holidays[0].date.iso }} is {{ $node[\"HTTP Request\"].json[\"response\"][\"holidays\"][0][\"name\"] }}.  I have scheduled a celebratory greeting to be sent to you on that morning at 8:00 AM.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1616,
+        -224
+      ],
+      "id": "b95eb07e-185d-4588-8e3b-3c5638536d40",
+      "name": "Send a message1",
+      "webhookId": "673e2b1b-9693-4b62-8e3f-c844bd2fcaa2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "FsQzHkENeU9Vbsdi",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resume": "specificTime",
+        "dateTime": "={{ $('Filter').item.json.response.holidays[0].date.iso }}T08:00:00"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        1824,
+        -224
+      ],
+      "id": "9dd01923-d291-4e2e-a6c9-d096bf20e89e",
+      "name": "Wait",
+      "webhookId": "e8723132-16dc-44a7-9a28-b8c0f7496c78"
+    },
+    {
+      "parameters": {
+        "sendTo": "krunalv1510@gmail.com",
+        "subject": "=✨ Happy {{ $node[\"HTTP Request\"].json[\"response\"][\"holidays\"][0][\"name\"] }}! ✨",
+        "message": "=Wishing you a very Happy {{ $node[\"HTTP Request\"].json[\"response\"][\"holidays\"][0][\"name\"] }}! \n\nI noticed this festival on your calendar for today and wanted to send you a warm greeting.  \n\nRegards, \nYour AI Assistant",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2032,
+        -224
+      ],
+      "id": "bca6ac20-548e-49fc-ae21-8efd93bd5b55",
+      "name": "Send a message2",
+      "webhookId": "523bf22f-dbe6-4372-90f9-7cfce2b2464c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "FsQzHkENeU9Vbsdi",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  { \"date\": \"2026-02-01\", \"description\": \"Payment from Client A\", \"amount\": 125000, \"type\": \"Credit\" },\n  { \"date\": \"2026-02-03\", \"description\": \"Office Electricity Bill\", \"amount\": 4500, \"type\": \"Debit\" },\n  { \"date\": \"2026-02-05\", \"description\": \"Purchase of Stationery\", \"amount\": 1200, \"type\": \"Debit\" },\n  { \"date\": \"2026-02-08\", \"description\": \"Product Sales - Batch 4\", \"amount\": 85000, \"type\": \"Credit\" }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1216,
+        32
+      ],
+      "id": "33e1b444-38fd-4d25-b0ab-e062f8ecc22e",
+      "name": "FinanceData"
+    },
+    {
+      "parameters": {
+        "resource": "conversion",
+        "htmlContent": "=<style>\n  body { font-family: 'Helvetica', sans-serif; padding: 40px; color: #333; }\n  .header { border-bottom: 2px solid #444; padding-bottom: 10px; margin-bottom: 20px; }\n  table { width: 100%; border-collapse: collapse; }\n  th { background-color: #f2f2f2; padding: 12px; border: 1px solid #ddd; text-align: left; }\n  td { padding: 12px; border: 1px solid #ddd; }\n  .credit { color: #27ae60; font-weight: bold; }\n  .debit { color: #c0392b; font-weight: bold; }\n</style>\n\n<div class=\"header\">\n  <h2>Aethera Naturals - Financial Report</h2>\n  <p><strong>Report Type:</strong> {{ $(\"Switch\").item.json.item || \"Ledger\" }}</p>\n  <p><strong>Statement Date:</strong> {{ $(\"Switch\").item.json.date || \"2026-02-10\" }}</p>\n</div>\n\n<table>\n  <thead>\n    <tr>\n      <th>Date</th>\n      <th>Description</th>\n      <th>Amount</th>\n      <th>Type</th>\n    </tr>\n  </thead>\n  <tbody>\n    {{ $json.data.map(row => `\n      <tr>\n        <td>${row.date}</td>\n        <td>${row.description}</td>\n        <td>₹${Number(row.amount).toLocaleString('en-IN')}</td>\n        <td class=\"${row.type.toLowerCase()}\">${row.type}</td>\n      </tr>`).join('') }}\n  </tbody>\n</table>",
+        "filename": "ledger",
+        "conversionOptions": {
+          "conversionOutput": "file"
+        }
+      },
+      "type": "@pdfgeneratorapi/n8n-nodes-pdf-generator-api.pdfGeneratorApi",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        16
+      ],
+      "id": "49d0d837-23c7-4914-a8bb-320a5833b83b",
+      "name": "Convert HTML content to PDF",
+      "credentials": {
+        "pdfGeneratorApi": {
+          "id": "uqpEs59tA51UpYpp",
+          "name": "PDF Generator account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "=D:/ssweb/automation/Finance_{{ $('Switch').item.json.item }}_{{ $now.toFormat('yyyyMMdd') }}.pdf",
+        "dataPropertyName": "ledger.pdf",
+        "options": {
+          "append": false
+        }
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1.1,
+      "position": [
+        2048,
+        112
+      ],
+      "id": "14a7306c-dd52-46aa-bc0b-6dd1b0e5e966",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "sendTo": "krunalv1510@gmail.com",
+        "subject": "=📄 Your Requested Report: {{ $('Switch').item.json.item }}",
+        "emailType": "text",
+        "message": "=Hello, As requested, I have generated the {{ $('Switch').item.json.item }} for {{ $('Switch').item.json.date }}. The PDF is attached to this email ",
+        "options": {
+          "attachmentsUi": {
+            "attachmentsBinary": [
+              {
+                "property": "={{ $json.filename }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        2272,
+        16
+      ],
+      "id": "9aeb5d3a-fe44-4f41-a86d-b0e85b52d944",
+      "name": "Send a message3",
+      "webhookId": "3d8d6abc-374a-409c-9bb3-22f97e514533",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "FsQzHkENeU9Vbsdi",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1632,
+        48
+      ],
+      "id": "a6c58bb1-3dc9-4635-871a-4c981c10b7c5",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "99b0e644-f78e-42cb-b8da-73558683ca63",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            },
+            {
+              "id": "c2388bc4-7e15-4b0a-b9ba-3c60770d5af8",
+              "name": "description",
+              "value": "={{ $json.description }}",
+              "type": "string"
+            },
+            {
+              "id": "196282b0-99ee-4cb0-abff-15784f65a253",
+              "name": "amount",
+              "value": "={{ $json.amount }}",
+              "type": "number"
+            },
+            {
+              "id": "e1c03374-27db-4bdd-8be7-6703b327628e",
+              "name": "type",
+              "value": "={{ $json.type }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1424,
+        32
+      ],
+      "id": "f2a95685-a62a-4a59-b3f6-4f51413b9db0",
+      "name": "Edit Fields"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Create an event",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "FinanceData",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an event": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message1": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Send a message2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FinanceData": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert HTML content to PDF": {
+      "main": [
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk": {
+      "main": [
+        []
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Convert HTML content to PDF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "timezone": "Asia/Kolkata",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "547c72f1-d80a-4bfb-806e-dcbbec43a20e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "20a6262624cf0246b3fb0f7da34ea23f194ab9557d7364194412e864c0a7c7e4"
+  },
+  "id": "I4IXrLkr5JviiiIuzndGt",
+  "tags": []
+}
