@@ -1,0 +1,305 @@
+{
+  "name": "resume_selector",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "resume upload ",
+        "formDescription": "upload your resume here ",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "upload pdf format resume",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -240,
+        160
+      ],
+      "id": "575201bf-8335-4ef0-a404-2838b7d6b2aa",
+      "name": "On form submission",
+      "webhookId": "f33906fc-6a2a-4239-975e-ed1eddbef5fc"
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "upload_pdf_format_resume",
+        "options": {
+          "joinPages": true,
+          "keepSource": "binary"
+        }
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1.1,
+      "position": [
+        -32,
+        160
+      ],
+      "id": "3afe65fe-3fbb-42da-af3f-94689a7d66d9",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are an expert HR Recruiter. Compare the provided Resume against this Job Description: Python Developer with Docker and SQL knowledge. Evaluate based on technical skills, years of experience, and education. You must output only one word: 'Yes' if the candidate is a match, or 'No' if they are not. Do not provide any explanation, scores, or lists."
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "\"Analyze this resume and determine if it is a match for the JD. Answer with only 'Yes' or 'No':"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        176,
+        160
+      ],
+      "id": "e6f9d6e4-9846-4971-8fb8-72d3fd5c0e5d",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e46bf593-a050-4a05-a5d2-5eeeeb5accf5",
+      "name": "When chat message received",
+      "webhookId": "e90f9c69-551e-44ab-9a29-737fdeeabcad"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        64,
+        368
+      ],
+      "id": "a5876708-2849-4393-9df7-0d258c30c29d",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ZUr05nnLal3BEWyQ",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.text }}",
+                    "rightValue": "No",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "0a2e13f1-d25e-4837-badd-1d538c3b7ead"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "a656aa18-c005-492f-aceb-4d9dd1cae903",
+                    "leftValue": "={{ $json.text }}",
+                    "rightValue": "Yes",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        528,
+        160
+      ],
+      "id": "19a23728-fb67-474f-ada1-f82dbcadbe7c",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "sendTo": "krunalv1510@gmail.com",
+        "subject": "Update regarding your application for Python Developer",
+        "emailType": "text",
+        "message": "=Hi {{ $('Extract from File').item.json.info.Author }} ,  \n\nThank you for giving us the opportunity to review your application for the Python Developer role.  While your background in [mention a strength, e.g., Data Science/Physics] is impressive, we have decided to move forward with other candidates whose current experience with Docker and backend development more closely matches our immediate requirements for this specific role. \n\nWe appreciate your interest and wish you the best of luck in your job search. ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        736,
+        64
+      ],
+      "id": "90526c08-a828-4313-ac9f-fd26c3c686b4",
+      "name": "Send a message",
+      "webhookId": "d380f74e-a5e6-4ba7-9acf-2554ede85967",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "FsQzHkENeU9Vbsdi",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "kddeveloper324@gmail.com",
+        "subject": "Interview Invitation: Python Developer Role",
+        "message": "=Hi {{ $('Extract from File').item.json.info.Author }},  \n\nThank you for applying for the Python Developer position.  After reviewing your resume and your experience with Python and SQL, we would like to invite you to a first-round interview to discuss how your background aligns with our technical needs.\n\nInterview Details:  \nFormat: [Video Call/In-Person]  \nDuration: [e.g., 45 minutes]  \n\nAvailability: Please let us know your availability for the next 3 business days.  We look forward to speaking with you.  \n\nBest regards,",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        736,
+        256
+      ],
+      "id": "74cd0508-78f3-479f-9505-4d74ad324894",
+      "name": "Send a message1",
+      "webhookId": "f3f4ebef-08fe-4ab2-b40c-96d4e937d2b6",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "FsQzHkENeU9Vbsdi",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "f6599475-45dc-4c02-b53c-52699fc8606c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "20a6262624cf0246b3fb0f7da34ea23f194ab9557d7364194412e864c0a7c7e4"
+  },
+  "id": "k9iT1ynn_7xmVzVZmrzIi",
+  "tags": []
+}
