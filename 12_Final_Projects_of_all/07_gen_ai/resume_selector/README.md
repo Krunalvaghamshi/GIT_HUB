@@ -7,6 +7,7 @@ An automated HR recruitment assistant built on **n8n**. This workflow utilizes *
 ## 📸 Workflow Visualization
 
 ![Resume Selector Workflow](D:\GIT_HUB\12_Final_Projects_of_all\07_gen_ai\resume_selector\workflow_image.png)
+![Resume Selector Workflow](./workflow_image.png)
 
 *The automation pipeline showing the resume upload, text extraction, AI evaluation, and automated email response system.*
 
